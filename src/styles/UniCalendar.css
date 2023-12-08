@@ -1,0 +1,29 @@
+/* 일요일 날짜: 빨간색 */
+.fc-day-sun a {
+    color: red;
+}
+
+/* 토요일 날짜: 파란색 */
+.fc-day-sat a {
+    color: blue;
+}
+
+.fc-day-H span {
+    color: red;
+}
+
+.fc-button {
+    cursor : pointer;
+}
+
+.fc-Mart-button {
+    background-color: orange !important;
+    border : none !important;
+    box-shadow: none !important;
+}
+.fc-Mart-click-button {
+    background-color: orange !important;
+    border : none !important;
+    opacity: 40%;
+    box-shadow: none !important;
+}
