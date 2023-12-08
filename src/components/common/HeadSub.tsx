@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import {Link as RouterLink, useLocation} from 'react-router-dom';
 
 import Box from '@mui/joy/Box';
 import Breadcrumbs from '@mui/joy/Breadcrumbs';
@@ -10,16 +9,8 @@ import Typography from '@mui/joy/Typography';
 import ColorSchemeToggle from './ColorSchmeToggle'; // 다크모드 버튼 컴포넌트
 
 export default function HeadSub() {
-  const [currentLastUrl, setCurrentLastUrl] = useState('');
-
-  useEffect(() => {
-    const url = document.location.href;
-    const splitUrl = url.split('/');
-    const location = splitUrl[splitUrl.length - 1];
-    setCurrentLastUrl(location);
-  }, []);
-
-  console.log(currentLastUrl);
+  const location = useLocation();
+  console.log(location.pathname);
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
