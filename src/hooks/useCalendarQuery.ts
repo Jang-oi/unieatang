@@ -1,16 +1,16 @@
-import {axiosDB} from "../utils/axios";
 import {useMutation, useQuery} from '@tanstack/react-query';
+import {axiosAPI} from "../utils/axios";
 // import {ResponseAxiosTypes} from '../../types/axiosTypes';
 
 export const QUERY_KEY_CALENDAR = 'abc';
 
 export const useCalendarQuery = () => {
     const fetcher = async () => {
-        return await axiosDB('holiday', {
+        return await axiosAPI('holiday', {
+            name: ' abc',
             type: 'R',
             data: {
                 tableData: [],
-                stringData: {}
             }
         });
     };
@@ -21,9 +21,10 @@ export const useCalendarQuery = () => {
     });
 };
 
-export const useCalendarMutation = (type: string, data : any) => {
+export const useCalendarMutation = (type: string, data: any) => {
     const fetcher = async () => {
-        return await axiosDB('holiday', {
+        return await axiosAPI('holiday', {
+            name: 'abc',
             type: type,
             data
         });

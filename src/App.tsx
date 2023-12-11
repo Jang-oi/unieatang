@@ -9,7 +9,6 @@ import NotFound from './pages/NotFound';
 import Sidebar from './components/common/Sidebar';
 import Header from './components/common/Header';
 import UniCalendar from './pages/UniCalendar';
-import HeadSub from "./components/common/HeadSub";
 import DataBaseTest from './pages/DataBaseTest';
 import HyperV from "./pages/HyperV";
 
@@ -39,7 +38,6 @@ export default function App() {
                         gap: 1,
                     }}
                 >
-                    <HeadSub/>
                     <Box sx={{margin: '30px'}}>
                         <Routes>
                             <Route path='/' element={<Main/>}/>

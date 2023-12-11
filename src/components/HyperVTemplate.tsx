@@ -25,11 +25,11 @@ export default function HyperVTemplate() {
         setHyperVData((prevData) => [...prevData, ...data]);
     };
 
-    console.log(query);
-
     useEffect(() => {
         socket.on('sessionData', handleSessionData);
-        if (query.data) handleSessionData(query.data);
+        if (query.data) {
+            handleSessionData(query.data.data);
+        }
         return () => {
             socket.off('sessionData', handleSessionData);
         };
@@ -41,7 +41,7 @@ export default function HyperVTemplate() {
     const sortedBoardData = filteredBoardData.sort((a, b) => a.customer.localeCompare(b.customer));
 
     return (
-        <Box sx={{overflow: 'auto', maxHeight:'80vh'}}>
+        <Box sx={{overflow: 'auto', maxHeight:'85vh'}}>
             <Input placeholder="고객사명 입력" variant="outlined" color="neutral" sx={{width: '20vw', marginBottom: '30px'}}
                    value={searchValue} onChange={onSearchHandler}/>
             <Typography
@@ -51,7 +51,7 @@ export default function HyperVTemplate() {
                 sx={{width:'35vw', marginBottom:'20px'}}
             >
                 <DangerousIcon/>
-                VPN, 고객사 방화벽 정책 등에 따라 연결상태가 정상적이지 않을 수 있음!!
+                고객사 방화벽, VPN 정책 등에 따라 연결상태가 정상적이지 않을 수 있음!!
             </Typography>
             <HyperVTable hyperVData={sortedBoardData}/>
         </Box>

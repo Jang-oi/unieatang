@@ -8,7 +8,7 @@ interface HyperVTableProps {
 export default function HyperVTable({hyperVData}: HyperVTableProps) {
 
     return (
-        <Table sx={{marginBottom: '30px', textAlign: 'center', fontSize: '15px'}} borderAxis="both" size="md" stickyHeader>
+        <Table sx={{marginBottom: '30px', textAlign: 'center', fontSize: '15px', width:'73vw'}} borderAxis="both" size="md" stickyHeader>
             <thead>
             <tr>
                 <th>고객사명 (HyeprV 이름)</th>

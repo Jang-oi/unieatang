@@ -3,7 +3,7 @@ import {Fragment, useState} from "react";
 import Box from "@mui/joy/Box";
 import {useCalendarQuery} from "../hooks/useCalendarQuery";
 import {formatDate} from "../utils/commonUits";
-import {axiosDB} from "../utils/axios";
+// import {axiosDB} from "../utils/axios";
 
 const DataBaseTest = () => {
 
@@ -35,7 +35,7 @@ const DataBaseTest = () => {
     };
 
     const onHolidayButtonHandler = (event: any) => {
-        const {id, value} = event.target;
+/*        const {id, value} = event.target;
         if (id === 'Create') {
             axiosDB('holiday', {
                 type: 'C',
@@ -73,7 +73,7 @@ const DataBaseTest = () => {
                     }
                 }
             });
-        }
+        }*/
     }
 
     const {data} = useCalendarQuery();
