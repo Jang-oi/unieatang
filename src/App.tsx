@@ -9,6 +9,7 @@ import NotFound from './pages/NotFound';
 import Sidebar from './components/common/Sidebar';
 import Header from './components/common/Header';
 import UniCalendar from './pages/UniCalendar';
+import InterviewQuiz from './pages/InterviewQuiz';
 import DataBaseTest from './pages/DataBaseTest';
 import HyperV from "./pages/HyperV";
 
@@ -41,8 +42,9 @@ export default function App() {
                     <Box sx={{margin: '30px'}}>
                         <Routes>
                             <Route path='/' element={<Main/>}/>
-                            <Route path='/hyperv' element={<HyperV/>}/>
-                            <Route path='/calendar' element={<UniCalendar/>}/>
+                            <Route path='/HyperV' element={<HyperV/>}/>
+                            <Route path='/Calendar' element={<UniCalendar/>}/>
+                            <Route path='/InterviewQuiz' element={<InterviewQuiz/>}/>
                             <Route path='/lab/dbtest' element={<DataBaseTest/>}/>
                             <Route path='*' element={<NotFound/>}/>
                         </Routes>

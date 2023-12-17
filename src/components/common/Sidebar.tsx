@@ -20,6 +20,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import KeyIcon from '@mui/icons-material/Key';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import ComputerIcon from '@mui/icons-material/Computer';
+import QuizIcon from '@mui/icons-material/Quiz';
 
 import {closeSidebar} from '../../utils/sdieBarUtil';
 import {openNewTab} from '../../utils/commonUits';
@@ -63,7 +64,22 @@ function Toggler({
 export default function Sidebar() {
 
     const navigate = useNavigate();
+    const menuData = [{menu : 'Home', url : '/'}, {menu : 'HyperV', url : '/HyperV'}, {menu : 'Calendar', url : '/Calendar'}, {menu : 'Interview Quiz', url : '/InterviewQuiz'}]
 
+    const getMenuIcon = (menu : string) => {
+        switch (menu) {
+            case 'Home' :
+                return <HomeRoundedIcon/>
+            case 'HyperV' :
+                return <ComputerIcon/>
+            case 'Calendar' :
+                return <CalendarMonthIcon/>
+            case "Interview Quiz" :
+                return <QuizIcon/>
+            default :
+                return <></>
+        }
+    }
     return (
         <Sheet
             className="Sidebar"
@@ -147,7 +163,17 @@ export default function Sidebar() {
                         '--ListItem-radius': (theme) => theme.vars.radius.sm,
                     }}
                 >
-                    <ListItem>
+                    {menuData && menuData.map((menuItem, index) => (
+                        <ListItem key={index}>
+                            <ListItemButton onClick={() => { navigate(`${menuItem.url}`)}}>
+                                {getMenuIcon(menuItem.menu)}
+                                <ListItemContent>
+                                    <Typography level="title-sm">{menuItem.menu}</Typography>
+                                </ListItemContent>
+                            </ListItemButton>
+                        </ListItem>
+                    ))}
+                  {/*  <ListItem>
                         <ListItemButton onClick={() => {navigate('/')}}>
                             <HomeRoundedIcon/>
                             <ListItemContent>
@@ -203,7 +229,7 @@ export default function Sidebar() {
                                 </ListItem>
                             </List>
                         </Toggler>
-                    </ListItem>
+                    </ListItem>*/}
                 </List>
 
                 <List
@@ -216,7 +242,7 @@ export default function Sidebar() {
                         mb: 2,
                     }}
                 >
-                    <ListItem>
+{/*                    <ListItem>
                         <ListItemButton
                             onClick={() => {
                                 alert('로또 추첨 사이트');
@@ -225,7 +251,7 @@ export default function Sidebar() {
                             <AttachMoneyIcon/>
                             Lotto
                         </ListItemButton>
-                    </ListItem>
+                    </ListItem>*/}
                     <ListItem>
                         <ListItemButton
                             onClick={() => {
