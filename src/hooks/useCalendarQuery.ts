@@ -6,8 +6,8 @@ export const QUERY_KEY_CALENDAR = 'abc';
 
 export const useCalendarQuery = () => {
     const fetcher = async () => {
-        return await axiosAPI('holiday', {
-            name: ' abc',
+        return await axiosAPI({
+            name: 'holiday',
             type: 'R',
             data: {
                 tableData: [],
@@ -23,7 +23,7 @@ export const useCalendarQuery = () => {
 
 export const useCalendarMutation = (type: string, data: any) => {
     const fetcher = async () => {
-        return await axiosAPI('holiday', {
+        return await axiosAPI({
             name: 'abc',
             type: type,
             data

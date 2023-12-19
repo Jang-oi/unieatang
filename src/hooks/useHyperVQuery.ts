@@ -6,7 +6,7 @@ export const QUERY_KEY_HYPER_V = 'GET_HYPER_V';
 export const useHyperVQuery = () => {
     const fetcher = async () => {
         // return await axiosAPI('/hyperv/connect/init', {name: 'hyperv', type: 'R'});
-        return await axiosAPI('http://local-prd-proxy:3001/hyperv/connect/init', {name: 'hyperv', type: 'R'});
+        return await axiosAPI({name: 'hyperv', type: 'R'}, 'http://local-prd-proxy:3001/hyperv/connect/init');
     };
 
     return useQuery({

@@ -64,9 +64,11 @@ function Toggler({
 export default function Sidebar() {
 
     const navigate = useNavigate();
-    const menuData = [{menu : 'Home', url : '/'}, {menu : 'HyperV', url : '/HyperV'}, {menu : 'Calendar', url : '/Calendar'}, {menu : 'Interview Quiz', url : '/InterviewQuiz'}]
+    //{menu : 'Calendar', url : '/Calendar'}
+    const menuData = [{menu: 'Home', url: '/'}, {menu: 'HyperV', url: '/HyperV'}, {menu: 'Interview Quiz', url: '/InterviewQuiz'}];
+    const bottomMenuData = [{menu: 'Support'}, {menu: 'Settings'}];
 
-    const getMenuIcon = (menu : string) => {
+    const getMenuIcon = (menu: string) => {
         switch (menu) {
             case 'Home' :
                 return <HomeRoundedIcon/>
@@ -76,6 +78,10 @@ export default function Sidebar() {
                 return <CalendarMonthIcon/>
             case "Interview Quiz" :
                 return <QuizIcon/>
+            case "Support" :
+                return <SupportRoundedIcon/>
+            case "Settings" :
+                return <SettingsRoundedIcon/>
             default :
                 return <></>
         }
@@ -133,12 +139,12 @@ export default function Sidebar() {
                 onClick={() => closeSidebar()}
             />
             <Box sx={{display: 'flex', gap: 1, alignItems: 'center'}}>
-                <Avatar variant="outlined" size="sm" src=""/>
+                <Avatar variant="outlined" size="md" src=""/>
                 <Box sx={{minWidth: 0, flex: 1}}>
-                    <Typography level="title-sm">User.Name</Typography>
-                    <Typography level="body-xs">User.????</Typography>
+                    <Typography level="title-lg">User.Name</Typography>
+                    <Typography level="body-md">User.????</Typography>
                 </Box>
-                <IconButton size="sm" variant="plain" color="neutral">
+                <IconButton size="md" variant="plain" color="neutral">
                     <LogoutRoundedIcon/>
                 </IconButton>
             </Box>
@@ -165,73 +171,17 @@ export default function Sidebar() {
                 >
                     {menuData && menuData.map((menuItem, index) => (
                         <ListItem key={index}>
-                            <ListItemButton onClick={() => { navigate(`${menuItem.url}`)}}>
+                            <ListItemButton onClick={() => {
+                                navigate(`${menuItem.url}`)
+                            }}>
                                 {getMenuIcon(menuItem.menu)}
                                 <ListItemContent>
-                                    <Typography level="title-sm">{menuItem.menu}</Typography>
+                                    <Typography level="title-md">{menuItem.menu}</Typography>
                                 </ListItemContent>
                             </ListItemButton>
                         </ListItem>
                     ))}
-                  {/*  <ListItem>
-                        <ListItemButton onClick={() => {navigate('/')}}>
-                            <HomeRoundedIcon/>
-                            <ListItemContent>
-                                <Typography level="title-sm">Home</Typography>
-                            </ListItemContent>
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem>
-                        <ListItemButton onClick={() => {navigate('/hyperv')}}>
-                            <ComputerIcon/>
-                            <ListItemContent>
-                                <Typography level="title-sm">HyperV</Typography>
-                            </ListItemContent>
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem>
-                        <ListItemButton onClick={() => {navigate('/license')}}>
-                            <KeyIcon/>
-                            <ListItemContent>
-                                <Typography level="title-sm">License</Typography>
-                            </ListItemContent>
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem>
-                        <ListItemButton onClick={() => {navigate('/calendar')}}>
-                            <CalendarMonthIcon/>
-                            <ListItemContent>
-                                <Typography level="title-sm">Calendar</Typography>
-                            </ListItemContent>
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem nested>
-                        <Toggler
-                            renderToggle={({open, setOpen}) => (
-                                <ListItemButton onClick={() => setOpen(!open)}>
-                                    <ScienceIcon/>
-                                    <ListItemContent>
-                                        <Typography level="title-sm">Lab</Typography>
-                                    </ListItemContent>
-                                    <KeyboardArrowDownIcon sx={{transform: open ? 'rotate(180deg)' : 'none'}}/>
-                                </ListItemButton>
-                            )}
-                        >
-                            <List sx={{gap: 0.5}}>
-                                <ListItem sx={{mt: 0.5}}>
-                                    <ListItemButton onClick={() => {
-                                        navigate('/lab/dbtest')
-                                    }}>DB Test</ListItemButton>
-                                </ListItem>
-                            </List>
-                        </Toggler>
-                    </ListItem>*/}
                 </List>
-
                 <List
                     size="sm"
                     sx={{
@@ -242,32 +192,16 @@ export default function Sidebar() {
                         mb: 2,
                     }}
                 >
-{/*                    <ListItem>
-                        <ListItemButton
-                            onClick={() => {
-                                alert('로또 추첨 사이트');
-                                // openNewTab('https://114.unipost.co.kr:8543');
-                            }}>
-                            <AttachMoneyIcon/>
-                            Lotto
-                        </ListItemButton>
-                    </ListItem>*/}
-                    <ListItem>
-                        <ListItemButton
-                            onClick={() => {
-                                openNewTab('https://114.unipost.co.kr:8543');
-                            }}
-                        >
-                            <SupportRoundedIcon/>
-                            Support
-                        </ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                        <ListItemButton>
-                            <SettingsRoundedIcon/>
-                            Settings
-                        </ListItemButton>
-                    </ListItem>
+                    {bottomMenuData && bottomMenuData.map((bottomMenuItem, index) => (
+                        <ListItem key={index}>
+                            <ListItemButton onClick={() => {}}>
+                                {getMenuIcon(bottomMenuItem.menu)}
+                                <ListItemContent>
+                                    <Typography level="title-md">{bottomMenuItem.menu}</Typography>
+                                </ListItemContent>
+                            </ListItemButton>
+                        </ListItem>
+                    ))}
                 </List>
             </Box>
         </Sheet>
