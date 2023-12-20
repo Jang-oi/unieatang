@@ -1,21 +1,5 @@
-import {Fragment} from 'react';
-import {Box, Button} from "@mui/joy";
-import Typography from "@mui/joy/Typography";
+import ErrorView from "../components/common/ErrorView";
 
 export default function Main() {
-    return (
-        <Box
-            sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexDirection: 'column',
-                minHeight: '80vh'
-            }}
-        >
-            <Typography level={'h2'} variant="plain" color="neutral">
-                공사중...
-            </Typography>
-        </Box>
-    )
+    return <ErrorView code={'9999'} message={'준비 중 입니다 ...'}/>
 };

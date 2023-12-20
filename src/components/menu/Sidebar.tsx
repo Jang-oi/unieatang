@@ -14,29 +14,20 @@ import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import SupportRoundedIcon from '@mui/icons-material/SupportRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import ScienceIcon from '@mui/icons-material/Science';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import KeyIcon from '@mui/icons-material/Key';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ComputerIcon from '@mui/icons-material/Computer';
 import QuizIcon from '@mui/icons-material/Quiz';
 
 import {closeSidebar} from '../../utils/sdieBarUtil';
-import {openNewTab} from '../../utils/commonUits';
+import {menuData} from '../../utils/commonUits';
 import {useNavigate} from "react-router-dom";
+import {MenuTypes} from "../../types/menuTypes";
 
-function Toggler({
-                     defaultExpanded = false,
-                     renderToggle,
-                     children,
-                 }: {
+function Toggler({defaultExpanded = false, renderToggle, children,}: {
     defaultExpanded?: boolean;
     children: React.ReactNode;
-    renderToggle: (params: {
-        open: boolean;
-        setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    }) => React.ReactNode;
+    renderToggle: (params: { open: boolean; setOpen: React.Dispatch<React.SetStateAction<boolean>> }) => React.ReactNode;
 }) {
     const [open, setOpen] = React.useState(defaultExpanded);
     return (
@@ -64,8 +55,6 @@ function Toggler({
 export default function Sidebar() {
 
     const navigate = useNavigate();
-    //{menu : 'Calendar', url : '/Calendar'}
-    const menuData = [{menu: 'Home', url: '/'}, {menu: 'HyperV', url: '/HyperV'}, {menu: 'Interview Quiz', url: '/InterviewQuiz'}];
     const bottomMenuData = [{menu: 'Support'}, {menu: 'Settings'}];
 
     const getMenuIcon = (menu: string) => {
@@ -86,6 +75,52 @@ export default function Sidebar() {
                 return <></>
         }
     }
+
+    /**
+     * Menu 렌더링 하는 함수
+     * childMenu 존재 유무로 분기 처리함
+     * @param menuItem
+     * @param menuIndex
+     */
+    const renderMenu = (menuItem: MenuTypes, menuIndex: number) => {
+        if (!menuItem.childMenu) {
+            return (
+                <ListItemButton onClick={() => {
+                    navigate(`${menuItem.url}`)
+                }}>
+                    {getMenuIcon(menuItem.menu)}
+                    <ListItemContent>
+                        <Typography level="title-md">{menuItem.menu}</Typography>
+                    </ListItemContent>
+                </ListItemButton>
+            )
+        } else {
+            return (
+                <Toggler
+                    renderToggle={({open, setOpen}) => (
+                        <ListItemButton onClick={() => setOpen(!open)}>
+                            {getMenuIcon(menuItem.menu)}
+                            <ListItemContent>
+                                <Typography level="title-md">{menuItem.menu}</Typography>
+                            </ListItemContent>
+                            <KeyboardArrowDownIcon sx={{transform: open ? 'rotate(180deg)' : 'none'}}/>
+                        </ListItemButton>
+                    )}
+                >
+                    <List key={menuIndex} sx={{gap: 0.5}}>
+                        {menuItem.childMenu.map((childItem, childIndex) => (
+                            <ListItem key={childIndex}>
+                                <ListItemButton onClick={() => {
+                                    navigate(`${menuItem.childUrl && menuItem.childUrl[childIndex]}`)
+                                }}>{childItem}</ListItemButton>
+                            </ListItem>
+                        ))}
+                    </List>
+                </Toggler>
+            )
+        }
+    }
+
     return (
         <Sheet
             className="Sidebar"
@@ -141,7 +176,7 @@ export default function Sidebar() {
             <Box sx={{display: 'flex', gap: 1, alignItems: 'center'}}>
                 <Avatar variant="outlined" size="md" src=""/>
                 <Box sx={{minWidth: 0, flex: 1}}>
-                    <Typography level="title-lg">User.Name</Typography>
+                    <Typography level="title-md">User.Name</Typography>
                     <Typography level="body-md">User.????</Typography>
                 </Box>
                 <IconButton size="md" variant="plain" color="neutral">
@@ -169,16 +204,9 @@ export default function Sidebar() {
                         '--ListItem-radius': (theme) => theme.vars.radius.sm,
                     }}
                 >
-                    {menuData && menuData.map((menuItem, index) => (
-                        <ListItem key={index}>
-                            <ListItemButton onClick={() => {
-                                navigate(`${menuItem.url}`)
-                            }}>
-                                {getMenuIcon(menuItem.menu)}
-                                <ListItemContent>
-                                    <Typography level="title-md">{menuItem.menu}</Typography>
-                                </ListItemContent>
-                            </ListItemButton>
+                    {menuData && menuData.map((menuItem, menuIndex) => (
+                        <ListItem key={menuIndex} nested={!!menuItem.childMenu}>
+                            {renderMenu(menuItem, menuIndex)}
                         </ListItem>
                     ))}
                 </List>
@@ -189,12 +217,13 @@ export default function Sidebar() {
                         flexGrow: 0,
                         '--ListItem-radius': (theme) => theme.vars.radius.sm,
                         '--List-gap': '8px',
-                        mb: 2,
+                        mb: 2
                     }}
                 >
                     {bottomMenuData && bottomMenuData.map((bottomMenuItem, index) => (
                         <ListItem key={index}>
-                            <ListItemButton onClick={() => {}}>
+                            <ListItemButton onClick={() => {
+                            }}>
                                 {getMenuIcon(bottomMenuItem.menu)}
                                 <ListItemContent>
                                     <Typography level="title-md">{bottomMenuItem.menu}</Typography>

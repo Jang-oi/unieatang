@@ -6,15 +6,14 @@ import {
     Modal,
     ModalDialog,
     Radio,
-    RadioGroup, Stack, Textarea,
+    RadioGroup, Stack,
     Typography
 } from "@mui/joy"
 import TouchAppIcon from '@mui/icons-material/TouchApp';
 import Box from "@mui/joy/Box";
 import {useState} from "react";
-import {useRecoilState} from "recoil";
+import {useRecoilState, useResetRecoilState} from "recoil";
 import {interviewQuizState} from "../recoil/interviewQuiz/atom";
-import {useHyperVQuery} from "../hooks/useHyperVQuery";
 
 interface quizType {
     quizIndex: number,
@@ -30,6 +29,7 @@ export default function InterviewQuiz() {
 
     const [open, setOpen] = useState<boolean>(false);
     const [interviewSelect, setInterviewSelect] = useRecoilState<saveQuizType>(interviewQuizState);
+    const resetInterviewSelect = useResetRecoilState(interviewQuizState);
 
     const handleRadioChange = (quizObject: quizType) => {
         const {quizIndex, choiceIndex, choiceItem} = quizObject;
@@ -45,9 +45,8 @@ export default function InterviewQuiz() {
     const onSubmitButtonHandler = () => {
         alert('고생하셨습니다.');
         setOpen(false);
-        setInterviewSelect({});
+        resetInterviewSelect();
     }
-
 
     const getDefaultValue = (quizIndex: number) => {
         return interviewSelect[quizIndex] ? interviewSelect[quizIndex]['choiceItem'] : '';

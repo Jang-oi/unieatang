@@ -1,3 +1,5 @@
+import {MenuTypes} from "../types/menuTypes";
+
 export function openNewTab(url: string) {
     const newTab = window.open(url, '_blank');
     if (newTab) {
@@ -14,3 +16,9 @@ export function formatDate(date: Date) {
 
     return `${year}-${month}-${day}`;
 }
+
+export const menuData: MenuTypes[] = [
+    {menu: 'Home', url: '/'},
+    {menu: 'HyperV', url: '/HyperV'},
+    {menu: 'Interview Quiz', url: '/InterviewQuiz'},
+];
