@@ -6,7 +6,9 @@ const {persistAtom} = recoilPersist();
 export const userSettingState = atom({
     key: "userSettingState",
     default: {
-        color : 'neutral'
+        color : 'neutral',
+        bgColor : '',
+        fontColor : '',
     },
     effects_UNSTABLE: [persistAtom]
 })

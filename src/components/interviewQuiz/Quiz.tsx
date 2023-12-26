@@ -19,10 +19,9 @@ interface QuizProps {
     quizIndex: number
 }
 
-const Quiz = ({quizItem, quizIndex} : QuizProps) => {
+const Quiz = ({quizItem, quizIndex}: QuizProps) => {
 
     const [interviewSelect, setInterviewSelect] = useRecoilState<saveQuizType>(interviewQuizState);
-    const resetInterviewSelect = useResetRecoilState(interviewQuizState);
 
     const handleRadioChange = (quizObject: quizType) => {
         const {quizIndex, choiceIndex, choiceItem} = quizObject;
@@ -44,7 +43,7 @@ const Quiz = ({quizItem, quizIndex} : QuizProps) => {
         <Card variant="plain" key={quizIndex}>
             <CardContent>
                 <Typography level="h3">{quizIndex + 1}) {quizItem.question}</Typography>
-                {quizItem.passage && (<Card size="md" sx={{width: '30vw'}}>{quizItem.passage}</Card>)}
+                {quizItem.passage && (<Card size="sm" sx={{width: '50vw', whiteSpace:'pre-line', minWidth:'400px'}}>{quizItem.passage}</Card>)}
                 <RadioGroup sx={{margin: '20px'}} value={getDefaultValue(quizIndex)}>
                     {quizItem.choice.map((choiceItem, choiceIndex) => (
                         <Radio key={choiceIndex} value={choiceItem} variant="outlined" label={choiceItem}

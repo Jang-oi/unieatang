@@ -24,7 +24,7 @@ import GridViewIcon from '@mui/icons-material/GridView';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 
 import {closeSidebar} from '../../utils/sdieBarUtil';
-import {menuData, bottomMenuData, openNewTab} from '../../utils/commonUits';
+import {menuData, bottomMenuData, openNewTab, getColorWithTheme} from '../../utils/commonUits';
 import {useNavigate} from "react-router-dom";
 import {MenuTypes} from "../../types/menuTypes";
 import ColorSchemeToggle from "./ColorSchmeToggle";
@@ -66,27 +66,27 @@ export default function Sidebar() {
     const getMenuIcon = (menu: string) => {
         switch (menu) {
             case 'Home' :
-                return <HomeRoundedIcon/>
+                return <HomeRoundedIcon sx={{color : fontColor}}/>
             case 'HyperV' :
-                return <ComputerIcon/>
+                return <ComputerIcon sx={{color : fontColor}}/>
             case 'Calendar' :
-                return <CalendarMonthIcon/>
+                return <CalendarMonthIcon sx={{color : fontColor}}/>
             case "Interview Quiz" :
-                return <QuizIcon/>
+                return <QuizIcon sx={{color : fontColor}}/>
             case "Lab" :
-                return <ScienceIcon/>
+                return <ScienceIcon sx={{color : fontColor}}/>
             case "Support" :
-                return <SupportRoundedIcon/>
+                return <SupportRoundedIcon sx={{color : fontColor}}/>
             case "GroupWare" :
-                return <GroupsIcon/>
+                return <GroupsIcon sx={{color : fontColor}}/>
             case "Git Lab" :
-                return <GitHubIcon/>
+                return <GitHubIcon sx={{color : fontColor}}/>
             case "Real Grid" :
-                return <GridViewIcon/>
+                return <GridViewIcon sx={{color : fontColor}}/>
             case "RedMine" :
-                return <RocketLaunchIcon/>
+                return <RocketLaunchIcon sx={{color : fontColor}}/>
             case "Settings" :
-                return <SettingsRoundedIcon/>
+                return <SettingsRoundedIcon sx={{color : fontColor}}/>
             default :
                 return <></>
         }
@@ -106,7 +106,7 @@ export default function Sidebar() {
                 }}>
                     {getMenuIcon(menuItem.menu)}
                     <ListItemContent>
-                        <Typography level="title-md">{menuItem.menu}</Typography>
+                        <Typography level="title-md" sx={{color: fontColor}}>{menuItem.menu}</Typography>
                     </ListItemContent>
                 </ListItemButton>
             )
@@ -117,7 +117,7 @@ export default function Sidebar() {
                         <ListItemButton onClick={() => setOpen(!open)}>
                             {getMenuIcon(menuItem.menu)}
                             <ListItemContent>
-                                <Typography level="title-md">{menuItem.menu}</Typography>
+                                <Typography level="title-md" sx={{color: fontColor}}>{menuItem.menu}</Typography>
                             </ListItemContent>
                             <KeyboardArrowDownIcon sx={{transform: open ? 'rotate(180deg)' : 'none'}}/>
                         </ListItemButton>
@@ -138,29 +138,30 @@ export default function Sidebar() {
     }
 
     const {color} = useRecoilValue(userSettingState);
+    const {bgColor, fontColor} = getColorWithTheme(color);
 
     return (
-        <Sheet
-            className="Sidebar"
-            sx={{
-                position: {xs: 'fixed', md: 'sticky'},
-                transform: {
-                    xs: 'translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1)))',
-                    md: 'none',
-                },
-                transition: 'transform 0.4s, width 0.4s',
-                zIndex: 10000,
-                height: '100dvh',
-                width: 'var(--Sidebar-width)',
-                top: 0,
-                p: 2,
-                flexShrink: 0,
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 2,
-                borderRight: '1px solid',
-                borderColor: 'divider',
-            }}
+        <Sheet className="Sidebar"
+               sx={{
+                   position: {xs: 'fixed', md: 'sticky'},
+                   transform: {
+                       xs: 'translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1)))',
+                       md: 'none',
+                   },
+                   transition: 'transform 0.4s, width 0.4s',
+                   zIndex: 10000,
+                   height: '100dvh',
+                   width: 'var(--Sidebar-width)',
+                   top: 0,
+                   p: 2,
+                   flexShrink: 0,
+                   display: 'flex',
+                   flexDirection: 'column',
+                   gap: 2,
+                   borderRight: '1px solid',
+                   borderColor: 'divider',
+                   backgroundColor: bgColor,
+               }}
         >
             <GlobalStyles
                 styles={(theme) => ({
@@ -193,11 +194,11 @@ export default function Sidebar() {
             />
             <Box sx={{display: 'flex', gap: 1, alignItems: 'center'}}>
                 <Box sx={{minWidth: 0, flex: 1}}>
-                    <Typography level="title-md">User.Name</Typography>
-                    <Typography level="body-md">User.????</Typography>
+                    <Typography level="title-md" sx={{color: fontColor}}>User.Name</Typography>
+                    <Typography level="body-md" sx={{color: fontColor}}>User.????</Typography>
                 </Box>
                 <ColorSchemeToggle sx={{marginLeft: 'auto'}}/>
-                <IconButton size="md" variant="plain" color={color}>
+                <IconButton size="md" variant="plain">
                     <LogoutRoundedIcon/>
                 </IconButton>
             </Box>
@@ -245,7 +246,8 @@ export default function Sidebar() {
                             }}>
                                 {getMenuIcon(bottomMenuItem.menu)}
                                 <ListItemContent>
-                                    <Typography level="title-md">{bottomMenuItem.menu}</Typography>
+                                    <Typography level="title-md"
+                                                sx={{color: fontColor}}>{bottomMenuItem.menu}</Typography>
                                 </ListItemContent>
                             </ListItemButton>
                         </ListItem>

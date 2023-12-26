@@ -1,17 +1,19 @@
 import * as React from 'react';
-import { useColorScheme } from '@mui/joy/styles';
-import IconButton, { IconButtonProps } from '@mui/joy/IconButton';
+import {useColorScheme} from '@mui/joy/styles';
+import IconButton, {IconButtonProps} from '@mui/joy/IconButton';
 
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import {userSettingState} from "../../recoil/settings/atom";
 import {useRecoilValue} from "recoil";
+import {getColorWithTheme} from "../../utils/commonUits";
 
 export default function ColorSchemeToggle(props: IconButtonProps) {
-    const { onClick, sx, ...other } = props;
-    const { mode, setMode } = useColorScheme();
+    const {onClick, sx, ...other} = props;
+    const {mode, setMode} = useColorScheme();
     const [mounted, setMounted] = React.useState(false);
     const {color} = useRecoilValue(userSettingState);
+    const {bgColor, fontColor} = getColorWithTheme(color);
 
     React.useEffect(() => {
         setMounted(true);
@@ -20,9 +22,8 @@ export default function ColorSchemeToggle(props: IconButtonProps) {
         return (
             <IconButton
                 size="sm"
-                color={color}
                 {...other}
-                sx={sx}
+                sx={{...sx, color: fontColor}}
                 disabled
             />
         );
@@ -53,8 +54,8 @@ export default function ColorSchemeToggle(props: IconButtonProps) {
                 ...(Array.isArray(sx) ? sx : [sx]),
             ]}
         >
-            <DarkModeRoundedIcon />
-            <LightModeIcon />
+            <DarkModeRoundedIcon/>
+            <LightModeIcon/>
         </IconButton>
     );
 }

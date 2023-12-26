@@ -1,4 +1,6 @@
 import {MenuTypes} from "../types/menuTypes";
+import {Option} from "@mui/joy";
+import React from "react";
 
 export function openNewTab(url: string) {
     const newTab = window.open(url, '_blank');
@@ -15,6 +17,24 @@ export function formatDate(date: Date) {
     const day = String(date.getDate()).padStart(2, '0');
 
     return `${year}-${month}-${day}`;
+}
+
+export const getColorWithTheme = (theme: string) => {
+
+    switch (theme) {
+        case 'neutral' :
+            return {fontColor: '#171A1C', bgColor: '#FBFCFE'}
+        case 'primary' :
+            return {fontColor: '#FFFFFF', bgColor: '#185EA5'}
+        case 'danger' :
+            return {fontColor: '#FFFFFF', bgColor: '#A51818'}
+        case 'success' :
+            return {fontColor: '#FFFFFF', bgColor: '#136C13'}
+        case 'warning' :
+            return {fontColor: '#FFFFFF', bgColor: '#72430D'}
+        default :
+            return {fontColor: '#171A1C', bgColor: '#555E68'}
+    }
 }
 
 export const menuData: MenuTypes[] = [
