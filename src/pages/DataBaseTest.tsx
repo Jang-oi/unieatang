@@ -3,6 +3,8 @@ import {Fragment, useState} from "react";
 import Box from "@mui/joy/Box";
 import {useCalendarQuery} from "../hooks/useCalendarQuery";
 import {formatDate} from "../utils/commonUits";
+import {useRecoilValue} from "recoil";
+import {userSettingState} from "../recoil/settings/atom";
 // import {axiosDB} from "../utils/axios";
 
 const DataBaseTest = () => {
@@ -77,6 +79,7 @@ const DataBaseTest = () => {
     }
 
     const {data} = useCalendarQuery();
+    const {color} = useRecoilValue(userSettingState);
 
     return (
         <Fragment>
@@ -118,15 +121,16 @@ const DataBaseTest = () => {
                         name="Name"
                         type="tel"
                         fullWidth
+                        color={color}
                         variant="outlined"
                         value={title}
                         onChange={handleTitleChange}
                     />
                 </FormControl>
                 <Box sx={{display: 'flex', gap: 3, justifyContent: 'left', marginTop: '20px'}}>
-                    <Button id={"Create"} onClick={onHolidayButtonHandler}>Create</Button>
-                    <Button id={"Update"} onClick={onHolidayButtonHandler}>Update</Button>
-                    <Button id={"Delete"} onClick={onHolidayButtonHandler}>Delete</Button>
+                    <Button color={color} id={"Create"} onClick={onHolidayButtonHandler}>Create</Button>
+                    <Button color={color} id={"Update"} onClick={onHolidayButtonHandler}>Update</Button>
+                    <Button color={color} id={"Delete"} onClick={onHolidayButtonHandler}>Delete</Button>
                 </Box>
             </Stack>
             <Table sx={{marginTop: '30px'}}>

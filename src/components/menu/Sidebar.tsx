@@ -1,6 +1,5 @@
 import * as React from 'react';
 import GlobalStyles from '@mui/joy/GlobalStyles';
-import Avatar from '@mui/joy/Avatar';
 import Box from '@mui/joy/Box';
 import Divider from '@mui/joy/Divider';
 import IconButton from '@mui/joy/IconButton';
@@ -18,11 +17,19 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ComputerIcon from '@mui/icons-material/Computer';
 import QuizIcon from '@mui/icons-material/Quiz';
+import ScienceIcon from '@mui/icons-material/Science';
+import GroupsIcon from '@mui/icons-material/Groups';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import GridViewIcon from '@mui/icons-material/GridView';
+import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 
 import {closeSidebar} from '../../utils/sdieBarUtil';
-import {menuData} from '../../utils/commonUits';
+import {menuData, bottomMenuData, openNewTab} from '../../utils/commonUits';
 import {useNavigate} from "react-router-dom";
 import {MenuTypes} from "../../types/menuTypes";
+import ColorSchemeToggle from "./ColorSchmeToggle";
+import {useRecoilValue} from "recoil";
+import {userSettingState} from "../../recoil/settings/atom";
 
 function Toggler({defaultExpanded = false, renderToggle, children,}: {
     defaultExpanded?: boolean;
@@ -55,7 +62,6 @@ function Toggler({defaultExpanded = false, renderToggle, children,}: {
 export default function Sidebar() {
 
     const navigate = useNavigate();
-    const bottomMenuData = [{menu: 'Support'}, {menu: 'Settings'}];
 
     const getMenuIcon = (menu: string) => {
         switch (menu) {
@@ -67,8 +73,18 @@ export default function Sidebar() {
                 return <CalendarMonthIcon/>
             case "Interview Quiz" :
                 return <QuizIcon/>
+            case "Lab" :
+                return <ScienceIcon/>
             case "Support" :
                 return <SupportRoundedIcon/>
+            case "GroupWare" :
+                return <GroupsIcon/>
+            case "Git Lab" :
+                return <GitHubIcon/>
+            case "Real Grid" :
+                return <GridViewIcon/>
+            case "RedMine" :
+                return <RocketLaunchIcon/>
             case "Settings" :
                 return <SettingsRoundedIcon/>
             default :
@@ -120,6 +136,8 @@ export default function Sidebar() {
             )
         }
     }
+
+    const {color} = useRecoilValue(userSettingState);
 
     return (
         <Sheet
@@ -174,12 +192,12 @@ export default function Sidebar() {
                 onClick={() => closeSidebar()}
             />
             <Box sx={{display: 'flex', gap: 1, alignItems: 'center'}}>
-                <Avatar variant="outlined" size="md" src=""/>
                 <Box sx={{minWidth: 0, flex: 1}}>
                     <Typography level="title-md">User.Name</Typography>
                     <Typography level="body-md">User.????</Typography>
                 </Box>
-                <IconButton size="md" variant="plain" color="neutral">
+                <ColorSchemeToggle sx={{marginLeft: 'auto'}}/>
+                <IconButton size="md" variant="plain" color={color}>
                     <LogoutRoundedIcon/>
                 </IconButton>
             </Box>
@@ -223,6 +241,7 @@ export default function Sidebar() {
                     {bottomMenuData && bottomMenuData.map((bottomMenuItem, index) => (
                         <ListItem key={index}>
                             <ListItemButton onClick={() => {
+                                openNewTab(`${bottomMenuItem.url}`)
                             }}>
                                 {getMenuIcon(bottomMenuItem.menu)}
                                 <ListItemContent>

@@ -4,11 +4,14 @@ import IconButton, { IconButtonProps } from '@mui/joy/IconButton';
 
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 import LightModeIcon from '@mui/icons-material/LightMode';
+import {userSettingState} from "../../recoil/settings/atom";
+import {useRecoilValue} from "recoil";
 
 export default function ColorSchemeToggle(props: IconButtonProps) {
     const { onClick, sx, ...other } = props;
     const { mode, setMode } = useColorScheme();
     const [mounted, setMounted] = React.useState(false);
+    const {color} = useRecoilValue(userSettingState);
 
     React.useEffect(() => {
         setMounted(true);
@@ -17,7 +20,7 @@ export default function ColorSchemeToggle(props: IconButtonProps) {
         return (
             <IconButton
                 size="sm"
-                color="neutral"
+                color={color}
                 {...other}
                 sx={sx}
                 disabled
@@ -28,7 +31,7 @@ export default function ColorSchemeToggle(props: IconButtonProps) {
         <IconButton
             id="toggle-mode"
             size="sm"
-            color="neutral"
+            color={color}
             {...other}
             onClick={(event) => {
                 if (mode === 'light') {

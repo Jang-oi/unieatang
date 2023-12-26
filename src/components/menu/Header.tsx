@@ -5,8 +5,13 @@ import IconButton from '@mui/joy/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
 import {toggleSidebar} from "../../utils/sdieBarUtil";
+import {useRecoilValue} from "recoil";
+import {userSettingState} from "../../recoil/settings/atom";
 
 export default function Header() {
+
+    const {color} = useRecoilValue(userSettingState);
+
     return (
         <Sheet
             sx={{
@@ -38,7 +43,7 @@ export default function Header() {
             <IconButton
                 onClick={() => toggleSidebar()}
                 variant="outlined"
-                color="neutral"
+                color={color}
                 size="sm"
             >
                 <MenuIcon/>

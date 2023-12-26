@@ -1,46 +1,23 @@
 import {
-    Button,
-    Card,
-    CardContent, DialogContent,
+    Button, DialogContent,
     DialogTitle, FormControl, FormLabel, Input,
     Modal,
-    ModalDialog,
-    Radio,
-    RadioGroup, Stack,
+    ModalDialog, Stack,
     Typography
 } from "@mui/joy"
 import TouchAppIcon from '@mui/icons-material/TouchApp';
 import Box from "@mui/joy/Box";
 import {useState} from "react";
-import {useRecoilState, useResetRecoilState} from "recoil";
+import {useRecoilValue, useResetRecoilState} from "recoil";
 import {interviewQuizState} from "../recoil/interviewQuiz/atom";
-
-interface quizType {
-    quizIndex: number,
-    choiceIndex: number,
-    choiceItem: string
-}
-
-interface saveQuizType {
-    [key: string]: quizType
-}
+import Quiz from "../components/interviewQuiz/Quiz";
+import {userSettingState} from "../recoil/settings/atom";
 
 export default function InterviewQuiz() {
 
     const [open, setOpen] = useState<boolean>(false);
-    const [interviewSelect, setInterviewSelect] = useRecoilState<saveQuizType>(interviewQuizState);
     const resetInterviewSelect = useResetRecoilState(interviewQuizState);
-
-    const handleRadioChange = (quizObject: quizType) => {
-        const {quizIndex, choiceIndex, choiceItem} = quizObject;
-        setInterviewSelect({
-            ...interviewSelect,
-            [quizIndex]: {
-                choiceIndex,
-                choiceItem
-            }
-        });
-    };
+    const {color} = useRecoilValue(userSettingState);
 
     const onSubmitButtonHandler = () => {
         alert('고생하셨습니다.');
@@ -48,14 +25,10 @@ export default function InterviewQuiz() {
         resetInterviewSelect();
     }
 
-    const getDefaultValue = (quizIndex: number) => {
-        return interviewSelect[quizIndex] ? interviewSelect[quizIndex]['choiceItem'] : '';
-    }
-
     const quizData = [
         {
             question: "What does HTML stand for?",
-            passage: 'asdasd',
+            passage: '지문이 있을 경우 사용',
             choice: [
                 "Hyper Text Markup Language",
                 "Home Tool Markup Language",
@@ -63,203 +36,47 @@ export default function InterviewQuiz() {
             ]
         },
         {
-            question: "Who is making the Web standards?",
+            question: "Java 에서 Wrapper 클래스는 무엇인가요?",
             choice: [
-                "The World Wide Web Consortium",
-                "Mozilla",
-                "Google",
-                "Microsoft"
+                "기본 데이터 타입을 객체로 감싸는 클래스",
+                "상속을 받지 않는 최상위 클래스",
+                "인터페이스를 구현한 클래스",
+                "문자열을 처리하는 클래스"
             ]
         },
         {
-            question: "Choose the correct HTML tag for the largest heading",
+            question: "Java 에서 예외 처리를 위한 키워드는 무엇인가요?",
             choice: [
-                "<h6>",
-                "<h1>",
-                "<heading>",
-                "<head>"
+                "exception",
+                "try",
+                "handle",
+                "throw"
             ]
         },
         {
-            question: "What does HTML stand for?",
+            question: "Java 에서 다음 중 오버로딩이 아닌 것은 무엇인가요?",
             choice: [
-                "Hyper Text Markup Language",
-                "Home Tool Markup Language",
-                "Hyperlinks and Text Markup Language"
+                "메서드 이름이 동일",
+                "매개변수의 개수가 다름",
+                "매개변수의 자료형이 다름",
+                "매개변수의 이름이 다름"
             ]
         },
         {
-            question: "Who is making the Web standards?",
+            question: "Java 에서 다음 중 올바르지 않은 것은 무엇인가요?",
             choice: [
-                "The World Wide Web Consortium",
-                "Mozilla",
-                "Google",
-                "Microsoft"
+                "배열(Array)의 길이는 length() 속성을 사용한다.",
+                "문자열(String)의 길이는 length() 메서드를 사용한다.",
+                "컬렉션(Collection)의 크기는 size() 메서드를 사용한다."
             ]
         },
         {
-            question: "Choose the correct HTML tag for the largest heading",
+            question: "Java 에서 다음 중 오류가 발생하는 코드는 무엇인가요?",
             choice: [
-                "<h6>",
-                "<h1>",
-                "<heading>",
-                "<head>"
-            ]
-        },
-        {
-            question: "What does HTML stand for?",
-            choice: [
-                "Hyper Text Markup Language",
-                "Home Tool Markup Language",
-                "Hyperlinks and Text Markup Language"
-            ]
-        },
-        {
-            question: "Who is making the Web standards?",
-            choice: [
-                "The World Wide Web Consortium",
-                "Mozilla",
-                "Google",
-                "Microsoft"
-            ]
-        },
-        {
-            question: "Choose the correct HTML tag for the largest heading",
-            choice: [
-                "<h6>",
-                "<h1>",
-                "<heading>",
-                "<head>"
-            ]
-        },
-        {
-            question: "What does HTML stand for?",
-            choice: [
-                "Hyper Text Markup Language",
-                "Home Tool Markup Language",
-                "Hyperlinks and Text Markup Language"
-            ]
-        },
-        {
-            question: "Who is making the Web standards?",
-            choice: [
-                "The World Wide Web Consortium",
-                "Mozilla",
-                "Google",
-                "Microsoft"
-            ]
-        },
-        {
-            question: "Choose the correct HTML tag for the largest heading",
-            choice: [
-                "<h6>",
-                "<h1>",
-                "<heading>",
-                "<head>"
-            ]
-        },
-        {
-            question: "What does HTML stand for?",
-            choice: [
-                "Hyper Text Markup Language",
-                "Home Tool Markup Language",
-                "Hyperlinks and Text Markup Language"
-            ]
-        },
-        {
-            question: "Who is making the Web standards?",
-            choice: [
-                "The World Wide Web Consortium",
-                "Mozilla",
-                "Google",
-                "Microsoft"
-            ]
-        },
-        {
-            question: "Choose the correct HTML tag for the largest heading",
-            choice: [
-                "<h6>",
-                "<h1>",
-                "<heading>",
-                "<head>"
-            ]
-        },
-        {
-            question: "What does HTML stand for?",
-            choice: [
-                "Hyper Text Markup Language",
-                "Home Tool Markup Language",
-                "Hyperlinks and Text Markup Language"
-            ]
-        },
-        {
-            question: "Who is making the Web standards?",
-            choice: [
-                "The World Wide Web Consortium",
-                "Mozilla",
-                "Google",
-                "Microsoft"
-            ]
-        },
-        {
-            question: "Choose the correct HTML tag for the largest heading",
-            choice: [
-                "<h6>",
-                "<h1>",
-                "<heading>",
-                "<head>"
-            ]
-        },
-        {
-            question: "What does HTML stand for?",
-            choice: [
-                "Hyper Text Markup Language",
-                "Home Tool Markup Language",
-                "Hyperlinks and Text Markup Language"
-            ]
-        },
-        {
-            question: "Who is making the Web standards?",
-            choice: [
-                "The World Wide Web Consortium",
-                "Mozilla",
-                "Google",
-                "Microsoft"
-            ]
-        },
-        {
-            question: "Choose the correct HTML tag for the largest heading",
-            choice: [
-                "<h6>",
-                "<h1>",
-                "<heading>",
-                "<head>"
-            ]
-        },
-        {
-            question: "What does HTML stand for?",
-            choice: [
-                "Hyper Text Markup Language",
-                "Home Tool Markup Language",
-                "Hyperlinks and Text Markup Language"
-            ]
-        },
-        {
-            question: "Who is making the Web standards?",
-            choice: [
-                "The World Wide Web Consortium",
-                "Mozilla",
-                "Google",
-                "Microsoft"
-            ]
-        },
-        {
-            question: "Choose the correct HTML tag for the largest heading",
-            choice: [
-                "<h6>",
-                "<h1>",
-                "<heading>",
-                "<head>"
+                "System.out.println(\"a = \" + 1 + 1);",
+                "System.out.println(\"a = \" + 1 - 1);",
+                "System.out.println(\"a = \" + 1 * 1);",
+                "System.out.println(\"a = \" + 1 / 1);"
             ]
         },
     ]
@@ -269,25 +86,11 @@ export default function InterviewQuiz() {
             <Box sx={{width: '100%', overflow: 'auto', maxHeight: '80vh', mb: '20px'}}>
                 <Typography level="h1" sx={{mb: '20px'}}>유니 영역</Typography>
                 {quizData && quizData.map((quizItem, quizIndex) => (
-                    <Card variant="plain" sx={{backgroundColor: 'white'}} key={quizIndex}>
-                        <CardContent>
-                            <Typography level="h3">{quizIndex + 1}) {quizItem.question}</Typography>
-                            {quizItem.passage && (<Card size="md" sx={{width:'30vw'}}>{quizItem.passage}</Card>)}
-                            <RadioGroup sx={{margin: '20px'}} value={getDefaultValue(quizIndex)}>
-                                {quizItem.choice.map((choiceItem, choiceIndex) => (
-                                    <Radio key={choiceIndex} value={choiceItem} variant="outlined" label={choiceItem}
-                                           onClick={() => {
-                                               handleRadioChange({quizIndex, choiceIndex, choiceItem})
-                                           }}/>
-                                ))}
-                            </RadioGroup>
-                        </CardContent>
-                    </Card>
+                    <Quiz quizItem={quizItem} quizIndex={quizIndex}/>
                 ))}
             </Box>
-            <Button sx={{float: 'right', mr: '50px'}} size={'lg'} color="neutral" variant="soft"
+            <Button sx={{float: 'right', mr: '50px'}} size={'lg'} color={color} variant="soft"
                     startDecorator={<TouchAppIcon/>} onClick={() => setOpen(true)}>Submit</Button>
-
             <Modal open={open} onClose={() => setOpen(false)}>
                 <ModalDialog>
                     <DialogTitle>테스트 보시느라 고생 많으셨습니다.</DialogTitle>
@@ -299,9 +102,9 @@ export default function InterviewQuiz() {
                         </FormControl>
                         <FormControl>
                             <FormLabel>핸드폰 번호 뒷 자리 4 자리</FormLabel>
-                            <Input required type={'number'} />
+                            <Input required type={'number'}/>
                         </FormControl>
-                        <Button color="neutral" variant="solid" onClick={onSubmitButtonHandler}>제출</Button>
+                        <Button color={color} variant="solid" onClick={onSubmitButtonHandler}>제출</Button>
                     </Stack>
                 </ModalDialog>
             </Modal>
