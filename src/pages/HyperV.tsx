@@ -7,6 +7,7 @@ import {HyperVBoardColumn} from "../types/hypervTypes";
 import {io} from "socket.io-client";
 import {useRecoilValue} from "recoil";
 import {hyperVSearchState} from "../recoil/hyperV/atom";
+import LoadingComponent from "../components/common/LoadingComponent";
 
 const socket = io('http://local-prd-proxy:3001', {transports: ['websocket']});
 const HyperV = () => {
@@ -28,6 +29,8 @@ const HyperV = () => {
             socket.off('sessionData', handleSessionData);
         };
     }, [query.data]);
+
+    if (query.isLoading) return <LoadingComponent/>;
 
     const filteredBoardData = hyperVData.filter((boardItem) => boardItem?.customer.toLowerCase().includes(hyperVSearch.toLowerCase()));
     const sortedBoardData = filteredBoardData.sort((a, b) => a.customer.localeCompare(b.customer));
