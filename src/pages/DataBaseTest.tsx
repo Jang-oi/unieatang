@@ -35,51 +35,11 @@ const DataBaseTest = () => {
                 break;
         }
     };
-
-    const onHolidayButtonHandler = (event: any) => {
-/*        const {id, value} = event.target;
-        if (id === 'Create') {
-            axiosDB('holiday', {
-                type: 'C',
-                data: {
-                    tableData: [],
-                    stringData: {
-                        start: fromDate,
-                        end: toDate,
-                        title,
-                    }
-                }
-            }).then(() => {
-                setTitle('');
-            });
-        } else if (id === 'Delete') {
-            axiosDB('holiday', {
-                type: 'D',
-                data: {
-                    tableData: [],
-                    stringData: {
-                        id: selectedRow
-                    }
-                }
-            });
-        }else if (id === 'Update') {
-            axiosDB('holiday', {
-                type: 'U',
-                data: {
-                    tableData: [],
-                    stringData: {
-                        id: selectedRow,
-                        start: fromDate,
-                        end: toDate,
-                        title,
-                    }
-                }
-            });
-        }*/
-    }
-
-    const {data} = useCalendarQuery();
     const {color} = useRecoilValue(userSettingState);
+
+    const onHolidayButtonHandler = () =>{
+
+    }
 
     return (
         <Fragment>
@@ -133,30 +93,6 @@ const DataBaseTest = () => {
                     <Button color={color} id={"Delete"} onClick={onHolidayButtonHandler}>Delete</Button>
                 </Box>
             </Stack>
-            <Table sx={{marginTop: '30px'}}>
-                <thead>
-                <tr>
-                    <th style={{width: '5%'}}>SELECT</th>
-                    <th>TITLE</th>
-                    <th>START</th>
-                    <th>END</th>
-                </tr>
-                </thead>
-                <tbody>
-                {data?.data && data?.data.tableData.map((row: any) => (
-                    <tr key={row._id}>
-                        <td>
-                            <RadioGroup name="radio-buttons-group" value={selectedRow}>
-                                <Radio value={row._id} variant="outlined" onClick={handleRadioChange}/>
-                            </RadioGroup>
-                        </td>
-                        <td>{row.title}</td>
-                        <td>{row.start}</td>
-                        <td>{row.end}</td>
-                    </tr>
-                ))}
-                </tbody>
-            </Table>
         </Fragment>
     );
 };

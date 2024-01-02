@@ -1,7 +1,7 @@
 import {axiosAPI} from "../utils/axios";
 import {useQuery, useMutation} from '@tanstack/react-query';
 
-export const QUERY_KEY_INTERVIEW_QUIZ = '';
+export const QUERY_KEY_INTERVIEW_QUIZ = 'INTERVIEW_QUIZ';
 
 export const useInterviewQuizQuery = () => {
     const GET_INTERVIEW_QUIZ = async () => {

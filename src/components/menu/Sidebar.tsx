@@ -27,7 +27,6 @@ import {closeSidebar} from '../../utils/sdieBarUtil';
 import {menuData, bottomMenuData, openNewTab, getColorWithTheme} from '../../utils/commonUits';
 import {useNavigate} from "react-router-dom";
 import {MenuTypes} from "../../types/menuTypes";
-import ColorSchemeToggle from "./ColorSchmeToggle";
 import {useRecoilValue} from "recoil";
 import {userSettingState} from "../../recoil/settings/atom";
 
@@ -197,7 +196,6 @@ export default function Sidebar() {
                     <Typography level="title-md" sx={{color: fontColor}}>User.Name</Typography>
                     <Typography level="body-md" sx={{color: fontColor}}>User.????</Typography>
                 </Box>
-                <ColorSchemeToggle sx={{marginLeft: 'auto'}}/>
                 <IconButton size="md" variant="plain">
                     <LogoutRoundedIcon/>
                 </IconButton>
