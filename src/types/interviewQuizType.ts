@@ -1,5 +1,8 @@
 export interface InterviewQuizType {
-    question : string,
-    passage? : string,
-    choice : string[]
+    _id: string,
+    question: string,
+    passage?: string,
+    choice: string[],
+    point: number,
+    type: string
 }

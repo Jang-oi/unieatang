@@ -7,23 +7,14 @@ import {
 } from "@mui/joy"
 import TouchAppIcon from '@mui/icons-material/TouchApp';
 import Box from "@mui/joy/Box";
-import {useState} from "react";
+import {Fragment, useState} from "react";
 import {useRecoilValue, useResetRecoilState} from "recoil";
 import {interviewQuizState} from "../recoil/interviewQuiz/atom";
 import Quiz from "../components/interviewQuiz/Quiz";
 import {userSettingState} from "../recoil/settings/atom";
 import {useInterviewQuizQuery} from "../hooks/useInterviewQuizQuery";
 import LoadingComponent from "../components/common/LoadingComponent";
-
-interface Question {
-    question: string;
-    choice: string[];
-    id: string;
-    passage?: string;
-    answer: string;
-    type: string;
-    del: string;
-}
+import {InterviewQuizType} from "../types/interviewQuizType";
 
 export default function InterviewQuiz() {
 
@@ -39,11 +30,11 @@ export default function InterviewQuiz() {
     }
 
     const quizData = query.data;
-    const questionsByType: Record<string, Question[]> = {};
+    const questionsByType: Record<string, InterviewQuizType[]> = {};
 
     if (query.isLoading) return <LoadingComponent/>;
 
-    quizData.forEach((question : Question) => {
+    quizData.forEach((question: InterviewQuizType) => {
         if (!questionsByType[question.type]) questionsByType[question.type] = [];
         questionsByType[question.type].push(question);
     });
@@ -53,13 +44,13 @@ export default function InterviewQuiz() {
             <Box sx={{width: '100%', overflow: 'auto', maxHeight: '80vh', mb: '20px'}}>
                 <Typography level="h1" sx={{mb: '20px'}}>유니 영역</Typography>
                 {questionsByType && Object.entries(questionsByType).map((entries, _i) => (
-                    <>
-                        <Typography level="h2" key={_i}>{entries[0]}</Typography>
-                        {entries[1].map((quizItem,quizIndex) => (
-                            <Quiz quizItem={quizItem} quizIndex={quizIndex}/>
-                        ))}
-                        <Divider sx={{fontSize: '20px'}}/>
-                    </>
+                        <Fragment key={entries[0]}>
+                            <Typography level="h2">{entries[0]}</Typography>
+                            {entries[1].map((quizItem, quizIndex) => (
+                                <Quiz key={`${entries[0]}_${quizIndex}`} quizItem={quizItem} quizIndex={quizIndex}/>
+                            ))}
+                            <Divider sx={{fontSize: '20px'}}/>
+                        </Fragment>
                     )
                 )}
             </Box>
