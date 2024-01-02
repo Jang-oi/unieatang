@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import HyperVTemplate from "../components/hyperv/HyperVTemplate";
 import HyperVTable from "../components/hyperv/HyperVTable";
 import {useHyperVQuery} from "../hooks/useHyperVQuery";
@@ -14,23 +14,27 @@ const HyperV = () => {
 
     const hyperVSearch = useRecoilValue<string>(hyperVSearchState);
 
-    const query = useHyperVQuery();
+    const {data, isLoading} = useHyperVQuery();
     const [hyperVData, setHyperVData] = useState<HyperVBoardColumn[]>([]);
 
-    const handleSessionData = (data: HyperVBoardColumn[]) => {
-        setHyperVData((prevData) => [...prevData, ...data]);
+    const handleSessionData = (hyperVData: HyperVBoardColumn[]) => {
+        setHyperVData(hyperVData);
     };
 
     useEffect(() => {
+        socket.emit('hyperV', 'hyperv-session');
         socket.on('sessionData', handleSessionData);
-        if (query.data) handleSessionData(query.data.data);
 
         return () => {
             socket.off('sessionData', handleSessionData);
         };
-    }, [query.data]);
+    }, []);
 
-    if (query.isLoading) return <LoadingComponent/>;
+    useEffect(() => {
+        if (data) handleSessionData(data.data);
+    }, [data]);
+
+    if (isLoading) return <LoadingComponent/>;
 
     const filteredBoardData = hyperVData.filter((boardItem) => boardItem?.customer.toLowerCase().includes(hyperVSearch.toLowerCase()));
     const sortedBoardData = filteredBoardData.sort((a, b) => a.customer.localeCompare(b.customer));
