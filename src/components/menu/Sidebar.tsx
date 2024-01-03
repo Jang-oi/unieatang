@@ -128,7 +128,7 @@ export default function Sidebar() {
                     <List key={menuIndex} sx={{gap: 0.5}}>
                         {menuItem.childMenu.map((childItem, childIndex) => (
                             <ListItem key={childIndex}>
-                                <ListItemButton onClick={() => {
+                                <ListItemButton sx={{color: fontColor}} onClick={() => {
                                     navigate(`${menuItem.childUrl && menuItem.childUrl[childIndex]}`)
                                 }}>{childItem}</ListItemButton>
                             </ListItem>

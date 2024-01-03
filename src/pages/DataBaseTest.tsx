@@ -2,7 +2,6 @@ import {Select, Option} from "@mui/joy";
 import {dbOptionData} from "../utils/commonUits";
 import {useState} from "react";
 import DbForm from "../components/dataBaseTest/DbForm";
-import {axiosAPI} from "../utils/axios";
 
 const DataBaseTest = () => {
 

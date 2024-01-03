@@ -5,10 +5,10 @@ import {useCustomerListQuery} from "../hooks/useCustomerListQuery";
 
 const CustomerList = () => {
 
-    const query = useCustomerListQuery();
+    const {isLoading, data} = useCustomerListQuery();
 
-    if (query.isLoading) return <LoadingComponent/>;
-    const customerData = query.data;
+    if (isLoading) return <LoadingComponent/>;
+    const customerData = data.data.tableData;
 
     // 데이터를 팀 별로 정렬
     const sortedData: any = {};

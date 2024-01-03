@@ -12,7 +12,7 @@ export const useCustomerListQuery = () => {
         queryKey: [QUERY_KEY_CUSTOMER_LIST],
         queryFn: GET_CUSTOMER_LIST,
         select : (data) => {
-            return data.data.tableData.data;
+            return data.data;
         }
     });
 };

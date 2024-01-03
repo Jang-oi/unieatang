@@ -19,7 +19,7 @@ import {InterviewQuizType} from "../types/interviewQuizType";
 export default function InterviewQuiz() {
 
     const [open, setOpen] = useState<boolean>(false);
-    const query = useInterviewQuizQuery();
+    const {isLoading, data} = useInterviewQuizQuery();
     const resetInterviewSelect = useResetRecoilState(interviewQuizState);
     const {color} = useRecoilValue(userSettingState);
 
@@ -29,11 +29,10 @@ export default function InterviewQuiz() {
         resetInterviewSelect();
     }
 
-    const quizData = query.data;
     const questionsByType: Record<string, InterviewQuizType[]> = {};
 
-    if (query.isLoading) return <LoadingComponent/>;
-
+    if (isLoading) return <LoadingComponent/>;
+    const quizData = data.data.tableData;
     quizData.forEach((question: InterviewQuizType) => {
         if (!questionsByType[question.type]) questionsByType[question.type] = [];
         questionsByType[question.type].push(question);

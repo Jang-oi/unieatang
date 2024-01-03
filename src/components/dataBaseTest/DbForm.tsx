@@ -35,14 +35,9 @@ const DbForm = ({optionValue}: DBFormProps) => {
 
     return (
         <Box sx={{overflow: 'auto', maxHeight: '85vh', width: '100%'}}>
-            <form onSubmit={(event) => {
-                event.preventDefault()
-            }}>
-                <Stack spacing={1}>
-                    {getDBCrudInput()}
-                </Stack>
-                <CrudButtonBox/>
-            </form>
+            <Stack spacing={1}>
+                {getDBCrudInput()}
+            </Stack>
             {getDBReadTable()}
         </Box>
     );
