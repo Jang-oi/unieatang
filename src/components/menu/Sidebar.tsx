@@ -22,6 +22,7 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import GridViewIcon from '@mui/icons-material/GridView';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
+import BusinessIcon from '@mui/icons-material/Business';
 
 import {closeSidebar} from '../../utils/sdieBarUtil';
 import {menuData, bottomMenuData, openNewTab, getColorWithTheme} from '../../utils/commonUits';
@@ -72,6 +73,8 @@ export default function Sidebar() {
                 return <CalendarMonthIcon sx={{color : fontColor}}/>
             case "Interview Quiz" :
                 return <QuizIcon sx={{color : fontColor}}/>
+            case "Customer List" :
+                return <BusinessIcon sx={{color : fontColor}}/>
             case "Lab" :
                 return <ScienceIcon sx={{color : fontColor}}/>
             case "Support" :

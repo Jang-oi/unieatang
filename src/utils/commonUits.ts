@@ -1,6 +1,5 @@
 import {MenuTypes} from "../types/menuTypes";
-import {Option} from "@mui/joy";
-import React from "react";
+import {dbOptionTypes} from "../types/dbOptionType";
 
 export function openNewTab(url: string) {
     const newTab = window.open(url, '_blank');
@@ -41,6 +40,7 @@ export const menuData: MenuTypes[] = [
     {menu: 'Home', url: '/'},
     {menu: 'HyperV', url: '/HyperV'},
     {menu: 'Interview Quiz', url: '/InterviewQuiz'},
+    {menu: 'Customer List', url: '/CustomerList'},
     // {menu: 'Calendar', url: '/Calendar'},
     {menu: 'Lab', childMenu: ['DB_TEST'], childUrl: ['/lab/dbtest']},
     {menu: 'Settings', url: '/Settings'}
@@ -52,4 +52,10 @@ export const bottomMenuData: MenuTypes[] = [
     {menu: 'Git Lab', url: 'http://unidocu/gitlab/'},
     {menu: 'RedMine', url: 'https://unidocu.unipost.co.kr/redmine/'},
     {menu: 'Real Grid', url: 'https://service.realgrid.com/'}
+]
+
+export const dbOptionData : dbOptionTypes[] = [
+    {optionValue : 'Quiz'},
+    {optionValue : 'Customer'},
+    {optionValue : 'Holiday'},
 ]

@@ -13,6 +13,7 @@ import InterviewQuiz from './pages/InterviewQuiz';
 import DataBaseTest from './pages/DataBaseTest';
 import HyperV from "./pages/HyperV";
 import Settings from "./pages/Settings";
+import CustomerList from "./pages/CustomerList";
 
 export default function App() {
     return (
@@ -35,6 +36,7 @@ export default function App() {
                             <Route path='/HyperV' element={<HyperV/>}/>
                             <Route path='/Calendar' element={<UniCalendar/>}/>
                             <Route path='/InterviewQuiz' element={<InterviewQuiz/>}/>
+                            <Route path='/CustomerList' element={<CustomerList/>}/>
                             <Route path='/Settings' element={<Settings/>}/>
                             <Route path='/lab/dbtest' element={<DataBaseTest/>}/>
                             <Route path='*' element={<NotFound/>}/>

@@ -2,6 +2,7 @@ import axios from 'axios';
 import {RequestAxiosTypes} from '../types/axiosTypes';
 
 let BASE_URL_API = 'http://local-prd-proxy:3001/api/v1/';
+// let BASE_URL_API = 'http://local-permes:3001/api/v1/';
 
 /**
  * @param url
