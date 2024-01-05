@@ -58,3 +58,31 @@ export const useInterviewQuizAnswerMutation = ({onSuccessFn}: UseInterviewQuizAn
         }
     });
 }
+
+
+interface InterviewQuizSubmitMutation {
+    type: string,
+    data: any
+}
+
+interface UseInterviewQuizSubmitMutation {
+    onSuccessFn: (response: any) => void
+}
+
+export const useInterviewQuizSubmitMutation = ({onSuccessFn}: UseInterviewQuizSubmitMutation) => {
+    const CREATE_INTERVIEW_ANSWER = async ({type, data}: InterviewQuizSubmitMutation) => {
+
+        return await axiosAPI({
+            name: 'interviewQuizSubmit',
+            type,
+            data
+        });
+    };
+
+    return useMutation({
+        mutationFn: CREATE_INTERVIEW_ANSWER,
+        onSuccess: (data) => {
+            onSuccessFn(data.data.data);
+        }
+    });
+}

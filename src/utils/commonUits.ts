@@ -1,5 +1,4 @@
 import {MenuTypes} from "../types/menuTypes";
-import {dbOptionTypes} from "../types/dbOptionType";
 
 export function openNewTab(url: string) {
     const newTab = window.open(url, '_blank');
@@ -17,6 +16,22 @@ export function formatDate(date: Date) {
 
     return `${year}-${month}-${day}`;
 }
+
+type removeArr = {
+    [key: string]: string;
+}
+
+export const removeDuplicates = (array: removeArr[], key: string) => {
+    const seen = new Set();
+    return array.filter(item => {
+        const value = item[key];
+        if (!seen.has(value)) {
+            seen.add(value);
+            return true;
+        }
+        return false;
+    });
+};
 
 export const getColorWithTheme = (theme: string) => {
 
@@ -54,8 +69,8 @@ export const bottomMenuData: MenuTypes[] = [
     {menu: 'Real Grid', url: 'https://service.realgrid.com/'}
 ]
 
-export const dbOptionData : dbOptionTypes[] = [
-    {optionValue : 'Quiz'},
-    {optionValue : 'Customer'},
-    {optionValue : 'Holiday'},
+export const dbOptionData: { optionValue: string }[] = [
+    {optionValue: 'Quiz'},
+    {optionValue: 'Customer'},
+    {optionValue: 'Holiday'},
 ]
