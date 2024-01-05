@@ -5,8 +5,8 @@
  * childUrl 하위 메뉴 URL
  */
 export type MenuTypes = {
-    menu: string;
-    url?: string;
-    childMenu?: string[];
-    childUrl?: string[];
-}
+  menu: string;
+  url?: string;
+  childMenu?: string[];
+  childUrl?: string[];
+};

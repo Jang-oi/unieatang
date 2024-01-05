@@ -7,10 +7,10 @@
  * currentTime : 접속 시간
  */
 export type HyperVBoardColumn = {
-    id: number;
-    customer: string;
-    hostName: string;
-    isConnect: boolean;
-    clientHostName: string;
-    currentTime: string;
+  id: number;
+  customer: string;
+  hostName: string;
+  isConnect: boolean;
+  clientHostName: string;
+  currentTime: string;
 };

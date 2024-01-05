@@ -7,10 +7,10 @@
  * type: 문제 타입 ( 운영체제, css 등등 )
  */
 export type InterviewQuizType = {
-    _id: string;
-    question: string;
-    passage?: string;
-    choice: string[];
-    point: number;
-    type: string;
-}
+  _id: string;
+  question: string;
+  passage?: string;
+  choice: string[];
+  point: number;
+  type: string;
+};

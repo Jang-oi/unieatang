@@ -1,6 +1,6 @@
-import {atom} from "recoil";
+import {atom} from 'recoil';
 
 export const hyperVSearchState = atom({
-    key: "hyperVSearchState",
-    default: '',
-})
+  key: 'hyperVSearchState',
+  default: ''
+});

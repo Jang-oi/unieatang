@@ -4,7 +4,7 @@
  * fontColor?: 폰트 색;
  */
 export type userSettingType = {
-    color: string;
-    bgColor?: string;
-    fontColor?: string;
-}
+  color: string;
+  bgColor?: string;
+  fontColor?: string;
+};
