@@ -1,8 +1,7 @@
-import {CircularProgress} from "@mui/joy";
+import {CircularProgress} from '@mui/joy';
 
 const LoadingComponent = () => {
-    return <CircularProgress color="neutral" size="lg" variant="solid"
-                             sx={{top: '50%', left: '50%', position: 'absolute'}}/>
+  return <CircularProgress color="neutral" size="lg" variant="solid" sx={{top: '50%', left: '50%', position: 'absolute'}} />;
 };
 
 export default LoadingComponent;
