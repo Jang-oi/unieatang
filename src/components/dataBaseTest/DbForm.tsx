@@ -1,8 +1,6 @@
 import React from 'react';
 import {Box} from '@mui/joy';
-import {QuizTable} from './QuizCRUD';
-import {CustomerTable} from './CustomerCRUD';
-import {HolidayTable} from './HolidayCRUD';
+import QuizTemplate from './QuizTemplate';
 
 interface DBFormProps {
   optionValue: string;
@@ -12,11 +10,7 @@ const DbForm = ({optionValue}: DBFormProps) => {
   const getDBReadTable = () => {
     switch (optionValue) {
       case 'Quiz':
-        return <QuizTable />;
-      case 'Customer':
-        return <CustomerTable />;
-      case 'Holiday':
-        return <HolidayTable />;
+        return <QuizTemplate />;
     }
   };
 
