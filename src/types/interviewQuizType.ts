@@ -5,6 +5,7 @@
  * choice: 보기
  * point: 점수
  * type: 문제 타입 ( 운영체제, css 등등 )
+ * answer: 정답
  */
 export type InterviewQuizType = {
   _id: string;
@@ -13,4 +14,5 @@ export type InterviewQuizType = {
   choice: string[];
   point: number;
   type: string;
+  answer : string;
 };

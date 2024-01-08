@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {useQueryClient} from '@tanstack/react-query';
 
 import {useRecoilState, useRecoilValue, useSetRecoilState} from 'recoil';
@@ -14,7 +14,7 @@ import LoadingComponent from '../common/LoadingComponent';
 
 const QuizTable = () => {
   const setQuizCURDModal = useSetRecoilState(interviewQuizCRUDModalState);
-  const {isLoading, data} = useInterviewQuizQuery({abc: 1});
+  const {isLoading, data} = useInterviewQuizQuery({option: 'a'});
 
   if (isLoading) return <LoadingComponent />;
   const quizData = data.data.tableData;
@@ -24,11 +24,12 @@ const QuizTable = () => {
       <Table sx={{mt: '30px', textAlign: 'center', fontSize: '15px', width: '73vw'}} borderAxis="both" size="sm" stickyHeader>
         <thead>
           <tr>
-            <th>카테고리</th>
-            <th>문제</th>
-            <th>지문</th>
-            <th>점수</th>
-            <th>보기</th>
+            <th style={{width: '10%'}}>카테고리</th>
+            <th style={{width: '20%'}}>문제</th>
+            <th style={{width: '30%'}}>지문</th>
+            <th style={{width: '5%'}}>점수</th>
+            <th style={{width: '30%'}}>보기</th>
+            <th style={{width: '5%'}}>정답</th>
           </tr>
         </thead>
         <tbody>
@@ -46,6 +47,7 @@ const QuizTable = () => {
                 <td>
                   <Textarea readOnly variant="plain" value={quizItem.choice.join('\n')}></Textarea>
                 </td>
+                <td>{quizItem.answer}</td>
               </tr>
             ))}
         </tbody>
@@ -88,15 +90,10 @@ const QuizCRUDModal = () => {
   const [quizCURDModal, setQuizCURDModal] = useRecoilState(interviewQuizCRUDModalState);
 
   const queryClient = useQueryClient();
-  const onSuccessFn = () => {
-    setQuestion('');
-    setPassage('');
-    setPoint(0);
-    setChoice('');
-    setChoiceArray([]);
-    setAnswer(0);
+  const onSuccessFn = (response: any) => {
+    setQuizCURDModal({createMode: false, showModal: false, quizData: {}});
     queryClient.invalidateQueries({queryKey: [READ_INTERVIEW_QUIZ]});
-    alert('생성 완료');
+    alert(response.returnMessage);
   };
   const {createMode, showModal, quizData} = quizCURDModal as any;
   const {mutate} = useInterviewQuizMutation({onSuccessFn});
@@ -115,6 +112,8 @@ const QuizCRUDModal = () => {
       setPassage(quizData.passage || '');
       setPoint(quizData.point || 0);
       setChoice(quizData.choice ? quizData.choice.join('\n') : []);
+      setAnswer(quizData.answer || '');
+      setTypeOption(quizData.type || '');
     }
   }, [quizData]);
 
@@ -151,12 +150,13 @@ const QuizCRUDModal = () => {
   const onQuizCreateHandler = () => {
     if (!typeOption || !question || !point || choiceArray.length === 0 || !answer) alert('데이터 확인');
     else {
+      const type = typeData.find((typeItem) => typeItem.text === typeOption)?.type;
       mutate({
         type: 'C',
         data: {
           tableData: [
             {
-              type: typeOption,
+              type,
               question,
               passage,
               point,
@@ -169,7 +169,18 @@ const QuizCRUDModal = () => {
     }
   };
 
-  const onQuizDeleteHandler = () => {};
+  const onQuizDeleteHandler = () => {
+    mutate({
+      type: 'D',
+      data: {
+        tableData: [
+          {
+            id: quizData._id
+          }
+        ]
+      }
+    });
+  };
   const onQuizUpdateHandler = () => {};
 
   const buttonRender = () => {
@@ -182,9 +193,9 @@ const QuizCRUDModal = () => {
     } else {
       return (
         <>
-          <Button type="submit" color={color} id={'update'} onClick={onQuizUpdateHandler}>
+          {/*          <Button type="submit" color={color} id={'update'} onClick={onQuizUpdateHandler}>
             Update
-          </Button>
+          </Button>*/}
           <Button type="submit" color={color} id={'delete'} onClick={onQuizDeleteHandler}>
             Delete
           </Button>
@@ -198,10 +209,10 @@ const QuizCRUDModal = () => {
       <ModalDialog>
         <DialogTitle>{createMode ? '문제 추가' : '문제 수정 및 삭제'}</DialogTitle>
         <Stack spacing={2}>
-          <Select defaultValue={typeOption} sx={{width: '30vw', mb: '40px'}} onChange={onTypeHandler} placeholder={'카테고리를 선택 해주세요.'}>
+          <Select value={typeOption} sx={{width: '30vw', mb: '40px'}} onChange={onTypeHandler} placeholder={'카테고리를 선택 해주세요.'}>
             {typeData &&
               typeData.map((optionItem, optionIndex) => (
-                <Option key={optionItem._id} value={optionItem.type}>
+                <Option key={optionItem._id} value={optionItem.text}>
                   {optionItem.text}
                 </Option>
               ))}

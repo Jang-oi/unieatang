@@ -45,7 +45,7 @@ export default function App() {
               <Route path="/InterviewQuiz" element={<InterviewQuiz />} />
               <Route path="/CustomerList" element={<CustomerList />} />
               <Route path="/Settings" element={<Settings />} />
-              <Route path="/lab/dbtest" element={<DataBaseTest />} />
+              <Route path="/lab/db" element={<DataBaseTest />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Box>

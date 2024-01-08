@@ -23,7 +23,7 @@ export const useInterviewQuizQuery = (params?: any) => {
 };
 
 interface InterviewQuizMutationCbType {
-  onSuccessFn: () => void;
+  onSuccessFn: (response: any) => void;
 }
 
 interface InterviewQuizMutationParamType {
@@ -45,8 +45,8 @@ export const useInterviewQuizMutation = ({onSuccessFn}: InterviewQuizMutationCbT
 
   return useMutation({
     mutationFn: fetcher,
-    onSuccess: () => {
-      onSuccessFn();
+    onSuccess: (response) => {
+      onSuccessFn(response.data);
     }
   });
 };

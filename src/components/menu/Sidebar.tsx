@@ -212,8 +212,8 @@ export default function Sidebar() {
             User.????
           </Typography>
         </Box>
-        <IconButton size="md" variant="plain">
-          <LogoutRoundedIcon />
+        <IconButton size="md">
+          <LogoutRoundedIcon sx={{color: fontColor}} />
         </IconButton>
       </Box>
       <Divider />

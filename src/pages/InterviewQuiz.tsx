@@ -21,14 +21,14 @@ export default function InterviewQuiz() {
 
   const onSuccessFn = (response: any) => {
     const userInterviewData = response.tableData[0];
-    alert(`${userInterviewData.name} 님 고생 많으셨습니다.\n점수는 ${userInterviewData.totalPoints} 점 입니다.`);
+    alert(`${userInterviewData.name} 님 고생 많으셨습니다.\n 총 ${userInterviewData.totalScore} 점 중 점수는 ${userInterviewData.score} 점 입니다.`);
   };
 
   const {mutate} = useInterviewQuizSubmitMutation({onSuccessFn});
 
   const [submitModalOpen, setSubmitModalOpen] = useState<boolean>(false);
   const [userName, setUserName] = useState<string>('');
-  const [phoneNum, setPhoneNum] = useState<number>(0);
+  const [phoneNum, setPhoneNum] = useState<number | ''>();
 
   const questionsByType: Record<string, InterviewQuizType[]> = {};
 
@@ -40,20 +40,32 @@ export default function InterviewQuiz() {
     questionsByType[question.type].push(question);
   });
 
-  const onUserNameHandler = (event: any) => {
+  const onUserNameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserName(event.currentTarget.value);
   };
 
-  const onPhoneNumHandler = (event: any) => {
-    setPhoneNum(event.currentTarget.value);
+  const onPhoneNumHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const phoneNum = event.target.value;
+    const numericRegex = /^[0-9]*$/;
+    if (numericRegex.test(phoneNum) && +phoneNum <= 9999) {
+      setPhoneNum(phoneNum === '' ? '' : parseFloat(phoneNum));
+    }
   };
 
   const onSubmitButtonHandler = () => {
-    setSubmitModalOpen(false);
-    mutate({type: 'C', data: {name: userName + phoneNum.toString(), tableData: interviewSelect}});
-    resetInterviewSelect();
-    setPhoneNum(0);
-    setUserName('');
+    const namePattern = /^[가-힣]{2,5}$/;
+
+    if (!namePattern.test(userName)) {
+      alert('이름은 한글 2~5 자만 가능합니다.');
+    } else if (!phoneNum) {
+      alert('핸드폰 번호 입력 필요');
+    } else {
+      setSubmitModalOpen(false);
+      mutate({type: 'C', data: {name: userName + phoneNum.toString(), tableData: interviewSelect}});
+      resetInterviewSelect();
+      setPhoneNum(0);
+      setUserName('');
+    }
   };
 
   return (
@@ -93,11 +105,11 @@ export default function InterviewQuiz() {
           <Stack spacing={2}>
             <FormControl>
               <FormLabel>이름</FormLabel>
-              <Input autoFocus value={userName} onChange={onUserNameHandler} />
+              <Input slotProps={{input: {minLength: 2, maxLength: 5}}} autoFocus value={userName} onChange={onUserNameHandler} />
             </FormControl>
             <FormControl>
               <FormLabel>핸드폰 번호 뒷 자리 4 자리</FormLabel>
-              <Input type={'number'} value={phoneNum} onChange={onPhoneNumHandler} />
+              <Input type="number" slotProps={{input: {min: 0, max: 9999}}} value={phoneNum} onChange={onPhoneNumHandler} />
             </FormControl>
             <Button color={color} variant="solid" onClick={onSubmitButtonHandler}>
               제출

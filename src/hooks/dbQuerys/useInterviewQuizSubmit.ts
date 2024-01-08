@@ -25,8 +25,8 @@ export const useInterviewQuizSubmitMutation = ({onSuccessFn}: UseInterviewQuizSu
 
   return useMutation({
     mutationFn: fetcher,
-    onSuccess: (data) => {
-      onSuccessFn(data.data.data);
+    onSuccess: (response) => {
+      onSuccessFn(response.data.data);
     }
   });
 };

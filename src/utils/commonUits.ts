@@ -56,7 +56,7 @@ export const menuData: MenuTypes[] = [
   {menu: 'Interview Quiz', url: '/InterviewQuiz'},
   {menu: 'Customer List', url: '/CustomerList'},
   // {menu: 'Calendar', url: '/Calendar'},
-  {menu: 'Lab', childMenu: ['DB_TEST'], childUrl: ['/lab/dbtest']},
+  {menu: 'Lab', childMenu: ['DB'], childUrl: ['/lab/db']},
   {menu: 'Settings', url: '/Settings'}
 ];
 

@@ -1,6 +1,7 @@
 import {Box} from '@mui/joy';
 
 import QuizTemplate from './QuizTemplate';
+import CustomerTemplate from './CustomerTemplate';
 
 interface DBFormProps {
   optionValue: string;
@@ -11,6 +12,8 @@ const DbForm = ({optionValue}: DBFormProps) => {
     switch (optionValue) {
       case 'Quiz':
         return <QuizTemplate />;
+      case 'Customer':
+        return <CustomerTemplate />;
     }
   };
 
