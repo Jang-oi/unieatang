@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import HyperVTemplate from '../components/hyperv/HyperVTemplate';
 import HyperVTable from '../components/hyperv/HyperVTable';
-import {useHyperVQuery} from '../hooks/useHyperVQuery';
+import {useHyperVQuery} from '../hooks/querys/useHyperVQuery';
 import {HyperVBoardColumn} from '../types/hypervTypes';
 
 import {io} from 'socket.io-client';

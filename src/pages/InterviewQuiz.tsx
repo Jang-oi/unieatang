@@ -1,6 +1,7 @@
 import {Fragment, useState} from 'react';
 import {useRecoilValue, useResetRecoilState} from 'recoil';
-import {useInterviewQuizQuery, useInterviewQuizSubmitMutation} from '../hooks/useInterviewQuizQuery';
+import {useInterviewQuizQuery} from '../hooks/dbQuerys/useInterviewQuiz';
+import {useInterviewQuizSubmitMutation} from '../hooks/dbQuerys/useInterviewQuizSubmit';
 
 import {userSettingState} from '../recoil/settings/atom';
 import {interviewQuizState} from '../recoil/interviewQuiz/atom';

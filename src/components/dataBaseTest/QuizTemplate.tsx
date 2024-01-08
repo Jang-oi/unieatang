@@ -1,16 +1,20 @@
-import React, {useState} from 'react';
-import {useRecoilState, useRecoilValue, useSetRecoilState} from 'recoil';
-import {userSettingState} from '../../recoil/settings/atom';
-import {QUERY_KEY_INTERVIEW_QUIZ, useInterviewQuizAnswerMutation, useInterviewQuizQuery, useInterviewQuizTypeQuery} from '../../hooks/useInterviewQuizQuery';
+import {useEffect, useState} from 'react';
 import {useQueryClient} from '@tanstack/react-query';
-import LoadingComponent from '../common/LoadingComponent';
-import {Box, Button, DialogTitle, Input, Modal, ModalDialog, Option, Select, Stack, Table, Textarea} from '@mui/joy';
+
+import {useRecoilState, useRecoilValue, useSetRecoilState} from 'recoil';
+import {useInterviewQuizQuery, READ_INTERVIEW_QUIZ, useInterviewQuizMutation} from '../../hooks/dbQuerys/useInterviewQuiz';
 import {InterviewQuizType} from '../../types/interviewQuizType';
+import {useInterviewQuizTypesQuery} from '../../hooks/dbQuerys/useInterviewQuizTypes';
+import {userSettingState} from '../../recoil/settings/atom';
 import {interviewQuizCRUDModalState} from '../../recoil/db/atom';
+
+import {Box, Button, DialogTitle, Input, Modal, ModalDialog, Option, Select, Stack, Table, Textarea} from '@mui/joy';
+
+import LoadingComponent from '../common/LoadingComponent';
 
 const QuizTable = () => {
   const setQuizCURDModal = useSetRecoilState(interviewQuizCRUDModalState);
-  const {isLoading, data} = useInterviewQuizQuery();
+  const {isLoading, data} = useInterviewQuizQuery({abc: 1});
 
   if (isLoading) return <LoadingComponent />;
   const quizData = data.data.tableData;
@@ -32,7 +36,7 @@ const QuizTable = () => {
             quizData.map((quizItem: InterviewQuizType) => (
               <tr key={quizItem._id}>
                 <td>{quizItem.type}</td>
-                <td style={{color: '#0079F4', cursor: 'pointer'}} onClick={() => setQuizCURDModal({createMode: false, showModal: true})}>
+                <td style={{color: '#0079F4', cursor: 'pointer'}} onClick={() => setQuizCURDModal({createMode: false, showModal: true, quizData: quizItem})}>
                   {quizItem.question}
                 </td>
                 <td>
@@ -67,7 +71,7 @@ const QuizTemplate = () => {
         color={color}
         id={'create'}
         onClick={() => {
-          setQuizCURDModal({createMode: true, showModal: true});
+          setQuizCURDModal({createMode: true, showModal: true, quizData: {}});
         }}
       >
         Create
@@ -80,7 +84,7 @@ const QuizTemplate = () => {
 
 const QuizCRUDModal = () => {
   const {color} = useRecoilValue(userSettingState);
-  const {isLoading, data} = useInterviewQuizTypeQuery();
+  const {isLoading, data} = useInterviewQuizTypesQuery();
   const [quizCURDModal, setQuizCURDModal] = useRecoilState(interviewQuizCRUDModalState);
 
   const queryClient = useQueryClient();
@@ -91,20 +95,28 @@ const QuizCRUDModal = () => {
     setChoice('');
     setChoiceArray([]);
     setAnswer(0);
-    queryClient.invalidateQueries({queryKey: [QUERY_KEY_INTERVIEW_QUIZ]});
+    queryClient.invalidateQueries({queryKey: [READ_INTERVIEW_QUIZ]});
     alert('생성 완료');
   };
+  const {createMode, showModal, quizData} = quizCURDModal as any;
+  const {mutate} = useInterviewQuizMutation({onSuccessFn});
 
-  const {mutate} = useInterviewQuizAnswerMutation({onSuccessFn});
-
-  const [typeOption, setTypeOption] = useState<string>('');
+  const [typeOption, setTypeOption] = useState<string>();
   const [question, setQuestion] = useState<string>('');
   const [passage, setPassage] = useState<string>('');
-  const [point, setPoint] = useState<number>(0);
+  const [point, setPoint] = useState<number>();
   const [choice, setChoice] = useState<string>('');
-  const [answer, setAnswer] = useState<number>(0);
+  const [answer, setAnswer] = useState<number>();
   const [choiceArray, setChoiceArray] = useState<string[]>([]);
-  const {createMode, showModal} = quizCURDModal;
+
+  useEffect(() => {
+    if (quizData) {
+      setQuestion(quizData.question || '');
+      setPassage(quizData.passage || '');
+      setPoint(quizData.point || 0);
+      setChoice(quizData.choice ? quizData.choice.join('\n') : []);
+    }
+  }, [quizData]);
 
   if (isLoading) return <LoadingComponent />;
 

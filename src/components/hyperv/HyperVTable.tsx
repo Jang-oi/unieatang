@@ -1,5 +1,6 @@
-import {Table} from '@mui/joy';
 import {HyperVBoardColumn} from '../../types/hypervTypes';
+
+import {Table} from '@mui/joy';
 
 interface HyperVTableProps {
   hyperVData: HyperVBoardColumn[];

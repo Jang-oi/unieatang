@@ -1,9 +1,9 @@
 import {useNavigate} from 'react-router-dom';
+import {useRecoilValue} from 'recoil';
+import {userSettingState} from '../../recoil/settings/atom';
 
 import {Box, Button} from '@mui/joy';
 import Typography from '@mui/joy/Typography';
-import {userSettingState} from '../../recoil/settings/atom';
-import {useRecoilValue} from 'recoil';
 
 interface ErrorProps {
   code: string;

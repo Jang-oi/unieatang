@@ -1,7 +1,7 @@
-import React from 'react';
 import {Box, Table} from '@mui/joy';
+
 import LoadingComponent from '../components/common/LoadingComponent';
-import {useCustomerListQuery} from '../hooks/useCustomerListQuery';
+import {useCustomerListQuery} from '../hooks/dbQuerys/useCustomerList';
 
 const CustomerList = () => {
   const {isLoading, data} = useCustomerListQuery();

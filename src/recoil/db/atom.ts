@@ -4,6 +4,7 @@ export const interviewQuizCRUDModalState = atom({
   key: 'interviewQuizCRUDModalState',
   default: {
     createMode: false,
-    showModal: false
+    showModal: false,
+    quizData: {}
   }
 });

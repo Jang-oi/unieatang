@@ -1,5 +1,5 @@
-import React from 'react';
 import {Box} from '@mui/joy';
+
 import QuizTemplate from './QuizTemplate';
 
 interface DBFormProps {

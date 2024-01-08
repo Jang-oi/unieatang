@@ -1,8 +1,9 @@
 import React from 'react';
-import {Select, Option} from '@mui/joy';
 import {useRecoilState} from 'recoil';
 import {userSettingState} from '../recoil/settings/atom';
 import {userSettingType} from '../types/userSettingType';
+
+import {Select, Option} from '@mui/joy';
 
 const Settings = () => {
   const [userSetting, setUserSetting] = useRecoilState<userSettingType>(userSettingState);
