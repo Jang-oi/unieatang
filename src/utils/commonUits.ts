@@ -53,7 +53,7 @@ export const getColorWithTheme = (theme: string) => {
 export const menuData: MenuTypes[] = [
   {menu: 'Home', url: '/'},
   {menu: 'HyperV', url: '/HyperV'},
-  {menu: 'Interview Quiz', url: '/InterviewQuiz'},
+  {menu: 'Interview Quiz', childMenu: ['Quiz', 'SubmitList'], childUrl: ['/InterviewQuiz/quiz', '/InterviewQuiz/submitList']},
   {menu: 'Customer List', url: '/CustomerList'},
   {menu: 'License', url: '/License'},
   {menu: 'Calendar', url: '/Calendar'},

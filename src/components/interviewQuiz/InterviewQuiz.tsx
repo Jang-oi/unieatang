@@ -1,17 +1,17 @@
 import {Fragment, useState} from 'react';
 import {useRecoilValue, useResetRecoilState} from 'recoil';
-import {useInterviewQuizQuery} from '../hooks/dbQuerys/useInterviewQuiz';
-import {useInterviewQuizSubmitMutation} from '../hooks/dbQuerys/useInterviewQuizSubmit';
+import {useInterviewQuizQuery} from "../../hooks/dbQuerys/useInterviewQuiz";
+import {useInterviewQuizSubmitMutation} from "../../hooks/dbQuerys/useInterviewQuizSubmit";
 
-import {userSettingState} from '../recoil/settings/atom';
-import {interviewQuizState} from '../recoil/interviewQuiz/atom';
-import {InterviewQuizType} from '../types/interviewQuizType';
+import {userSettingState} from "../../recoil/settings/atom";
+import {interviewQuizState} from "../../recoil/interviewQuiz/atom";
+import {InterviewQuizType} from "../../types/interviewQuizType";
 
 import {Box, Button, DialogContent, DialogTitle, FormControl, FormLabel, Input, Modal, ModalDialog, Stack, Typography, Divider} from '@mui/joy';
 import TouchAppIcon from '@mui/icons-material/TouchApp';
 
-import Quiz from '../components/interviewQuiz/Quiz';
-import LoadingComponent from '../components/common/LoadingComponent';
+import Quiz from "./Quiz";
+import LoadingComponent from "../common/LoadingComponent";
 
 export default function InterviewQuiz() {
   const {color} = useRecoilValue(userSettingState);

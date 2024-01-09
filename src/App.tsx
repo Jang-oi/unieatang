@@ -9,12 +9,13 @@ import NotFound from './pages/NotFound';
 import Sidebar from './components/menu/Sidebar';
 import Header from './components/menu/Header';
 import UniCalendar from './pages/UniCalendar';
-import InterviewQuiz from './pages/InterviewQuiz';
+import InterviewQuiz from "./components/interviewQuiz/InterviewQuiz";
 import DataBaseCRUD from './pages/DataBaseCRUD';
 import HyperV from './pages/HyperV';
 import Settings from './pages/Settings';
 import CustomerList from './pages/CustomerList';
 import License from './pages/License';
+import SubmitList from "./components/interviewQuiz/SubmitList";
 
 export default function App() {
   return (
@@ -43,7 +44,8 @@ export default function App() {
               <Route path="/" element={<Main />} />
               <Route path="/HyperV" element={<HyperV />} />
               <Route path="/Calendar" element={<UniCalendar />} />
-              <Route path="/InterviewQuiz" element={<InterviewQuiz />} />
+              <Route path="/InterviewQuiz/quiz" element={<InterviewQuiz />} />
+              <Route path="/InterviewQuiz/submitList" element={<SubmitList />} />
               <Route path="/CustomerList" element={<CustomerList />} />
               <Route path="/License" element={<License />} />
               <Route path="/Settings" element={<Settings />} />

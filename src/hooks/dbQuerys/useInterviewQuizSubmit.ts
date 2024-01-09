@@ -1,5 +1,25 @@
 import {axiosAPI} from '../../utils/axios';
-import {useMutation} from '@tanstack/react-query';
+import {useMutation, useQuery} from '@tanstack/react-query';
+
+const COLLECTION_NAME = 'interviewQuizSubmit';
+export const READ_INTERVIEW_QUIZ_SUBMIT = 'READ_INTERVIEW_QUIZ_SUBMIT';
+
+/**
+ * 면접 문제 제출자 조회 쿼리
+ */
+export const useInterviewQuizSubmitQuery = (params?: any) => {
+  const fetcher = async () => {
+    return await axiosAPI({name: COLLECTION_NAME, type: 'R', ...params});
+  };
+
+  return useQuery({
+    queryKey: [READ_INTERVIEW_QUIZ_SUBMIT],
+    queryFn: fetcher,
+    select: (data) => {
+      return data.data;
+    }
+  });
+};
 
 interface InterviewQuizSubmitMutation {
   type: string;
@@ -10,7 +30,7 @@ interface UseInterviewQuizSubmitMutation {
   onSuccessFn: (response: any) => void;
 }
 
-const COLLECTION_NAME = 'interviewQuizSubmit';
+
 /**
  * 면접 문제 제출 쿼리
  */
