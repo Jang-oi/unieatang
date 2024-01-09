@@ -12,12 +12,24 @@ import {Box, Button, DialogTitle, Input, Modal, ModalDialog, Option, Select, Sta
 
 import LoadingComponent from '../common/LoadingComponent';
 
-const QuizTable = () => {
+type QuizTableType = {
+  typeOption: string | undefined;
+};
+
+const QuizTable = ({typeOption}: QuizTableType) => {
   const setQuizCURDModal = useSetRecoilState(interviewQuizCRUDModalState);
+  const [filteredQuizData, setFilteredQuizData] = useState([]);
   const {isLoading, data} = useInterviewQuizQuery({option: 'a'});
 
+  useEffect(() => {
+    if (typeOption && data) {
+      const quizData = data.data.tableData;
+
+      if (typeOption === '전체') setFilteredQuizData(quizData);
+      else setFilteredQuizData(quizData.filter((item: any) => item.type === typeOption));
+    }
+  }, [typeOption, data]);
   if (isLoading) return <LoadingComponent />;
-  const quizData = data.data.tableData;
 
   return (
     <>
@@ -33,8 +45,8 @@ const QuizTable = () => {
           </tr>
         </thead>
         <tbody>
-          {quizData &&
-            quizData.map((quizItem: InterviewQuizType) => (
+          {filteredQuizData &&
+            filteredQuizData.map((quizItem: InterviewQuizType) => (
               <tr key={quizItem._id}>
                 <td>{quizItem.type}</td>
                 <td style={{color: '#0079F4', cursor: 'pointer'}} onClick={() => setQuizCURDModal({createMode: false, showModal: true, quizData: quizItem})}>
@@ -218,6 +230,21 @@ const QuizTemplate = () => {
   const {color} = useRecoilValue(userSettingState);
   const setQuizCURDModal = useSetRecoilState(interviewQuizCRUDModalState);
 
+  const {isLoading, data} = useInterviewQuizTypesQuery();
+  const [typeOption, setTypeOption] = useState<string>();
+
+  if (isLoading) return <LoadingComponent />;
+
+  const typeData: QuizOptionTypes[] = data.data.tableData;
+  typeData.unshift({
+    _id: '1234',
+    text: '전체',
+    type: 'All'
+  });
+  const onTypeHandler = (event: any, optionValue: string | null) => {
+    if (optionValue) setTypeOption(optionValue);
+  };
+
   return (
     <>
       <Button
@@ -229,7 +256,15 @@ const QuizTemplate = () => {
       >
         Create
       </Button>
-      <QuizTable />
+      <Select value={typeOption} sx={{width: '30vw', mt: '40px'}} onChange={onTypeHandler} placeholder={'카테고리를 선택 해주세요.'}>
+        {typeData &&
+          typeData.map((optionItem, optionIndex) => (
+            <Option key={optionIndex} value={optionItem.text}>
+              {optionItem.text}
+            </Option>
+          ))}
+      </Select>
+      <QuizTable typeOption={typeOption} />
       <QuizCRUDModal />
     </>
   );
