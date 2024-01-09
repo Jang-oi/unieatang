@@ -89,7 +89,7 @@ const QuizCRUDModal = () => {
     if (quizData) {
       setQuestion(quizData.question || '');
       setPassage(quizData.passage || '');
-      setPoint(quizData.point || 0);
+      setPoint(quizData.point || '');
       setChoice(quizData.choice ? quizData.choice.join('\n') : []);
       setAnswer(quizData.answer || '');
       setTypeOption(quizData.type || '');
