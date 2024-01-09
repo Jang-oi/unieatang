@@ -92,7 +92,7 @@ export default function InterviewQuiz() {
         variant="soft"
         startDecorator={<TouchAppIcon />}
         onClick={() => {
-          if (interviewSelect.length === 0) alert('정답을 체크해 주세요.');
+          if (interviewSelect.length !== quizData.length) alert('체크되지 않은 문항이 있습니다.\n정답을 체크해 주세요.');
           else setSubmitModalOpen(true);
         }}
       >
