@@ -55,8 +55,9 @@ export const menuData: MenuTypes[] = [
   {menu: 'HyperV', url: '/HyperV'},
   {menu: 'Interview Quiz', url: '/InterviewQuiz'},
   {menu: 'Customer List', url: '/CustomerList'},
-  // {menu: 'Calendar', url: '/Calendar'},
-  {menu: 'Lab', childMenu: ['DB'], childUrl: ['/lab/db']},
+  {menu: 'License', url: '/License'},
+  {menu: 'Calendar', url: '/Calendar'},
+  {menu: 'Lab', childMenu: ['DB'], childUrl: ['/Lab/db']},
   {menu: 'Settings', url: '/Settings'}
 ];
 

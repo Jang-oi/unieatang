@@ -14,5 +14,5 @@ export type InterviewQuizType = {
   choice: string[];
   point: number;
   type: string;
-  answer : string;
+  answer: string;
 };

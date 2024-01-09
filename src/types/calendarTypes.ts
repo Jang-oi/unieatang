@@ -6,7 +6,7 @@
  * start: 시작 날짜 (당번일),
  * end?: 끝 날짜,
  */
-export interface UniCalendarEvents {
+export interface UniCalendarType {
   _id: string;
   title: string;
   start: string;

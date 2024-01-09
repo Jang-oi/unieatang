@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useQueryClient} from '@tanstack/react-query';
 
 import {useRecoilState, useRecoilValue, useSetRecoilState} from 'recoil';
@@ -41,11 +41,11 @@ const QuizTable = () => {
                   {quizItem.question}
                 </td>
                 <td>
-                  <Textarea readOnly variant="plain" value={quizItem?.passage}></Textarea>
+                  <Textarea readOnly variant="plain" sx={{backgroundColor: 'white'}} value={quizItem?.passage}></Textarea>
                 </td>
                 <td>{quizItem.point}</td>
                 <td>
-                  <Textarea readOnly variant="plain" value={quizItem.choice.join('\n')}></Textarea>
+                  <Textarea readOnly variant="plain" sx={{backgroundColor: 'white'}} value={quizItem.choice.join('\n')}></Textarea>
                 </td>
                 <td>{quizItem.answer}</td>
               </tr>
@@ -61,27 +61,6 @@ type QuizOptionTypes = {
   _id: string;
   text: string;
   type: string;
-};
-
-const QuizTemplate = () => {
-  const {color} = useRecoilValue(userSettingState);
-  const setQuizCURDModal = useSetRecoilState(interviewQuizCRUDModalState);
-
-  return (
-    <>
-      <Button
-        color={color}
-        id={'create'}
-        onClick={() => {
-          setQuizCURDModal({createMode: true, showModal: true, quizData: {}});
-        }}
-      >
-        Create
-      </Button>
-      <QuizCRUDModal />
-      <QuizTable />
-    </>
-  );
 };
 
 const QuizCRUDModal = () => {
@@ -232,6 +211,27 @@ const QuizCRUDModal = () => {
         </Stack>
       </ModalDialog>
     </Modal>
+  );
+};
+
+const QuizTemplate = () => {
+  const {color} = useRecoilValue(userSettingState);
+  const setQuizCURDModal = useSetRecoilState(interviewQuizCRUDModalState);
+
+  return (
+    <>
+      <Button
+        color={color}
+        id={'create'}
+        onClick={() => {
+          setQuizCURDModal({createMode: true, showModal: true, quizData: {}});
+        }}
+      >
+        Create
+      </Button>
+      <QuizTable />
+      <QuizCRUDModal />
+    </>
   );
 };
 

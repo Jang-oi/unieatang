@@ -1,21 +1,22 @@
 import {useEffect, useState} from 'react';
 import '../styles/UniCalendar.css';
-import {UniCalendarEvents} from '../types/calendarTypes';
+import {UniCalendarType} from '../types/calendarTypes';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import {useCalendarQuery} from '../hooks/useCalendarQuery';
+import {useHolidayQuery} from '../hooks/dbQuerys/useHoliday';
+import LoadingComponent from '../components/common/LoadingComponent';
 
 const UniCalendar = () => {
-  const [events, setEvents] = useState<UniCalendarEvents[]>([]);
-
-  const {data} = useCalendarQuery();
+  const [events, setEvents] = useState<UniCalendarType[]>([]);
+  const {isLoading, data} = useHolidayQuery();
 
   useEffect(() => {
-    if (data?.data) {
-      setEvents(data?.data.tableData);
-    }
-  }, [data?.data]);
+    console.log(data);
+    if (data) setEvents(data.data.tableData);
+  }, [data]);
+
+  if (isLoading) return <LoadingComponent />;
 
   const headerToolbar = {
     start: 'Mart',
@@ -32,7 +33,7 @@ const UniCalendar = () => {
       event.target.classList.add(`fc-${title}-click-button`);
       event.target.classList.remove(`fc-${title}-button`);
     }
-    const abc: UniCalendarEvents[] = [{title: '김재현', start: '2023-11-13', type: 'M', _id: '125'}];
+    const abc: UniCalendarType[] = [{title: '김재현', start: '2023-11-13', type: 'M', _id: '125'}];
     setEvents(abc);
     // setIsEditable(!isEditable);
   };
@@ -56,7 +57,7 @@ const UniCalendar = () => {
 
   const handleDateCellContent = (arg: any) => {
     const date = arg.date;
-    const eventsItem = events.find((event: UniCalendarEvents) => event.start === formatDate(date));
+    const eventsItem = events.find((event: UniCalendarType) => event.start === formatDate(date));
     const isHoliDay = eventsItem?.type === 'H';
     return (
       <div className={`fc-daygrid-day-events fc-day-${isHoliDay ? eventsItem.type : 'N'}`}>

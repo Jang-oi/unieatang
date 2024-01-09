@@ -8,3 +8,12 @@ export const interviewQuizCRUDModalState = atom({
     quizData: {}
   }
 });
+
+export const holidayCRUDModalState = atom({
+  key: 'holidayCRUDModalState',
+  default: {
+    createMode: false,
+    showModal: false,
+    holidayData: {}
+  }
+});

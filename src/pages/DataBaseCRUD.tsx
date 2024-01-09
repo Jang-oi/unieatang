@@ -3,7 +3,7 @@ import {dbOptionData} from '../utils/commonUits';
 import {Select, Option} from '@mui/joy';
 import DbForm from '../components/dataBaseTest/DbForm';
 
-const DataBaseTest = () => {
+const DataBaseCRUD = () => {
   const [dbOption, setDbOption] = useState<string>('Quiz');
 
   const onDBHandler = (event: any, optionValue: string | null) => {
@@ -25,4 +25,4 @@ const DataBaseTest = () => {
   );
 };
 
-export default DataBaseTest;
+export default DataBaseCRUD;

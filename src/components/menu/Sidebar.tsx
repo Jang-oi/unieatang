@@ -24,6 +24,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import GridViewIcon from '@mui/icons-material/GridView';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import BusinessIcon from '@mui/icons-material/Business';
+import KeyIcon from '@mui/icons-material/Key';
 
 function Toggler({
   defaultExpanded = false,
@@ -72,6 +73,8 @@ export default function Sidebar() {
         return <QuizIcon sx={{color: fontColor}} />;
       case 'Customer List':
         return <BusinessIcon sx={{color: fontColor}} />;
+      case 'License':
+        return <KeyIcon sx={{color: fontColor}} />;
       case 'Lab':
         return <ScienceIcon sx={{color: fontColor}} />;
       case 'Support':

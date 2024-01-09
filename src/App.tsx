@@ -10,10 +10,11 @@ import Sidebar from './components/menu/Sidebar';
 import Header from './components/menu/Header';
 import UniCalendar from './pages/UniCalendar';
 import InterviewQuiz from './pages/InterviewQuiz';
-import DataBaseTest from './pages/DataBaseTest';
+import DataBaseCRUD from './pages/DataBaseCRUD';
 import HyperV from './pages/HyperV';
 import Settings from './pages/Settings';
 import CustomerList from './pages/CustomerList';
+import License from './pages/License';
 
 export default function App() {
   return (
@@ -44,8 +45,9 @@ export default function App() {
               <Route path="/Calendar" element={<UniCalendar />} />
               <Route path="/InterviewQuiz" element={<InterviewQuiz />} />
               <Route path="/CustomerList" element={<CustomerList />} />
+              <Route path="/License" element={<License />} />
               <Route path="/Settings" element={<Settings />} />
-              <Route path="/lab/db" element={<DataBaseTest />} />
+              <Route path="/Lab/db" element={<DataBaseCRUD />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Box>
