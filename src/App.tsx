@@ -41,15 +41,7 @@ export default function App() {
         >
           <Box sx={{margin: '30px'}}>
             <Routes>
-              <Route path="/" element={<Main />} />
-              <Route path="/HyperV" element={<HyperV />} />
-              <Route path="/Calendar" element={<UniCalendar />} />
-              <Route path="/InterviewQuiz/quiz" element={<InterviewQuiz />} />
-              <Route path="/InterviewQuiz/submitList" element={<SubmitList />} />
-              <Route path="/CustomerList" element={<CustomerList />} />
-              <Route path="/License" element={<License />} />
-              <Route path="/Settings" element={<Settings />} />
-              <Route path="/Lab/db" element={<DataBaseCRUD />} />
+              <Route path="/" element={<InterviewQuiz />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Box>

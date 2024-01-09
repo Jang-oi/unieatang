@@ -51,22 +51,10 @@ export const getColorWithTheme = (theme: string) => {
 };
 
 export const menuData: MenuTypes[] = [
-  {menu: 'Home', url: '/'},
-  {menu: 'HyperV', url: '/HyperV'},
-  {menu: 'Interview Quiz', childMenu: ['Quiz', 'SubmitList'], childUrl: ['/InterviewQuiz/quiz', '/InterviewQuiz/submitList']},
-  {menu: 'Customer List', url: '/CustomerList'},
-  {menu: 'License', url: '/License'},
-  {menu: 'Calendar', url: '/Calendar'},
-  {menu: 'Lab', childMenu: ['DB'], childUrl: ['/Lab/db']},
-  {menu: 'Settings', url: '/Settings'}
+  {menu: 'Interview Quiz', url: '/'},
 ];
 
 export const bottomMenuData: MenuTypes[] = [
-  {menu: 'Support', url: 'https://114.unipost.co.kr:8543/'},
-  {menu: 'GroupWare', url: 'https://unipost.hanbiro.net/'},
-  {menu: 'Git Lab', url: 'http://unidocu/gitlab/'},
-  {menu: 'RedMine', url: 'https://unidocu.unipost.co.kr/redmine/'},
-  {menu: 'Real Grid', url: 'https://service.realgrid.com/'}
 ];
 
 export const dbOptionData: {optionValue: string}[] = [{optionValue: 'Quiz'}, {optionValue: 'Customer'}, {optionValue: 'Holiday'}];
