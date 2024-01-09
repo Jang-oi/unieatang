@@ -13,9 +13,10 @@ type QuizProps = {
   key: string;
   quizItem: InterviewQuizType;
   quizIndex: number;
+  forwardedRef: any;
 };
 
-const Quiz = ({quizItem, quizIndex}: QuizProps) => {
+const Quiz = ({quizItem, quizIndex, forwardedRef}: QuizProps) => {
   const [interviewSelect, setInterviewSelect] = useRecoilState<saveQuizType[]>(interviewQuizState);
 
   const handleRadioChange = (choiceItem: string, choiceIndex: number) => {
@@ -52,7 +53,7 @@ const Quiz = ({quizItem, quizIndex}: QuizProps) => {
   return (
     <Card variant="plain" sx={{width: '60vw', backgroundColor: 'white'}}>
       <CardContent>
-        <Typography level="h3">
+        <Typography level="h3" ref={(el) => (forwardedRef.current[quizItem._id] = el)}>
           {quizIndex + 1}) {quizItem.question}
         </Typography>
         {quizItem.passage && (

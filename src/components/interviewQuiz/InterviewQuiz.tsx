@@ -1,17 +1,17 @@
-import {Fragment, useState} from 'react';
+import {Fragment, useRef, useState} from 'react';
 import {useRecoilValue, useResetRecoilState} from 'recoil';
-import {useInterviewQuizQuery} from "../../hooks/dbQuerys/useInterviewQuiz";
-import {useInterviewQuizSubmitMutation} from "../../hooks/dbQuerys/useInterviewQuizSubmit";
+import {useInterviewQuizQuery} from '../../hooks/dbQuerys/useInterviewQuiz';
+import {useInterviewQuizSubmitMutation} from '../../hooks/dbQuerys/useInterviewQuizSubmit';
 
-import {userSettingState} from "../../recoil/settings/atom";
-import {interviewQuizState} from "../../recoil/interviewQuiz/atom";
-import {InterviewQuizType} from "../../types/interviewQuizType";
+import {userSettingState} from '../../recoil/settings/atom';
+import {interviewQuizState} from '../../recoil/interviewQuiz/atom';
+import {InterviewQuizType} from '../../types/interviewQuizType';
 
 import {Box, Button, DialogContent, DialogTitle, FormControl, FormLabel, Input, Modal, ModalDialog, Stack, Typography, Divider} from '@mui/joy';
 import TouchAppIcon from '@mui/icons-material/TouchApp';
 
-import Quiz from "./Quiz";
-import LoadingComponent from "../common/LoadingComponent";
+import Quiz from './Quiz';
+import LoadingComponent from '../common/LoadingComponent';
 
 export default function InterviewQuiz() {
   const {color} = useRecoilValue(userSettingState);
@@ -31,6 +31,7 @@ export default function InterviewQuiz() {
   const [phoneNum, setPhoneNum] = useState<number | ''>();
 
   const questionsByType: Record<string, InterviewQuizType[]> = {};
+  const quizRef = useRef<any>([]);
 
   if (isLoading) return <LoadingComponent />;
 
@@ -79,7 +80,7 @@ export default function InterviewQuiz() {
             <Fragment key={entries[0]}>
               <Typography level="h1">{entries[0]}</Typography>
               {entries[1].map((quizItem, quizIndex) => (
-                <Quiz key={`${entries[0]}_${quizIndex}`} quizItem={quizItem} quizIndex={quizIndex} />
+                <Quiz key={`${entries[0]}_${quizIndex}`} quizItem={quizItem} quizIndex={quizIndex} forwardedRef={quizRef} />
               ))}
               <Divider sx={{fontSize: '20px', width: '60vw', mb: '30px'}} />
             </Fragment>
@@ -92,8 +93,21 @@ export default function InterviewQuiz() {
         variant="soft"
         startDecorator={<TouchAppIcon />}
         onClick={() => {
-          if (interviewSelect.length !== quizData.length) alert('체크되지 않은 문항이 있습니다.\n정답을 체크해 주세요.');
-          else setSubmitModalOpen(true);
+          const interviewSelectKeys = new Set(interviewSelect.map((item: any) => item.key));
+          let missingKey;
+          for (const item of quizData) {
+            if (!interviewSelectKeys.has(item._id)) {
+              missingKey = item._id;
+              break;
+            }
+          }
+
+          if (missingKey) {
+            alert('체크되지 않은 문항이 있습니다.\n정답을 체크해 주세요.');
+            quizRef.current[missingKey].scrollIntoView({behavior: 'smooth'});
+          } else {
+            setSubmitModalOpen(true);
+          }
         }}
       >
         Submit

@@ -30,7 +30,6 @@ interface UseInterviewQuizSubmitMutation {
   onSuccessFn: (response: any) => void;
 }
 
-
 /**
  * 면접 문제 제출 쿼리
  */
