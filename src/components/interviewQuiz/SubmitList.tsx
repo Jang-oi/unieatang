@@ -3,11 +3,9 @@ import {useInterviewQuizSubmitQuery} from '../../hooks/dbQuerys/useInterviewQuiz
 import LoadingComponent from '../common/LoadingComponent';
 
 const SubmitList = () => {
-  const {isLoading, data} = useInterviewQuizSubmitQuery();
+  const {isLoading, data: interviewSubmitData} = useInterviewQuizSubmitQuery();
   if (isLoading) return <LoadingComponent />;
-  const interviewSubmitData = data.data.tableData;
 
-  console.log(interviewSubmitData);
   return (
     <Table sx={{marginBottom: '30px', textAlign: 'center', fontSize: '15px', width: '73vw'}} borderAxis="both" size="md" stickyHeader>
       <thead>
@@ -21,10 +19,9 @@ const SubmitList = () => {
         {interviewSubmitData &&
           interviewSubmitData.map((submitItem: any) => (
             <tr key={submitItem._id}>
-              {/*<td>{hyperVItem.customer.toUpperCase()}</td>*/}
-              {/*<td>{hyperVItem.isConnect && '연결 중'}</td>*/}
-              {/*<td>{hyperVItem.clientHostName}</td>*/}
-              {/*<td>{hyperVItem.currentTime}</td>*/}
+                <td>{submitItem.name}</td>
+                <td>{submitItem.totalScore}</td>
+                <td>{submitItem.score}</td>
             </tr>
           ))}
       </tbody>

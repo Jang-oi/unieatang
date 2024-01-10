@@ -1,5 +1,6 @@
 import {axiosAPI} from '../../utils/axios';
 import {useMutation, useQuery} from '@tanstack/react-query';
+import {ResponseAxiosTypes} from '../../types/axiosTypes';
 
 const COLLECTION_NAME = 'interviewQuizSubmit';
 export const READ_INTERVIEW_QUIZ_SUBMIT = 'READ_INTERVIEW_QUIZ_SUBMIT';
@@ -16,8 +17,13 @@ export const useInterviewQuizSubmitQuery = (params?: any) => {
     queryKey: [READ_INTERVIEW_QUIZ_SUBMIT],
     queryFn: fetcher,
     select: (data) => {
-      return data.data;
-    }
+      const responseData: ResponseAxiosTypes = data.data;
+      if (responseData.returnErrorMessage) {
+        alert(responseData.returnErrorMessage);
+      } else {
+        return responseData.data.tableData;
+      }
+    },
   });
 };
 

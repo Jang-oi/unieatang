@@ -33,7 +33,7 @@ const QuizTable = ({typeOption}: QuizTableType) => {
 
   return (
     <>
-      <Table sx={{mt: '30px', textAlign: 'center', fontSize: '15px', width: '73vw'}} borderAxis="both" size="sm" stickyHeader>
+      <Table sx={{mt: '30px', textAlign: 'center', fontSize: '15px', width: '73vw'}} borderAxis="both" stickyHeader>
         <thead>
           <tr>
             <th style={{width: '10%'}}>카테고리</th>
@@ -105,6 +105,10 @@ const QuizCRUDModal = () => {
       setChoice(quizData.choice ? quizData.choice.join('\n') : []);
       setAnswer(quizData.answer || '');
       setTypeOption(quizData.type || '');
+      if (quizData.choice) {
+        setChoice(quizData.choice.join('\n'));
+        setChoiceArray(quizData.choice);
+      }
     }
   }, [quizData]);
 
@@ -138,25 +142,23 @@ const QuizCRUDModal = () => {
     setAnswer(event.currentTarget.value);
   };
 
-  const onQuizCreateHandler = () => {
-    if (!typeOption || !question || !point || choiceArray.length === 0 || !answer) alert('데이터 확인');
-    else {
+  const onQuizCreateHandler = (event: any) => {
+    if (!typeOption || !question || !point || choiceArray.length === 0 || !answer) {
+      alert('입력되지 않은 값이 존재합니다.');
+    } else {
       const type = typeData.find((typeItem) => typeItem.text === typeOption)?.type;
-      mutate({
-        type: 'C',
-        data: {
-          tableData: [
-            {
-              type,
-              question,
-              passage,
-              point,
-              choice: choiceArray,
-              answer: answer.toString()
-            }
-          ]
-        }
-      });
+      const buttonId = event.target.id;
+      const params = {
+        type,
+        question,
+        passage,
+        point,
+        choice: choiceArray,
+        answer: answer.toString(),
+        id: quizData._id
+      };
+      if (buttonId === 'create') delete params['id'];
+      mutate({type: buttonId === 'create' ? 'C' : 'U', data: {tableData: [params]}});
     }
   };
 
@@ -172,7 +174,6 @@ const QuizCRUDModal = () => {
       }
     });
   };
-  const onQuizUpdateHandler = () => {};
 
   const buttonRender = () => {
     if (createMode) {
@@ -184,9 +185,9 @@ const QuizCRUDModal = () => {
     } else {
       return (
         <>
-          {/*          <Button type="submit" color={color} id={'update'} onClick={onQuizUpdateHandler}>
+          <Button type="submit" color={color} id={'update'} onClick={onQuizCreateHandler}>
             Update
-          </Button>*/}
+          </Button>
           <Button type="submit" color={color} id={'delete'} onClick={onQuizDeleteHandler}>
             Delete
           </Button>
