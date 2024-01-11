@@ -11,3 +11,14 @@ export const interviewQuizState = atom({
   default: [],
   effects_UNSTABLE: [persistAtom]
 });
+
+/**
+ * 면접 문제 제출자 틀린문제 모달
+ */
+export const interviewQuizSubmitModalState = atom({
+  key: 'interviewQuizSubmitModalState',
+  default: {
+    showModal: false,
+    submitDetailData: {}
+  }
+});

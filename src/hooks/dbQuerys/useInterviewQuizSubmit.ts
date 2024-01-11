@@ -10,7 +10,7 @@ export const READ_INTERVIEW_QUIZ_SUBMIT = 'READ_INTERVIEW_QUIZ_SUBMIT';
  */
 export const useInterviewQuizSubmitQuery = (params?: any) => {
   const fetcher = async () => {
-    return await axiosAPI({name: COLLECTION_NAME, type: 'R', ...params});
+    return await axiosAPI({name: COLLECTION_NAME, type: 'R', data: params});
   };
 
   return useQuery({
@@ -19,11 +19,11 @@ export const useInterviewQuizSubmitQuery = (params?: any) => {
     select: (data) => {
       const responseData: ResponseAxiosTypes = data.data;
       if (responseData.returnErrorMessage) {
-        alert(responseData.returnErrorMessage);
+        throw responseData.returnErrorMessage;
       } else {
         return responseData.data.tableData;
       }
-    },
+    }
   });
 };
 
