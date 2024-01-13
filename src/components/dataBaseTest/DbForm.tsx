@@ -1,4 +1,4 @@
-import {Box} from '@mui/joy';
+import { Box } from '@mui/joy';
 
 import QuizTemplate from './QuizTemplate';
 import CustomerTemplate from './CustomerTemplate';
@@ -8,7 +8,7 @@ interface DBFormProps {
   optionValue: string;
 }
 
-const DbForm = ({optionValue}: DBFormProps) => {
+const DbForm = ({ optionValue }: DBFormProps) => {
   const getDBReadTable = () => {
     switch (optionValue) {
       case 'Quiz':
@@ -20,7 +20,7 @@ const DbForm = ({optionValue}: DBFormProps) => {
     }
   };
 
-  return <Box sx={{overflow: 'auto', maxHeight: '85vh', width: '100%'}}>{getDBReadTable()}</Box>;
+  return <Box sx={{ overflow: 'auto', maxHeight: '85vh', width: '100%' }}>{getDBReadTable()}</Box>;
 };
 
 export default DbForm;

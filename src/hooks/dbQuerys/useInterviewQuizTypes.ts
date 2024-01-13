@@ -1,5 +1,5 @@
-import {axiosAPI} from '../../utils/axios';
-import {useQuery} from '@tanstack/react-query';
+import { axiosAPI } from '../../utils/axios';
+import { useQuery } from '@tanstack/react-query';
 
 export const READ_INTERVIEW_QUIZ_TYPE = 'READ_INTERVIEW_QUIZ_TYPE';
 const COLLECTION_NAME = 'interviewQuizTypes';
@@ -10,7 +10,7 @@ const COLLECTION_NAME = 'interviewQuizTypes';
  */
 export const useInterviewQuizTypesQuery = () => {
   const fetcher = async () => {
-    return await axiosAPI({name: COLLECTION_NAME, type: 'R'});
+    return await axiosAPI({ name: COLLECTION_NAME, type: 'R' });
   };
 
   return useQuery({
@@ -18,6 +18,6 @@ export const useInterviewQuizTypesQuery = () => {
     queryFn: fetcher,
     select: (data) => {
       return data.data;
-    }
+    },
   });
 };

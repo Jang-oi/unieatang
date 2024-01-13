@@ -1,6 +1,6 @@
-import {useState} from 'react';
-import {dbOptionData} from '../utils/commonUits';
-import {Select, Option} from '@mui/joy';
+import { useState } from 'react';
+import { dbOptionData } from '../utils/commonUits';
+import { Select, Option } from '@mui/joy';
 import DbForm from '../components/dataBaseTest/DbForm';
 
 const DataBaseCRUD = () => {
@@ -12,7 +12,7 @@ const DataBaseCRUD = () => {
 
   return (
     <>
-      <Select defaultValue={dbOption} sx={{width: '30vw', mb: '40px'}} onChange={onDBHandler}>
+      <Select defaultValue={dbOption} sx={{ width: '30vw', mb: '40px' }} onChange={onDBHandler}>
         {dbOptionData &&
           dbOptionData.map((optionItem, optionIndex) => (
             <Option key={optionIndex} value={optionItem.optionValue}>

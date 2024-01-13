@@ -1,8 +1,8 @@
-import {useNavigate} from 'react-router-dom';
-import {useRecoilValue} from 'recoil';
-import {userSettingState} from '../../recoil/settings/atom';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { userSettingState } from '../../recoil/settings/atom';
 
-import {Box, Button} from '@mui/joy';
+import { Box, Button } from '@mui/joy';
 import Typography from '@mui/joy/Typography';
 
 interface ErrorProps {
@@ -10,21 +10,29 @@ interface ErrorProps {
   message: string;
 }
 
-export default function ErrorView({code, message}: ErrorProps) {
+export default function ErrorView({ code, message }: ErrorProps) {
   const navigate = useNavigate();
-  const {color} = useRecoilValue(userSettingState);
+  const { themeColor } = useRecoilValue(userSettingState);
 
   return (
-    <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', minHeight: '80vh'}}>
-      <Typography level={'h1'} variant="plain" color={color}>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+        minHeight: '80vh',
+      }}
+    >
+      <Typography level={'h1'} variant="plain" color={themeColor}>
         {code}
       </Typography>
-      <Typography level={'h2'} variant="plain" color={color}>
+      <Typography level={'h2'} variant="plain" color={themeColor}>
         {message}
       </Typography>
       <Button
-        sx={{marginTop: '30px'}}
-        color={color}
+        sx={{ marginTop: '30px' }}
+        color={themeColor}
         variant="soft"
         onClick={() => {
           navigate('/');

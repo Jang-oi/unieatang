@@ -1,6 +1,6 @@
-import {axiosAPI} from '../../utils/axios';
-import {useQuery} from '@tanstack/react-query';
-import {useMutation} from '@tanstack/react-query';
+import { axiosAPI } from '../../utils/axios';
+import { useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 
 export const READ_INTERVIEW_QUIZ = 'READ_INTERVIEW_QUIZ';
 const COLLECTION_NAME = 'interviewQuiz';
@@ -10,7 +10,7 @@ const COLLECTION_NAME = 'interviewQuiz';
  */
 export const useInterviewQuizQuery = (params?: any) => {
   const fetcher = async () => {
-    return await axiosAPI({name: COLLECTION_NAME, type: 'R', ...params});
+    return await axiosAPI({ name: COLLECTION_NAME, type: 'R', ...params });
   };
 
   return useQuery({
@@ -18,7 +18,7 @@ export const useInterviewQuizQuery = (params?: any) => {
     queryFn: fetcher,
     select: (data) => {
       return data.data;
-    }
+    },
   });
 };
 
@@ -34,12 +34,12 @@ interface InterviewQuizMutationParamType {
 /**
  * 면접 문제 생성, 삭제, 업데이트 쿼리
  */
-export const useInterviewQuizMutation = ({onSuccessFn}: InterviewQuizMutationCbType) => {
-  const fetcher = async ({type, data}: InterviewQuizMutationParamType) => {
+export const useInterviewQuizMutation = ({ onSuccessFn }: InterviewQuizMutationCbType) => {
+  const fetcher = async ({ type, data }: InterviewQuizMutationParamType) => {
     return await axiosAPI({
       name: COLLECTION_NAME,
       type,
-      data
+      data,
     });
   };
 
@@ -47,6 +47,6 @@ export const useInterviewQuizMutation = ({onSuccessFn}: InterviewQuizMutationCbT
     mutationFn: fetcher,
     onSuccess: (response) => {
       onSuccessFn(response.data);
-    }
+    },
   });
 };

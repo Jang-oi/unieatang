@@ -1,9 +1,9 @@
-import {useRecoilState} from 'recoil';
+import { useRecoilState } from 'recoil';
 
-import {interviewQuizState} from '../../recoil/interviewQuiz/atom';
-import {InterviewQuizType} from '../../types/interviewQuizType';
+import { interviewQuizState } from '../../recoil/interviewQuiz/atom';
+import { InterviewQuizType } from '../../types/interviewQuizType';
 
-import {Card, CardContent, Radio, RadioGroup, Typography} from '@mui/joy';
+import { Card, CardContent, Radio, RadioGroup, Typography } from '@mui/joy';
 
 type saveQuizType = {
   [key: string]: string;
@@ -16,7 +16,7 @@ type QuizProps = {
   forwardedRef: any;
 };
 
-const Quiz = ({quizItem, quizIndex, forwardedRef}: QuizProps) => {
+const Quiz = ({ quizItem, quizIndex, forwardedRef }: QuizProps) => {
   const [interviewSelect, setInterviewSelect] = useRecoilState<saveQuizType[]>(interviewQuizState);
 
   const handleRadioChange = (choiceItem: string, choiceIndex: number) => {
@@ -29,7 +29,7 @@ const Quiz = ({quizItem, quizIndex, forwardedRef}: QuizProps) => {
       updatedData[existingDataIndex] = {
         key: quizItem._id,
         value: (choiceIndex + 1).toString(),
-        text: choiceItem
+        text: choiceItem,
       };
     } else {
       // 기존 데이터가 없으면 새로운 데이터 추가
@@ -38,8 +38,8 @@ const Quiz = ({quizItem, quizIndex, forwardedRef}: QuizProps) => {
         {
           key: quizItem._id,
           value: (choiceIndex + 1).toString(),
-          text: choiceItem
-        }
+          text: choiceItem,
+        },
       ];
     }
     setInterviewSelect(updatedData);
@@ -51,17 +51,17 @@ const Quiz = ({quizItem, quizIndex, forwardedRef}: QuizProps) => {
   };
 
   return (
-    <Card variant="plain" sx={{width: '60vw', backgroundColor: 'white'}}>
+    <Card variant="plain" sx={{ width: '60vw', backgroundColor: 'white' }}>
       <CardContent>
         <Typography level="h3" ref={(el) => (forwardedRef.current[quizItem._id] = el)}>
           {quizIndex + 1}) {quizItem.question}
         </Typography>
         {quizItem.passage && (
-          <Card size="sm" sx={{width: '50vw', whiteSpace: 'pre-line', minWidth: '400px'}}>
+          <Card size="sm" sx={{ width: '50vw', whiteSpace: 'pre-line', minWidth: '400px' }}>
             {quizItem.passage}
           </Card>
         )}
-        <RadioGroup sx={{margin: '20px'}} value={getDefaultValue()} id={quizItem._id}>
+        <RadioGroup sx={{ margin: '20px' }} value={getDefaultValue()} id={quizItem._id}>
           {quizItem.choice.map((choiceItem, choiceIndex) => (
             <Radio
               key={choiceIndex}

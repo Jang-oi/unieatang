@@ -1,5 +1,5 @@
-import {axiosAPI} from '../../utils/axios';
-import {useQuery, useMutation} from '@tanstack/react-query';
+import { axiosAPI } from '../../utils/axios';
+import { useQuery, useMutation } from '@tanstack/react-query';
 
 export const READ_HOLIDAY = 'READ_HOLIDAY';
 const COLLECTION_NAME = 'holiday';
@@ -9,7 +9,7 @@ const COLLECTION_NAME = 'holiday';
  */
 export const useHolidayQuery = () => {
   const fetcher = async () => {
-    return await axiosAPI({name: COLLECTION_NAME, type: 'R'});
+    return await axiosAPI({ name: COLLECTION_NAME, type: 'R' });
   };
 
   return useQuery({
@@ -17,7 +17,7 @@ export const useHolidayQuery = () => {
     queryFn: fetcher,
     select: (data) => {
       return data.data;
-    }
+    },
   });
 };
 
@@ -32,12 +32,12 @@ interface HolidayMutationParamType {
 /**
  * 공휴일 생성, 삭제, 업데이트 쿼리
  */
-export const useHolidayMutation = ({onSuccessFn}: HolidayMutationCbType) => {
-  const fetcher = async ({type, data}: HolidayMutationParamType) => {
+export const useHolidayMutation = ({ onSuccessFn }: HolidayMutationCbType) => {
+  const fetcher = async ({ type, data }: HolidayMutationParamType) => {
     return await axiosAPI({
       name: COLLECTION_NAME,
       type,
-      data
+      data,
     });
   };
 
@@ -45,6 +45,6 @@ export const useHolidayMutation = ({onSuccessFn}: HolidayMutationCbType) => {
     mutationFn: fetcher,
     onSuccess: (response) => {
       onSuccessFn(response.data);
-    }
+    },
   });
 };

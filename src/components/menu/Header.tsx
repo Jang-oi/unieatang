@@ -1,18 +1,18 @@
-import {useRecoilValue} from 'recoil';
-import {userSettingState} from '../../recoil/settings/atom';
+import { useRecoilValue } from 'recoil';
+import { userSettingState } from '../../recoil/settings/atom';
 
-import {toggleSidebar} from '../../utils/sdieBarUtil';
+import { toggleSidebar } from '../../utils/sdieBarUtil';
 
-import {GlobalStyles, Sheet, IconButton} from '@mui/joy';
+import { GlobalStyles, Sheet, IconButton } from '@mui/joy';
 import MenuIcon from '@mui/icons-material/Menu';
 
 export default function Header() {
-  const {color} = useRecoilValue(userSettingState);
+  const { themeColor } = useRecoilValue(userSettingState);
 
   return (
     <Sheet
       sx={{
-        display: {xs: 'flex', md: 'none'},
+        display: { xs: 'flex', md: 'none' },
         alignItems: 'center',
         justifyContent: 'space-between',
         position: 'fixed',
@@ -24,7 +24,7 @@ export default function Header() {
         gap: 1,
         borderBottom: '1px solid',
         borderColor: 'background.level1',
-        boxShadow: 'sm'
+        boxShadow: 'sm',
       }}
     >
       <GlobalStyles
@@ -32,12 +32,12 @@ export default function Header() {
           ':root': {
             '--Header-height': '52px',
             [theme.breakpoints.up('md')]: {
-              '--Header-height': '0px'
-            }
-          }
+              '--Header-height': '0px',
+            },
+          },
         })}
       />
-      <IconButton onClick={() => toggleSidebar()} variant="outlined" color={color} size="sm">
+      <IconButton onClick={() => toggleSidebar()} variant="outlined" color={themeColor} size="sm">
         <MenuIcon />
       </IconButton>
     </Sheet>

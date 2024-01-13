@@ -1,12 +1,12 @@
-import {atom} from 'recoil';
+import { atom } from 'recoil';
 
 export const interviewQuizCRUDModalState = atom({
   key: 'interviewQuizCRUDModalState',
   default: {
     createMode: false,
     showModal: false,
-    quizData: {}
-  }
+    quizData: {},
+  },
 });
 
 export const holidayCRUDModalState = atom({
@@ -14,6 +14,6 @@ export const holidayCRUDModalState = atom({
   default: {
     createMode: false,
     showModal: false,
-    holidayData: {}
-  }
+    holidayData: {},
+  },
 });

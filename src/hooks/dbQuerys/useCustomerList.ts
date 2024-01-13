@@ -1,5 +1,5 @@
-import {axiosAPI} from '../../utils/axios';
-import {useQuery} from '@tanstack/react-query';
+import { axiosAPI } from '../../utils/axios';
+import { useQuery } from '@tanstack/react-query';
 
 export const READ_CUSTOMER_LIST = 'READ_CUSTOMER_LIST';
 const COLLECTION_NAME = 'customerList';
@@ -9,7 +9,7 @@ const COLLECTION_NAME = 'customerList';
  */
 export const useCustomerListQuery = () => {
   const fetcher = async () => {
-    return await axiosAPI({name: COLLECTION_NAME, type: 'R'});
+    return await axiosAPI({ name: COLLECTION_NAME, type: 'R' });
   };
 
   return useQuery({
@@ -17,6 +17,6 @@ export const useCustomerListQuery = () => {
     queryFn: fetcher,
     select: (data) => {
       return data.data;
-    }
+    },
   });
 };

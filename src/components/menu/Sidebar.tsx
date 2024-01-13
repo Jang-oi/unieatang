@@ -1,15 +1,27 @@
 import * as React from 'react';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import {useRecoilValue} from 'recoil';
-import {userSettingState} from '../../recoil/settings/atom';
+import { useRecoilValue } from 'recoil';
+import { userSettingState } from '../../recoil/settings/atom';
 
-import {MenuTypes} from '../../types/menuTypes';
+import { MenuTypes } from '../../types/menuTypes';
 
-import {closeSidebar} from '../../utils/sdieBarUtil';
-import {menuData, bottomMenuData, openNewTab, getColorWithTheme} from '../../utils/commonUits';
+import { closeSidebar } from '../../utils/sdieBarUtil';
+import { menuData, bottomMenuData, openNewTab, getColorWithTheme } from '../../utils/commonUits';
 
-import {GlobalStyles, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemContent, listItemButtonClasses, Typography, Sheet} from '@mui/joy';
+import {
+  GlobalStyles,
+  Box,
+  Divider,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemContent,
+  listItemButtonClasses,
+  Typography,
+  Sheet,
+} from '@mui/joy';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import SupportRoundedIcon from '@mui/icons-material/SupportRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
@@ -29,24 +41,24 @@ import KeyIcon from '@mui/icons-material/Key';
 function Toggler({
   defaultExpanded = false,
   renderToggle,
-  children
+  children,
 }: {
   defaultExpanded?: boolean;
   children: React.ReactNode;
-  renderToggle: (params: {open: boolean; setOpen: React.Dispatch<React.SetStateAction<boolean>>}) => React.ReactNode;
+  renderToggle: (params: { open: boolean; setOpen: React.Dispatch<React.SetStateAction<boolean>> }) => React.ReactNode;
 }) {
   const [open, setOpen] = React.useState(defaultExpanded);
   return (
     <React.Fragment>
-      {renderToggle({open, setOpen})}
+      {renderToggle({ open, setOpen })}
       <Box
         sx={{
           display: 'grid',
           gridTemplateRows: open ? '1fr' : '0fr',
           transition: '0.2s ease',
           '& > *': {
-            overflow: 'hidden'
-          }
+            overflow: 'hidden',
+          },
         }}
       >
         {children}
@@ -64,31 +76,31 @@ export default function Sidebar() {
   const getMenuIcon = (menu: string) => {
     switch (menu) {
       case 'Home':
-        return <HomeRoundedIcon sx={{color: fontColor}} />;
+        return <HomeRoundedIcon sx={{ color: fontColor }} />;
       case 'HyperV':
-        return <ComputerIcon sx={{color: fontColor}} />;
+        return <ComputerIcon sx={{ color: fontColor }} />;
       case 'Calendar':
-        return <CalendarMonthIcon sx={{color: fontColor}} />;
+        return <CalendarMonthIcon sx={{ color: fontColor }} />;
       case 'Interview Quiz':
-        return <QuizIcon sx={{color: fontColor}} />;
+        return <QuizIcon sx={{ color: fontColor }} />;
       case 'Customer List':
-        return <BusinessIcon sx={{color: fontColor}} />;
+        return <BusinessIcon sx={{ color: fontColor }} />;
       case 'License':
-        return <KeyIcon sx={{color: fontColor}} />;
+        return <KeyIcon sx={{ color: fontColor }} />;
       case 'Lab':
-        return <ScienceIcon sx={{color: fontColor}} />;
+        return <ScienceIcon sx={{ color: fontColor }} />;
       case 'Support':
-        return <SupportRoundedIcon sx={{color: fontColor}} />;
+        return <SupportRoundedIcon sx={{ color: fontColor }} />;
       case 'GroupWare':
-        return <GroupsIcon sx={{color: fontColor}} />;
+        return <GroupsIcon sx={{ color: fontColor }} />;
       case 'Git Lab':
-        return <GitHubIcon sx={{color: fontColor}} />;
+        return <GitHubIcon sx={{ color: fontColor }} />;
       case 'Real Grid':
-        return <GridViewIcon sx={{color: fontColor}} />;
+        return <GridViewIcon sx={{ color: fontColor }} />;
       case 'RedMine':
-        return <RocketLaunchIcon sx={{color: fontColor}} />;
+        return <RocketLaunchIcon sx={{ color: fontColor }} />;
       case 'Settings':
-        return <SettingsRoundedIcon sx={{color: fontColor}} />;
+        return <SettingsRoundedIcon sx={{ color: fontColor }} />;
       default:
         return <></>;
     }
@@ -110,7 +122,7 @@ export default function Sidebar() {
         >
           {getMenuIcon(menuItem.menu)}
           <ListItemContent>
-            <Typography level="title-md" sx={{color: fontColor}}>
+            <Typography level="title-md" sx={{ color: fontColor }}>
               {menuItem.menu}
             </Typography>
           </ListItemContent>
@@ -119,23 +131,23 @@ export default function Sidebar() {
     } else {
       return (
         <Toggler
-          renderToggle={({open, setOpen}) => (
+          renderToggle={({ open, setOpen }) => (
             <ListItemButton onClick={() => setOpen(!open)}>
               {getMenuIcon(menuItem.menu)}
               <ListItemContent>
-                <Typography level="title-md" sx={{color: fontColor}}>
+                <Typography level="title-md" sx={{ color: fontColor }}>
                   {menuItem.menu}
                 </Typography>
               </ListItemContent>
-              <KeyboardArrowDownIcon sx={{transform: open ? 'rotate(180deg)' : 'none'}} />
+              <KeyboardArrowDownIcon sx={{ transform: open ? 'rotate(180deg)' : 'none' }} />
             </ListItemButton>
           )}
         >
-          <List key={menuIndex} sx={{gap: 0.5}}>
+          <List key={menuIndex} sx={{ gap: 0.5 }}>
             {menuItem.childMenu.map((childItem, childIndex) => (
               <ListItem key={childIndex}>
                 <ListItemButton
-                  sx={{color: fontColor}}
+                  sx={{ color: fontColor }}
                   onClick={() => {
                     navigate(`${menuItem.childUrl && menuItem.childUrl[childIndex]}`);
                   }}
@@ -150,17 +162,16 @@ export default function Sidebar() {
     }
   };
 
-  const {color} = useRecoilValue(userSettingState);
-  const {bgColor, fontColor} = getColorWithTheme(color);
+  const { bgColor, fontColor } = useRecoilValue(userSettingState);
 
   return (
     <Sheet
       className="Sidebar"
       sx={{
-        position: {xs: 'fixed', md: 'sticky'},
+        position: { xs: 'fixed', md: 'sticky' },
         transform: {
           xs: 'translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1)))',
-          md: 'none'
+          md: 'none',
         },
         transition: 'transform 0.4s, width 0.4s',
         zIndex: 10000,
@@ -174,7 +185,7 @@ export default function Sidebar() {
         gap: 2,
         borderRight: '1px solid',
         borderColor: 'divider',
-        backgroundColor: bgColor
+        backgroundColor: bgColor,
       }}
     >
       <GlobalStyles
@@ -182,9 +193,9 @@ export default function Sidebar() {
           ':root': {
             '--Sidebar-width': '220px',
             [theme.breakpoints.up('lg')]: {
-              '--Sidebar-width': '260px'
-            }
-          }
+              '--Sidebar-width': '260px',
+            },
+          },
         })}
       />
       <Box
@@ -201,22 +212,22 @@ export default function Sidebar() {
           transition: 'opacity 0.4s',
           transform: {
             xs: 'translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1) + var(--SideNavigation-slideIn, 0) * var(--Sidebar-width, 0px)))',
-            lg: 'translateX(-100%)'
-          }
+            lg: 'translateX(-100%)',
+          },
         }}
         onClick={() => closeSidebar()}
       />
-      <Box sx={{display: 'flex', gap: 1, alignItems: 'center'}}>
-        <Box sx={{minWidth: 0, flex: 1}}>
-          <Typography level="title-md" sx={{color: fontColor}}>
+      <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+        <Box sx={{ minWidth: 0, flex: 1 }}>
+          <Typography level="title-md" sx={{ color: fontColor }}>
             User.Name
           </Typography>
-          <Typography level="body-md" sx={{color: fontColor}}>
+          <Typography level="body-md" sx={{ color: fontColor }}>
             User.????
           </Typography>
         </Box>
         <IconButton size="md">
-          <LogoutRoundedIcon sx={{color: fontColor}} />
+          <LogoutRoundedIcon sx={{ color: fontColor }} />
         </IconButton>
       </Box>
       <Divider />
@@ -228,8 +239,8 @@ export default function Sidebar() {
           display: 'flex',
           flexDirection: 'column',
           [`& .${listItemButtonClasses.root}`]: {
-            gap: 1.5
-          }
+            gap: 1.5,
+          },
         }}
       >
         <List
@@ -237,7 +248,7 @@ export default function Sidebar() {
           sx={{
             gap: 1,
             '--List-nestedInsetStart': '30px',
-            '--ListItem-radius': (theme) => theme.vars.radius.sm
+            '--ListItem-radius': (theme) => theme.vars.radius.sm,
           }}
         >
           {menuData &&
@@ -254,7 +265,7 @@ export default function Sidebar() {
             flexGrow: 0,
             '--ListItem-radius': (theme) => theme.vars.radius.sm,
             '--List-gap': '8px',
-            mb: 2
+            mb: 2,
           }}
         >
           {bottomMenuData &&
@@ -267,7 +278,7 @@ export default function Sidebar() {
                 >
                   {getMenuIcon(bottomMenuItem.menu)}
                   <ListItemContent>
-                    <Typography level="title-md" sx={{color: fontColor}}>
+                    <Typography level="title-md" sx={{ color: fontColor }}>
                       {bottomMenuItem.menu}
                     </Typography>
                   </ListItemContent>

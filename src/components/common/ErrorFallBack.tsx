@@ -1,7 +1,7 @@
 import React from 'react';
-import {Button} from '@mui/joy';
+import { Button } from '@mui/joy';
 
-const ErrorFallBack = ({error, resetErrorBoundary}: any) => {
+const ErrorFallBack = ({ error, resetErrorBoundary }: any) => {
   return (
     <div>
       <span>{error.message}...</span>

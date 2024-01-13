@@ -1,14 +1,15 @@
-import {atom} from 'recoil';
-import {recoilPersist} from 'recoil-persist';
+import { atom } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
+import { userSettingType } from '../../types/userSettingType';
 
-const {persistAtom} = recoilPersist();
+const { persistAtom } = recoilPersist();
 
-export const userSettingState = atom({
+export const userSettingState = atom<userSettingType>({
   key: 'userSettingState',
   default: {
-    color: 'neutral',
+    themeColor: 'neutral',
     bgColor: '',
-    fontColor: ''
+    fontColor: '',
   },
-  effects_UNSTABLE: [persistAtom]
+  effects_UNSTABLE: [persistAtom],
 });

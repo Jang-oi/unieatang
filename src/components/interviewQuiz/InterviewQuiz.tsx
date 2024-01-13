@@ -1,30 +1,45 @@
-import {Fragment, useRef, useState} from 'react';
-import {useRecoilValue, useResetRecoilState} from 'recoil';
-import {useInterviewQuizQuery} from '../../hooks/dbQuerys/useInterviewQuiz';
-import {useInterviewQuizSubmitMutation} from '../../hooks/dbQuerys/useInterviewQuizSubmit';
+import { Fragment, useRef, useState } from 'react';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { useInterviewQuizQuery } from '../../hooks/dbQuerys/useInterviewQuiz';
+import { useInterviewQuizSubmitMutation } from '../../hooks/dbQuerys/useInterviewQuizSubmit';
 
-import {userSettingState} from '../../recoil/settings/atom';
-import {interviewQuizState} from '../../recoil/interviewQuiz/atom';
-import {InterviewQuizType} from '../../types/interviewQuizType';
+import { userSettingState } from '../../recoil/settings/atom';
+import { interviewQuizState } from '../../recoil/interviewQuiz/atom';
+import { InterviewQuizType } from '../../types/interviewQuizType';
 
-import {Box, Button, DialogContent, DialogTitle, FormControl, FormLabel, Input, Modal, ModalDialog, Stack, Typography, Divider} from '@mui/joy';
+import {
+  Box,
+  Button,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  FormLabel,
+  Input,
+  Modal,
+  ModalDialog,
+  Stack,
+  Typography,
+  Divider,
+} from '@mui/joy';
 import TouchAppIcon from '@mui/icons-material/TouchApp';
 
 import Quiz from './Quiz';
 import LoadingComponent from '../common/LoadingComponent';
 
 export default function InterviewQuiz() {
-  const {color} = useRecoilValue(userSettingState);
+  const { themeColor } = useRecoilValue(userSettingState);
   const interviewSelect = useRecoilValue(interviewQuizState);
   const resetInterviewSelect = useResetRecoilState(interviewQuizState);
-  const {isLoading, data} = useInterviewQuizQuery();
+  const { isLoading, data } = useInterviewQuizQuery();
 
   const onSuccessFn = (response: any) => {
     const userInterviewData = response.tableData[0];
-    alert(`${userInterviewData.name} 님 고생 많으셨습니다.\n 총 ${userInterviewData.totalScore} 점 중 점수는 ${userInterviewData.score} 점 입니다.`);
+    alert(
+      `${userInterviewData.name} 님 고생 많으셨습니다.\n 총 ${userInterviewData.totalScore} 점 중 점수는 ${userInterviewData.score} 점 입니다.`,
+    );
   };
 
-  const {mutate} = useInterviewQuizSubmitMutation({onSuccessFn});
+  const { mutate } = useInterviewQuizSubmitMutation({ onSuccessFn });
 
   const [submitModalOpen, setSubmitModalOpen] = useState<boolean>(false);
   const [userName, setUserName] = useState<string>('');
@@ -62,7 +77,7 @@ export default function InterviewQuiz() {
       alert('핸드폰 번호 입력 필요');
     } else {
       setSubmitModalOpen(false);
-      mutate({type: 'C', data: {name: userName + phoneNum.toString(), tableData: interviewSelect}});
+      mutate({ type: 'C', data: { name: userName + phoneNum.toString(), tableData: interviewSelect } });
       resetInterviewSelect();
       setPhoneNum(0);
       setUserName('');
@@ -71,8 +86,8 @@ export default function InterviewQuiz() {
 
   return (
     <>
-      <Box sx={{width: '100%', overflow: 'auto', maxHeight: '80vh', mb: '20px'}}>
-        <Typography level="h1" sx={{mb: '20px'}}>
+      <Box sx={{ width: '100%', overflow: 'auto', maxHeight: '80vh', mb: '20px' }}>
+        <Typography level="h1" sx={{ mb: '20px' }}>
           유니 영역
         </Typography>
         {questionsByType &&
@@ -80,16 +95,21 @@ export default function InterviewQuiz() {
             <Fragment key={entries[0]}>
               <Typography level="h1">{entries[0]}</Typography>
               {entries[1].map((quizItem, quizIndex) => (
-                <Quiz key={`${entries[0]}_${quizIndex}`} quizItem={quizItem} quizIndex={quizIndex} forwardedRef={quizRef} />
+                <Quiz
+                  key={`${entries[0]}_${quizIndex}`}
+                  quizItem={quizItem}
+                  quizIndex={quizIndex}
+                  forwardedRef={quizRef}
+                />
               ))}
-              <Divider sx={{fontSize: '20px', width: '60vw', mb: '30px'}} />
+              <Divider sx={{ fontSize: '20px', width: '60vw', mb: '30px' }} />
             </Fragment>
           ))}
       </Box>
       <Button
-        sx={{float: 'right', mr: '50px'}}
+        sx={{ float: 'right', mr: '50px' }}
         size={'lg'}
-        color={color}
+        color={themeColor}
         variant="soft"
         startDecorator={<TouchAppIcon />}
         onClick={() => {
@@ -104,7 +124,7 @@ export default function InterviewQuiz() {
 
           if (missingKey) {
             alert('체크되지 않은 문항이 있습니다.\n정답을 체크해 주세요.');
-            quizRef.current[missingKey].scrollIntoView({behavior: 'smooth'});
+            quizRef.current[missingKey].scrollIntoView({ behavior: 'smooth' });
           } else {
             setSubmitModalOpen(true);
           }
@@ -119,13 +139,23 @@ export default function InterviewQuiz() {
           <Stack spacing={2}>
             <FormControl>
               <FormLabel>이름</FormLabel>
-              <Input slotProps={{input: {minLength: 2, maxLength: 5}}} autoFocus value={userName} onChange={onUserNameHandler} />
+              <Input
+                slotProps={{ input: { minLength: 2, maxLength: 5 } }}
+                autoFocus
+                value={userName}
+                onChange={onUserNameHandler}
+              />
             </FormControl>
             <FormControl>
               <FormLabel>핸드폰 번호 뒷 자리 4 자리</FormLabel>
-              <Input type="number" slotProps={{input: {min: 0, max: 9999}}} value={phoneNum} onChange={onPhoneNumHandler} />
+              <Input
+                type="number"
+                slotProps={{ input: { min: 0, max: 9999 } }}
+                value={phoneNum}
+                onChange={onPhoneNumHandler}
+              />
             </FormControl>
-            <Button color={color} variant="solid" onClick={onSubmitButtonHandler}>
+            <Button color={themeColor} variant="solid" onClick={onSubmitButtonHandler}>
               제출
             </Button>
           </Stack>

@@ -1,17 +1,17 @@
-import {useQueryErrorResetBoundary} from '@tanstack/react-query'; // (*)
-import {ErrorBoundary} from 'react-error-boundary'; // (*)
+import { useQueryErrorResetBoundary } from '@tanstack/react-query'; // (*)
+import { ErrorBoundary } from 'react-error-boundary'; // (*)
 
 interface Props {
   children: React.ReactNode;
 }
 
-const QueryErrorBoundary = ({children}: Props) => {
-  const {reset} = useQueryErrorResetBoundary(); // (*)
+const QueryErrorBoundary = ({ children }: Props) => {
+  const { reset } = useQueryErrorResetBoundary(); // (*)
 
   return (
     <ErrorBoundary
       onReset={reset}
-      fallbackRender={({resetErrorBoundary}) => (
+      fallbackRender={({ resetErrorBoundary }) => (
         <div>
           Error!!
           <button onClick={() => resetErrorBoundary()}>Try again</button>

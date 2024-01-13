@@ -1,18 +1,23 @@
-import {HyperVBoardColumn} from '../../types/hypervTypes';
+import { HyperVBoardColumn } from '../../types/hypervTypes';
 
-import {Table} from '@mui/joy';
+import { Table } from '@mui/joy';
 
 interface HyperVTableProps {
   hyperVData: HyperVBoardColumn[];
 }
 
-export default function HyperVTable({hyperVData}: HyperVTableProps) {
+export default function HyperVTable({ hyperVData }: HyperVTableProps) {
   return (
-    <Table sx={{marginBottom: '30px', textAlign: 'center', fontSize: '15px', width: '73vw'}} borderAxis="both" size="md" stickyHeader>
+    <Table
+      sx={{ marginBottom: '30px', textAlign: 'center', fontSize: '15px', width: '73vw' }}
+      borderAxis="both"
+      size="md"
+      stickyHeader
+    >
       <thead>
         <tr>
           <th>고객사명 (HyeprV 이름)</th>
-          <th style={{width: '10%'}}>연결상태</th>
+          <th style={{ width: '10%' }}>연결상태</th>
           <th>접속자</th>
           <th>접속시간</th>
         </tr>
