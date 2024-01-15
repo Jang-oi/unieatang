@@ -15,6 +15,8 @@ import { interviewQuizCRUDModalState } from '../../recoil/db/atom';
 import { Box, Button, DialogTitle, Input, Modal, ModalDialog, Option, Select, Stack, Table, Textarea } from '@mui/joy';
 
 import LoadingComponent from '../common/LoadingComponent';
+import { SnackbarType } from '../common/UniSnackbar';
+import { snackbarState } from '../../recoil/snackbar/atom';
 
 type QuizTableType = {
   typeOption: string | undefined;
@@ -55,7 +57,13 @@ const QuizTable = ({ typeOption }: QuizTableType) => {
                 <td>{quizItem.type}</td>
                 <td
                   style={{ color: '#0079F4', cursor: 'pointer' }}
-                  onClick={() => setQuizCURDModal({ createMode: false, showModal: true, quizData: quizItem })}
+                  onClick={() =>
+                    setQuizCURDModal({
+                      createMode: false,
+                      showModal: true,
+                      quizData: quizItem,
+                    })
+                  }
                 >
                   {quizItem.question}
                 </td>
@@ -91,12 +99,13 @@ const QuizCRUDModal = () => {
   const { themeColor } = useRecoilValue(userSettingState);
   const { isLoading, data } = useInterviewQuizTypesQuery();
   const [quizCURDModal, setQuizCURDModal] = useRecoilState(interviewQuizCRUDModalState);
+  const [snackbarOption, setSnackbarOption] = useRecoilState<SnackbarType>(snackbarState);
 
   const queryClient = useQueryClient();
   const onSuccessFn = (response: any) => {
     setQuizCURDModal({ createMode: false, showModal: false, quizData: {} });
     queryClient.invalidateQueries({ queryKey: [READ_INTERVIEW_QUIZ] });
-    alert(response.returnMessage);
+    setSnackbarOption({ ...snackbarOption, open: true, message: response.returnMessage });
   };
   const { createMode, showModal, quizData } = quizCURDModal as any;
   const { mutate } = useInterviewQuizMutation({ onSuccessFn });
@@ -156,7 +165,7 @@ const QuizCRUDModal = () => {
 
   const onQuizCreateHandler = (event: any) => {
     if (!typeOption || !question || !point || choiceArray.length === 0 || !answer) {
-      alert('입력되지 않은 값이 존재합니다.');
+      setSnackbarOption({ ...snackbarOption, open: true, message: '입력되지 않은 값이 존재합니다.' });
     } else {
       const type = typeData.find((typeItem) => typeItem.text === typeOption)?.type;
       const buttonId = event.target.id;

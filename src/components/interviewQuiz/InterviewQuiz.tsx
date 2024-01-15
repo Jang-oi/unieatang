@@ -1,5 +1,5 @@
 import { Fragment, useRef, useState } from 'react';
-import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { useInterviewQuizQuery } from '../../hooks/dbQuerys/useInterviewQuiz';
 import { useInterviewQuizSubmitMutation } from '../../hooks/dbQuerys/useInterviewQuizSubmit';
 
@@ -25,18 +25,23 @@ import TouchAppIcon from '@mui/icons-material/TouchApp';
 
 import Quiz from './Quiz';
 import LoadingComponent from '../common/LoadingComponent';
+import { snackbarState } from '../../recoil/snackbar/atom';
+import { SnackbarType } from '../common/UniSnackbar';
 
 export default function InterviewQuiz() {
   const { themeColor } = useRecoilValue(userSettingState);
   const interviewSelect = useRecoilValue(interviewQuizState);
   const resetInterviewSelect = useResetRecoilState(interviewQuizState);
   const { isLoading, data } = useInterviewQuizQuery();
+  const [snackbarOption, setSnackbarOption] = useRecoilState<SnackbarType>(snackbarState);
 
   const onSuccessFn = (response: any) => {
     const userInterviewData = response.tableData[0];
-    alert(
-      `${userInterviewData.name} 님 고생 많으셨습니다.\n 총 ${userInterviewData.totalScore} 점 중 점수는 ${userInterviewData.score} 점 입니다.`,
-    );
+    setSnackbarOption({
+      ...snackbarOption,
+      open: true,
+      message: `${userInterviewData.name} 님 고생 많으셨습니다.\n 총 ${userInterviewData.totalScore} 점 중 점수는 ${userInterviewData.score} 점 입니다.`,
+    });
   };
 
   const { mutate } = useInterviewQuizSubmitMutation({ onSuccessFn });
@@ -72,9 +77,17 @@ export default function InterviewQuiz() {
     const namePattern = /^[가-힣]{2,5}$/;
 
     if (!namePattern.test(userName)) {
-      alert('이름은 한글 2~5 자만 가능합니다.');
+      setSnackbarOption({
+        ...snackbarOption,
+        open: true,
+        message: '이름은 한글 2~5 자만 가능합니다.',
+      });
     } else if (!phoneNum) {
-      alert('핸드폰 번호 입력 필요');
+      setSnackbarOption({
+        ...snackbarOption,
+        open: true,
+        message: '핸드폰 번호 입력이 필요합니다.',
+      });
     } else {
       setSubmitModalOpen(false);
       mutate({ type: 'C', data: { name: userName + phoneNum.toString(), tableData: interviewSelect } });
@@ -123,7 +136,11 @@ export default function InterviewQuiz() {
           }
 
           if (missingKey) {
-            alert('체크되지 않은 문항이 있습니다.\n정답을 체크해 주세요.');
+            setSnackbarOption({
+              ...snackbarOption,
+              open: true,
+              message: '체크되지 않은 문항이 있습니다.\n정답을 체크해 주세요.',
+            });
             quizRef.current[missingKey].scrollIntoView({ behavior: 'smooth' });
           } else {
             setSubmitModalOpen(true);

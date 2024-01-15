@@ -1,5 +1,5 @@
 import { Box, Snackbar, Textarea } from '@mui/joy';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { snackbarState } from '../../recoil/snackbar/atom';
 import ErrorIcon from '@mui/icons-material/Error';
 import InfoIcon from '@mui/icons-material/Info';
@@ -13,11 +13,9 @@ export interface SnackbarType {
 }
 
 const UniSnackbar = () => {
-  const [snackbarOption, setSnackbarOption] = useRecoilState<SnackbarType>(snackbarState);
+  const snackbarOption = useRecoilValue<SnackbarType>(snackbarState);
+  const resetSnackbarState = useResetRecoilState(snackbarState);
   const { vertical, horizontal, open, message, isError } = snackbarOption;
-  const handleClose = () => {
-    setSnackbarOption({ ...snackbarOption, open: false, isError: false, message: '' });
-  };
 
   const snackBackgroundColor = isError ? '#C41C1C' : '#FBFCFE';
   const snackFontColor = isError ? 'white' : '#595F64';
@@ -27,14 +25,14 @@ const UniSnackbar = () => {
       <Snackbar
         anchorOrigin={{ vertical, horizontal }}
         open={open}
-        onClose={handleClose}
+        onClose={resetSnackbarState}
         key={vertical + horizontal}
         startDecorator={
           isError ? <ErrorIcon sx={{ color: snackFontColor }} /> : <InfoIcon sx={{ color: snackFontColor }} />
         }
         variant={'plain'}
         size={'lg'}
-        sx={{ backgroundColor: snackBackgroundColor }}
+        sx={{ backgroundColor: snackBackgroundColor, minWidth: 400 }}
       >
         <Textarea
           readOnly

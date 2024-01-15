@@ -11,6 +11,8 @@ import { formatDate } from '../../utils/commonUits';
 import { Box, Button, DialogTitle, FormLabel, Input, Modal, ModalDialog, Table } from '@mui/joy';
 
 import LoadingComponent from '../common/LoadingComponent';
+import { SnackbarType } from '../common/UniSnackbar';
+import { snackbarState } from '../../recoil/snackbar/atom';
 
 const HolidayTable = () => {
   const setHolidayCURDModal = useSetRecoilState(holidayCRUDModalState);
@@ -56,12 +58,13 @@ const HolidayTable = () => {
 const HolidayCRUDModal = () => {
   const { themeColor } = useRecoilValue(userSettingState);
   const [holidayCURDModal, setHolidayCURDModal] = useRecoilState(holidayCRUDModalState);
+  const [snackbarOption, setSnackbarOption] = useRecoilState<SnackbarType>(snackbarState);
 
   const queryClient = useQueryClient();
   const onSuccessFn = (response: any) => {
     setHolidayCURDModal({ createMode: false, showModal: false, holidayData: {} });
     queryClient.invalidateQueries({ queryKey: [READ_HOLIDAY] });
-    alert(response.returnMessage);
+    setSnackbarOption({ ...snackbarOption, open: true, message: response.returnMessage });
   };
 
   const { createMode, showModal, holidayData } = holidayCURDModal as any;
