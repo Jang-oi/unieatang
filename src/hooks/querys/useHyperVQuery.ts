@@ -1,5 +1,5 @@
-import { axiosAPI } from '../../utils/axios';
 import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
 export const READ_HYPER_V_LIST = 'READ_HYPER_V_LIST';
 
@@ -8,7 +8,7 @@ export const READ_HYPER_V_LIST = 'READ_HYPER_V_LIST';
  */
 export const useHyperVQuery = () => {
   const fetcher = async () => {
-    return await axiosAPI({ name: 'hyperv', type: 'R' }, 'http://local-prd-proxy:3001/hyperv/connect/init');
+    return await axios.get('http://local-prd-proxy:3001/hyperv/connect/init');
   };
 
   return useQuery({

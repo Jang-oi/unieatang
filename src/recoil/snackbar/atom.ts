@@ -5,7 +5,7 @@ export const snackbarState = atom<SnackbarType>({
   key: 'snackbarState',
   default: {
     vertical: 'top',
-    horizontal: 'center',
+    horizontal: 'right',
     open: false,
     message: '',
     isError: false,
