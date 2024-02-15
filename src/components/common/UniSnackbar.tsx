@@ -32,7 +32,7 @@ const UniSnackbar = () => {
         }
         variant={'plain'}
         size={'lg'}
-        sx={{ backgroundColor: snackBackgroundColor, minWidth: 400 }}
+        sx={{ backgroundColor: snackBackgroundColor, minWidth: 400, zIndex: 99999 }}
       >
         <Textarea
           readOnly

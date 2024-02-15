@@ -33,7 +33,7 @@ const LicenseKey = () => {
           setFetchData({ ...fetchData, isLoading: false });
           setSnackbarOption({ ...snackbarOption, open: true, isError: true, message: res.data.data.error });
         } else {
-          setFetchData({ isLoading: false, data: res.data.data });
+          setFetchData({ isLoading: false, data: res.data.data.toUpperCase() });
           setSnackbarOption({ ...snackbarOption, open: true, message: '정상적으로 암복호화 완료되었습니다.' });
         }
       })
