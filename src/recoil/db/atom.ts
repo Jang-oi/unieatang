@@ -17,3 +17,12 @@ export const holidayCRUDModalState = atom({
     holidayData: {},
   },
 });
+
+export const customerCRUDModalState = atom({
+  key: 'customerCRUDModalState',
+  default: {
+    createMode: false,
+    showModal: false,
+    customerData: {},
+  },
+});

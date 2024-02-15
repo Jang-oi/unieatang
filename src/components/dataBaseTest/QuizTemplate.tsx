@@ -84,7 +84,6 @@ const QuizTable = ({ typeOption }: QuizTableType) => {
             ))}
         </tbody>
       </Table>
-      <QuizCRUDModal />
     </>
   );
 };

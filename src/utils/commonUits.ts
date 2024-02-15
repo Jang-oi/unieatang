@@ -78,3 +78,11 @@ export const dbOptionData: { optionValue: string }[] = [
   { optionValue: 'Customer' },
   { optionValue: 'Holiday' },
 ];
+
+export const customerTypeOptionData: { _id: string; type: string; text: string }[] = [
+  { _id: '99', type: '99', text: '전체' },
+  { _id: '1', type: '01', text: '1팀' },
+  { _id: '2', type: '02', text: '2팀' },
+  { _id: '3', type: '03', text: '3팀' },
+  { _id: '4', type: '04', text: '4팀' },
+];
