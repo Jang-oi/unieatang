@@ -17,6 +17,10 @@ export function formatDate(date: Date) {
   return `${year}-${month}-${day}`;
 }
 
+export const emptyObject = (object: Record<string, any>) => {
+  return Object.entries(object).length === 0;
+};
+
 type removeArr = {
   [key: string]: string;
 };

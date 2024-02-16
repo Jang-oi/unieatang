@@ -6,8 +6,6 @@ import {
   Box,
   Button,
   DialogTitle,
-  FormControl,
-  FormLabel,
   Input,
   Modal,
   ModalDialog,
@@ -28,15 +26,10 @@ import {
 import { SnackbarType } from '../common/UniSnackbar';
 import { snackbarState } from '../../recoil/snackbar/atom';
 import { useQueryClient } from '@tanstack/react-query';
-import { customerTypeOptionData } from '../../utils/commonUits';
+import { customerTypeOptionData, emptyObject } from '../../utils/commonUits';
 
 interface CustomerData {
-  _id: string;
-  team: string;
-  code: string;
-  text: string;
-  type: string;
-  version: string;
+  [key: string]: string;
 }
 
 const CustomerCRUDModal = () => {
@@ -53,18 +46,24 @@ const CustomerCRUDModal = () => {
   const { createMode, showModal, customerData } = customerCURDModal as any;
   const { mutate } = useCustomerListMutation({ onSuccessFn });
 
-  const [customerInput, setCustomerInput] = useState<CustomerData>({
+  const initialCustomerData = {
     _id: '',
     team: '',
     code: '',
     text: '',
     type: '',
     version: '',
-  });
+    sshType: '',
+    ip: '',
+  };
+  const [customerInput, setCustomerInput] = useState<CustomerData>(initialCustomerData);
 
   const [typeOption, setTypeOption] = useState<string>('전체');
   const onTypeHandler = (event: any, optionValue: string | null) => {
-    if (optionValue) setTypeOption(optionValue);
+    if (optionValue) {
+      setTypeOption(optionValue);
+      setCustomerInput({ ...customerInput, team: optionValue.replace('팀', '') });
+    }
   };
 
   const onCustomerInputHandler = (event: any) => {
@@ -75,31 +74,34 @@ const CustomerCRUDModal = () => {
   const filterCustomerTypeData = customerTypeOptionData.filter((item) => item.text !== '전체');
 
   useEffect(() => {
-    setCustomerInput({ ...customerData });
+    if (emptyObject(customerData)) {
+      setCustomerInput(initialCustomerData);
+    } else {
+      setCustomerInput({ ...customerInput, ...customerData });
+    }
     setTypeOption(`${customerData.team}팀`);
   }, [customerData]);
 
-  /*  const onQuizCreateHandler = (event: any) => {
-    if (!typeOption || !question || !point || choiceArray.length === 0 || !answer) {
+  const isCustomerDataValidate = (inputData: CustomerData): boolean => {
+    for (const key in inputData) {
+      if (key !== '_id' && inputData[key] === '') {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const onCustomerCreateHandler = (event: any) => {
+    if (!isCustomerDataValidate(customerInput)) {
       setSnackbarOption({ ...snackbarOption, open: true, message: '입력되지 않은 값이 존재합니다.' });
     } else {
-      const type = typeData.find((typeItem) => typeItem.text === typeOption)?.type;
       const buttonId = event.target.id;
-      const params = {
-        type,
-        question,
-        passage,
-        point,
-        choice: choiceArray,
-        answer: answer.toString(),
-        id: quizData._id,
-      };
-      if (buttonId === 'create') delete params['id'];
-      mutate({ type: buttonId === 'create' ? 'C' : 'U', data: { tableData: [params] } });
+      if (buttonId === 'create') delete customerInput['_id'];
+      mutate({ type: buttonId === 'create' ? 'C' : 'U', data: { tableData: [customerInput] } });
     }
-  };*/
+  };
 
-  const onQuizDeleteHandler = () => {
+  const onCustomerDeleteHandler = () => {
     mutate({
       type: 'D',
       data: {
@@ -112,33 +114,38 @@ const CustomerCRUDModal = () => {
     });
   };
 
-  /*const buttonRender = () => {
+  const buttonRender = () => {
     if (createMode) {
       return (
-        <Button type="submit" color={themeColor} id={'create'} onClick={onQuizCreateHandler}>
+        <Button type="submit" color={themeColor} id={'create'} onClick={onCustomerCreateHandler}>
           Create
         </Button>
       );
     } else {
       return (
         <>
-          <Button type="submit" color={themeColor} id={'update'} onClick={onQuizCreateHandler}>
+          <Button type="submit" color={themeColor} id={'update'} onClick={onCustomerCreateHandler}>
             Update
           </Button>
-          <Button type="submit" color={themeColor} id={'delete'} onClick={onQuizDeleteHandler}>
+          <Button type="submit" color={themeColor} id={'delete'} onClick={onCustomerDeleteHandler}>
             Delete
           </Button>
         </>
       );
     }
-  };*/
+  };
 
   return (
     <Modal open={showModal} onClose={() => setCustomerCURDModal({ ...customerCURDModal, showModal: false })}>
       <ModalDialog>
         <DialogTitle>{createMode ? '고객사 추가' : '고객사 수정 및 삭제'}</DialogTitle>
         <Stack spacing={2}>
-          <Select value={typeOption} sx={{ width: '30vw', mb: '40px' }} onChange={onTypeHandler}>
+          <Select
+            value={typeOption}
+            sx={{ width: '30vw', mb: '40px' }}
+            onChange={onTypeHandler}
+            placeholder={'팀을 선택 해주세요.'}
+          >
             {filterCustomerTypeData &&
               filterCustomerTypeData.map((optionItem, optionIndex) => (
                 <Option key={optionItem._id} value={optionItem.text}>
@@ -150,29 +157,46 @@ const CustomerCRUDModal = () => {
             sx={{ width: '40vw' }}
             placeholder={'코드를 입력해주세요.'}
             id={'code'}
-            value={customerInput.code || ''}
+            value={customerInput.code}
             onChange={onCustomerInputHandler}
           />
           <Input
             sx={{ width: '40vw' }}
             placeholder={'고객사명를 입력해주세요.'}
             id={'text'}
-            value={customerInput.text || ''}
+            value={customerInput.text}
+            onChange={onCustomerInputHandler}
+          />
+          <Input
+            sx={{ width: '40vw' }}
+            placeholder={'버전을 입력해주세요.'}
+            id={'version'}
+            value={customerInput.version}
             onChange={onCustomerInputHandler}
           />
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Typography fontSize="sm">TYPE :</Typography>
-            <RadioGroup orientation="horizontal" defaultValue="medium" name="radio-buttons-group">
-              <Radio value="M" label="M" color="primary" />
-              <Radio value="S" label="S" color="warning" />
+            <Typography fontSize="sm">운영 종류 :</Typography>
+            <RadioGroup orientation="horizontal" value={customerInput.type} onChange={onCustomerInputHandler}>
+              <Radio id={'type'} value="M" label="운영" color={themeColor} />
+              <Radio id={'type'} value="S" label="월 계약 업체" color={themeColor} />
+              {/*<Radio value="?" label="하자보수" color={themeColor} />*/}
             </RadioGroup>
           </Box>
-          {/*<td>{customerItem.text}</td>
-          <td>{customerItem.type}</td>
-          <td>{customerItem.version}</td>
-          <td>{customerItem.useSsh}</td>
-          <td>{customerItem.ip}</td>*/}
-          {/*<Box sx={{ display: 'flex', gap: 3, justifyContent: 'left', marginTop: '20px' }}>{buttonRender()}</Box>*/}
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Typography fontSize="sm">SSH 사용 유무 :</Typography>
+            <RadioGroup orientation="horizontal" value={customerInput.sshType} onChange={onCustomerInputHandler}>
+              <Radio id={'sshType'} value="Y" label="사용" color={themeColor} />
+              <Radio id={'sshType'} value="N" label="미사용" color={themeColor} />
+            </RadioGroup>
+          </Box>
+          <Input
+            sx={{ width: '40vw' }}
+            placeholder={'IP를 입력해주세요.'}
+            id={'ip'}
+            value={customerInput.ip}
+            onChange={onCustomerInputHandler}
+          />
+          <Box sx={{ display: 'flex', gap: 3, justifyContent: 'left', marginTop: '20px' }}>{buttonRender()}</Box>
         </Stack>
       </ModalDialog>
     </Modal>
@@ -233,9 +257,9 @@ const CustomerTable = ({ currentTypeOption }: CustomerTableProps) => {
                   {customerItem.code}
                 </td>
                 <td>{customerItem.text}</td>
-                <td>{customerItem.type}</td>
+                <td>{customerItem.type === 'M' ? '운영' : '월 계약'}</td>
                 <td>{customerItem.version}</td>
-                <td>{customerItem.useSsh}</td>
+                <td>{customerItem.sshType === 'Y' ? '시용' : '미사용'}</td>
                 <td>{customerItem.ip}</td>
               </tr>
             ))}
