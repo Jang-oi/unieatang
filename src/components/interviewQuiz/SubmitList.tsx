@@ -117,18 +117,20 @@ const SubmitList = () => {
         </thead>
         <tbody>
           {interviewSubmitData &&
-            interviewSubmitData.map((submitItem: any, submitIndex) => (
-              <tr key={submitIndex}>
-                <td
-                  style={{ color: '#0079F4', cursor: 'pointer' }}
-                  onClick={() => setInterviewQuizSubmitModal({ showModal: true, submitDetailData: submitItem })}
-                >
-                  {submitItem.name}
-                </td>
-                <td>{submitItem.totalScore}</td>
-                <td>{submitItem.score}</td>
-              </tr>
-            ))}
+            interviewSubmitData
+              .sort((a, b) => b.score - a.score)
+              .map((submitItem: any, submitIndex) => (
+                <tr key={submitIndex}>
+                  <td
+                    style={{ color: '#0079F4', cursor: 'pointer' }}
+                    onClick={() => setInterviewQuizSubmitModal({ showModal: true, submitDetailData: submitItem })}
+                  >
+                    {submitItem.name}
+                  </td>
+                  <td>{submitItem.totalScore}</td>
+                  <td>{submitItem.score}</td>
+                </tr>
+              ))}
         </tbody>
       </Table>
       <SubmitDetailModal />
