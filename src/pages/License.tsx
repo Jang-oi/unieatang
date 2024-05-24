@@ -3,6 +3,7 @@ import React, { ChangeEvent, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { userSettingState } from '../recoil/settings/atom';
 import axios from 'axios';
+import { sha256 } from 'js-sha256';
 import LoadingComponent from '../components/common/LoadingComponent';
 import { SnackbarType } from '../components/common/UniSnackbar';
 import { snackbarState } from '../recoil/snackbar/atom';
@@ -18,6 +19,8 @@ const LicenseKey = () => {
   const [fetchData, setFetchData] = useState<fetchDataType>({ isLoading: false, data: '' });
   const [snackbarOption, setSnackbarOption] = useRecoilState<SnackbarType>(snackbarState);
   const [cryptoText, setCryptoText] = useState<string>('');
+  const [shaCryptoText, shaSetCryptoText] = useState<string>('');
+  const [encryptText, setEncryptText] = useState<string>('');
   const { themeColor } = useRecoilValue(userSettingState);
   const { isLoading, data } = fetchData;
 
@@ -33,7 +36,10 @@ const LicenseKey = () => {
           setFetchData({ ...fetchData, isLoading: false });
           setSnackbarOption({ ...snackbarOption, open: true, isError: true, message: res.data.data.error });
         } else {
-          setFetchData({ isLoading: false, data: res.data.data.toUpperCase() });
+          setFetchData({
+            isLoading: false,
+            data: buttonId === 'encrypt' ? res.data.data.toUpperCase() : res.data.data,
+          });
           setSnackbarOption({ ...snackbarOption, open: true, message: '정상적으로 암복호화 완료되었습니다.' });
         }
       })
@@ -42,9 +48,14 @@ const LicenseKey = () => {
       });
   };
 
-  const copyToClipboard = () => {
+  const onShaCryptoButtonHandler = (event: any) => {
+    event.preventDefault();
+    setEncryptText(sha256(shaCryptoText));
+  };
+
+  const copyToClipboard = (event: any) => {
     try {
-      const container = document.getElementById('crypto-result') as HTMLInputElement;
+      const container = document.getElementById(event.target.id) as HTMLInputElement;
       const range = document.createRange();
       range.selectNode(container);
       window.getSelection()?.removeAllRanges();
@@ -63,7 +74,7 @@ const LicenseKey = () => {
     <>
       <Input
         size="md"
-        placeholder="암복호화 문자열을 입력해주세요."
+        placeholder="SAP 패스워드 암복호화 문자열을 입력해주세요."
         sx={{ width: '40vw' }}
         value={cryptoText}
         onChange={(event: ChangeEvent<HTMLInputElement>) => {
@@ -94,8 +105,34 @@ const LicenseKey = () => {
           </>
         }
       />
-      <Typography id={'crypto-result'} level={'body-md'} sx={{ mt: '20px' }} onClick={copyToClipboard}>
+      <Typography id={'crypto-result'} level={'body-md'} sx={{ mt: '20px', mb: '100px' }} onClick={copyToClipboard}>
         {data && data}
+      </Typography>
+      <Input
+        size="md"
+        placeholder="SHA256 암호화 문자열을 입력해주세요."
+        sx={{ width: '40vw' }}
+        value={shaCryptoText}
+        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+          shaSetCryptoText(event.target.value);
+        }}
+        endDecorator={
+          <>
+            <Button
+              id="encrypt"
+              variant={'solid'}
+              color={themeColor}
+              sx={{ margin: '5px' }}
+              disabled={!shaCryptoText}
+              onClick={onShaCryptoButtonHandler}
+            >
+              암호화
+            </Button>
+          </>
+        }
+      />
+      <Typography id={'crypto-result2'} level={'body-md'} sx={{ mt: '20px' }} onClick={copyToClipboard}>
+        {encryptText && encryptText}
       </Typography>
     </>
   );

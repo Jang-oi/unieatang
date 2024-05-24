@@ -48,7 +48,7 @@ export default function InterviewQuiz() {
 
   const [submitModalOpen, setSubmitModalOpen] = useState<boolean>(false);
   const [userName, setUserName] = useState<string>('');
-  const [phoneNum, setPhoneNum] = useState<number | ''>();
+  const [phoneNum, setPhoneNum] = useState<string | ''>('');
 
   const questionsByType: Record<string, InterviewQuizType[]> = {};
   const quizRef = useRef<any>([]);
@@ -68,14 +68,13 @@ export default function InterviewQuiz() {
   const onPhoneNumHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const phoneNum = event.target.value;
     const numericRegex = /^[0-9]*$/;
-    if (numericRegex.test(phoneNum) && +phoneNum <= 9999) {
-      setPhoneNum(phoneNum === '' ? '' : parseFloat(phoneNum));
+    if (numericRegex.test(phoneNum) && phoneNum.length <= 4) {
+      setPhoneNum(phoneNum === '' ? '' : phoneNum);
     }
   };
 
   const onSubmitButtonHandler = () => {
     const namePattern = /^[가-힣]{2,5}$/;
-
     if (!namePattern.test(userName)) {
       setSnackbarOption({
         ...snackbarOption,
@@ -90,9 +89,9 @@ export default function InterviewQuiz() {
       });
     } else {
       setSubmitModalOpen(false);
-      mutate({ type: 'C', data: { name: userName + phoneNum.toString(), tableData: interviewSelect } });
+      mutate({ type: 'C', data: { name: `${userName}${phoneNum}`, tableData: interviewSelect } });
       resetInterviewSelect();
-      setPhoneNum(0);
+      setPhoneNum('');
       setUserName('');
     }
   };

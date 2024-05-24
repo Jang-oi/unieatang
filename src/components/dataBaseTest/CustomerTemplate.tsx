@@ -53,7 +53,7 @@ const CustomerCRUDModal = () => {
     text: '',
     type: '',
     version: '',
-    sshType: '',
+    ssh: '',
     ip: '',
   };
   const [customerInput, setCustomerInput] = useState<CustomerData>(initialCustomerData);
@@ -92,13 +92,18 @@ const CustomerCRUDModal = () => {
   };
 
   const onCustomerCreateHandler = (event: any) => {
-    if (!isCustomerDataValidate(customerInput)) {
-      setSnackbarOption({ ...snackbarOption, open: true, message: '입력되지 않은 값이 존재합니다.' });
+    // if (!isCustomerDataValidate(customerInput)) {
+    //   setSnackbarOption({ ...snackbarOption, open: true, message: '입력되지 않은 값이 존재합니다.' });
+    // } else {
+    const buttonId = event.target.id;
+    if (buttonId === 'create') {
+      delete customerInput['_id'];
     } else {
-      const buttonId = event.target.id;
-      if (buttonId === 'create') delete customerInput['_id'];
-      mutate({ type: buttonId === 'create' ? 'C' : 'U', data: { tableData: [customerInput] } });
+      customerInput['id'] = customerInput['_id'];
+      delete customerInput['_id'];
     }
+    mutate({ type: buttonId === 'create' ? 'C' : 'U', data: { tableData: [customerInput] } });
+    // }
   };
 
   const onCustomerDeleteHandler = () => {
@@ -136,7 +141,10 @@ const CustomerCRUDModal = () => {
   };
 
   return (
-    <Modal open={showModal} onClose={() => setCustomerCURDModal({ ...customerCURDModal, showModal: false })}>
+    <Modal
+      open={showModal}
+      onClose={() => setCustomerCURDModal({ ...customerCURDModal, showModal: false, customerData: {} })}
+    >
       <ModalDialog>
         <DialogTitle>{createMode ? '고객사 추가' : '고객사 수정 및 삭제'}</DialogTitle>
         <Stack spacing={2}>
@@ -184,9 +192,9 @@ const CustomerCRUDModal = () => {
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <Typography fontSize="sm">SSH 사용 유무 :</Typography>
-            <RadioGroup orientation="horizontal" value={customerInput.sshType} onChange={onCustomerInputHandler}>
-              <Radio id={'sshType'} value="Y" label="사용" color={themeColor} />
-              <Radio id={'sshType'} value="N" label="미사용" color={themeColor} />
+            <RadioGroup orientation="horizontal" value={customerInput.ssh} onChange={onCustomerInputHandler}>
+              <Radio id={'ssh'} value="X" label="사용" color={themeColor} />
+              <Radio id={'ssh'} value="" label="미사용" color={themeColor} checked={customerInput.ssh === ''} />
             </RadioGroup>
           </Box>
           <Input
@@ -259,7 +267,7 @@ const CustomerTable = ({ currentTypeOption }: CustomerTableProps) => {
                 <td>{customerItem.text}</td>
                 <td>{customerItem.type === 'M' ? '운영' : '월 계약'}</td>
                 <td>{customerItem.version}</td>
-                <td>{customerItem.sshType === 'Y' ? '시용' : '미사용'}</td>
+                <td>{customerItem.ssh === 'X' ? '사용' : '미사용'}</td>
                 <td>{customerItem.ip}</td>
               </tr>
             ))}
