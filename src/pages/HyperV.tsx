@@ -8,8 +8,9 @@ import { io } from 'socket.io-client';
 import { useRecoilValue } from 'recoil';
 import { hyperVSearchState } from '../recoil/hyperV/atom';
 import LoadingComponent from '../components/common/LoadingComponent';
+import { BASE_URL } from '../utils/commonUits';
 
-const socket = io('http://local-prd-proxy:3001', { transports: ['websocket'] });
+const socket = io(`${BASE_URL}`, { transports: ['websocket'] });
 const HyperV = () => {
   const hyperVSearch = useRecoilValue<string>(hyperVSearchState);
 

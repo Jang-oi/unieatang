@@ -3,6 +3,7 @@ import { Box } from '@mui/joy';
 import QuizTemplate from './QuizTemplate';
 import CustomerTemplate from './CustomerTemplate';
 import HolidayTemplate from './HolidayTemplate';
+import UserTemplate from './UserTemplate';
 
 interface DBFormProps {
   optionValue: string;
@@ -17,6 +18,8 @@ const DbForm = ({ optionValue }: DBFormProps) => {
         return <CustomerTemplate />;
       case 'Holiday':
         return <HolidayTemplate />;
+      case 'User':
+        return <UserTemplate />;
     }
   };
 

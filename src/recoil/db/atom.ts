@@ -26,3 +26,12 @@ export const customerCRUDModalState = atom({
     customerData: {},
   },
 });
+
+export const userCRUDModalState = atom({
+  key: 'userCRUDModalState',
+  default: {
+    createMode: false,
+    showModal: false,
+    userData: {},
+  },
+});

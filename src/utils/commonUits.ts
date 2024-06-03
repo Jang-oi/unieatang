@@ -55,8 +55,7 @@ export const getColorWithTheme = (theme: string) => {
 };
 
 export const menuData: MenuTypes[] = [
-  { menu: 'Home', url: '/' },
-  { menu: 'HyperV', url: '/HyperV' },
+  { menu: 'HyperV', url: '/' },
   { menu: 'Customer List', url: '/CustomerList' },
   { menu: 'License', url: '/License' },
   { menu: 'Calendar', url: '/Calendar' },
@@ -81,6 +80,7 @@ export const dbOptionData: { optionValue: string }[] = [
   { optionValue: 'Quiz' },
   { optionValue: 'Customer' },
   { optionValue: 'Holiday' },
+  { optionValue: 'User' },
 ];
 
 export const customerTypeOptionData: { _id: string; type: string; text: string }[] = [
@@ -90,3 +90,5 @@ export const customerTypeOptionData: { _id: string; type: string; text: string }
   { _id: '3', type: '03', text: '3팀' },
   { _id: '4', type: '04', text: '4팀' },
 ];
+
+export const BASE_URL = 'http://192.168.12.199:3001';

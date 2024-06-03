@@ -14,7 +14,7 @@ export const READ_INTERVIEW_QUIZ_SUBMIT = 'READ_INTERVIEW_QUIZ_SUBMIT';
 export const useInterviewQuizSubmitQuery = (params?: any) => {
   const [snackbarOption, setSnackbarOption] = useRecoilState<SnackbarType>(snackbarState);
   const fetcher = async () => {
-    return await axiosAPI({ name: COLLECTION_NAME, type: 'R', data: params });
+    return await axiosAPI({ name: COLLECTION_NAME, type: 'R', ...params });
   };
 
   return useQuery({

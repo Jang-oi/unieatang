@@ -7,6 +7,7 @@ import { sha256 } from 'js-sha256';
 import LoadingComponent from '../components/common/LoadingComponent';
 import { SnackbarType } from '../components/common/UniSnackbar';
 import { snackbarState } from '../recoil/snackbar/atom';
+import { BASE_URL } from '../utils/commonUits';
 
 type fetchDataType = {
   isLoading: boolean;
@@ -30,7 +31,7 @@ const LicenseKey = () => {
     setFetchData({ ...fetchData, isLoading: true });
 
     axios
-      .post(`http://local-prd-proxy:3001/license/${buttonId}/text`, { cryptoText })
+      .post(`${BASE_URL}/license/${buttonId}/text`, { cryptoText })
       .then((res) => {
         if (res.data.data.error) {
           setFetchData({ ...fetchData, isLoading: false });
