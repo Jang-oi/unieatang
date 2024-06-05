@@ -15,6 +15,7 @@ import HyperV from './pages/HyperV';
 import Settings from './pages/Settings';
 import CustomerList from './pages/CustomerList';
 import License from './pages/License';
+import OTPList from './pages/OTPList';
 import SubmitList from './components/interviewQuiz/SubmitList';
 import UniSnackbar from './components/common/UniSnackbar';
 
@@ -44,13 +45,10 @@ export default function App() {
           <Box sx={{ margin: '30px' }}>
             <Routes>
               <Route path="/" element={<HyperV />} />
-              <Route path="/Calendar" element={<UniCalendar />} />
-              <Route path="/InterviewQuiz/quiz" element={<InterviewQuiz />} />
-              <Route path="/InterviewQuiz/submitList" element={<SubmitList />} />
               <Route path="/CustomerList" element={<CustomerList />} />
               <Route path="/License" element={<License />} />
+              <Route path="/OTPList" element={<OTPList />} />
               <Route path="/Settings" element={<Settings />} />
-              <Route path="/Lab/db" element={<DataBaseCRUD />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Box>

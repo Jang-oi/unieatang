@@ -37,6 +37,7 @@ import GridViewIcon from '@mui/icons-material/GridView';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import BusinessIcon from '@mui/icons-material/Business';
 import KeyIcon from '@mui/icons-material/Key';
+import LockIcon from '@mui/icons-material/Lock';
 
 function Toggler({
   defaultExpanded = false,
@@ -101,6 +102,8 @@ export default function Sidebar() {
         return <RocketLaunchIcon sx={{ color: fontColor }} />;
       case 'Settings':
         return <SettingsRoundedIcon sx={{ color: fontColor }} />;
+      case 'OTP List':
+        return <LockIcon sx={{ color: fontColor }} />;
       default:
         return <></>;
     }
@@ -217,20 +220,6 @@ export default function Sidebar() {
         }}
         onClick={() => closeSidebar()}
       />
-      <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-        <Box sx={{ minWidth: 0, flex: 1 }}>
-          <Typography level="title-md" sx={{ color: fontColor }}>
-            User.Name
-          </Typography>
-          <Typography level="body-md" sx={{ color: fontColor }}>
-            User.????
-          </Typography>
-        </Box>
-        <IconButton size="md">
-          <LogoutRoundedIcon sx={{ color: fontColor }} />
-        </IconButton>
-      </Box>
-      <Divider />
       <Box
         sx={{
           minHeight: 0,

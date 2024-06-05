@@ -9,7 +9,7 @@ export const READ_HYPER_V_LIST = 'READ_HYPER_V_LIST';
  */
 export const useHyperVQuery = () => {
   const fetcher = async () => {
-    return await axios.get(`${BASE_URL}/hyperv/connect/init`);
+    return await axios.get(`${BASE_URL}:3001/hyperv/connect/init`);
   };
 
   return useQuery({
