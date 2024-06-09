@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import {
+  Box,
   CircularProgress,
   DialogTitle,
   List,
@@ -15,6 +16,7 @@ import { useOTPDetailQuery } from '../../hooks/querys/useOTPList';
 import LoadingComponent from '../common/LoadingComponent';
 import { SnackbarType } from '../common/UniSnackbar';
 import { snackbarState } from '../../recoil/snackbar/atom';
+import { copyToClipboard } from '../../utils/commonUits';
 
 const OTPModal = () => {
   const [snackbarOption, setSnackbarOption] = useRecoilState<SnackbarType>(snackbarState);
@@ -24,21 +26,6 @@ const OTPModal = () => {
   const { showModal, customer } = otpListModal as any;
 
   const { isLoading, data, refetch } = useOTPDetailQuery({ customer });
-
-  const copyToClipboard = (id: string) => {
-    try {
-      const container = document.getElementById(id) as HTMLInputElement;
-      const range = document.createRange();
-      range.selectNode(container);
-      window.getSelection()?.removeAllRanges();
-      window.getSelection()?.addRange(range);
-      document.execCommand('copy');
-      window.getSelection()?.removeAllRanges();
-      setSnackbarOption({ ...snackbarOption, open: true, message: '클립보드 복사 완료되었습니다.' });
-    } catch (e: any) {
-      setSnackbarOption({ ...snackbarOption, open: true, isError: true, message: e.toString() });
-    }
-  };
 
   useEffect(() => {
     if (data) {
@@ -60,17 +47,29 @@ const OTPModal = () => {
     <>
       <Modal open={showModal} onClose={() => setOTPListModal({ ...otpListModal, showModal: false })}>
         <ModalDialog size="lg">
-          <DialogTitle sx={{ mb: '30px' }}>
+          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'left', marginTop: '20px' }}>
             <Typography level="h2">{customer}</Typography>
             <CircularProgress determinate value={progress * 3.33} size="md" />
-          </DialogTitle>
+          </Box>
           <List>
             {otpData &&
-              otpData.map((otpItem: any) => (
-                <>
+              otpData.map((otpItem: any, otpIndex: number) => (
+                <Fragment key={otpIndex}>
                   <ListItemButton
                     onClick={() => {
-                      copyToClipboard(otpItem.user);
+                      copyToClipboard(
+                        otpItem.user,
+                        () => {
+                          setSnackbarOption({
+                            ...snackbarOption,
+                            open: true,
+                            message: '클립보드 복사 완료되었습니다.',
+                          });
+                        },
+                        (err: any) => {
+                          setSnackbarOption({ ...snackbarOption, open: true, isError: true, message: err.toString() });
+                        },
+                      );
                     }}
                   >
                     <Typography level="h2" id={otpItem.user} sx={{ fontSize: '25px' }}>
@@ -79,7 +78,7 @@ const OTPModal = () => {
                     {`${otpItem.user} 기기  ${otpItem.mobile}`}
                   </ListItemButton>
                   <ListDivider />
-                </>
+                </Fragment>
               ))}
           </List>
           <Typography level="title-md">해당 OTP 클릭하면 클립보드에 복사 됩니다!!</Typography>

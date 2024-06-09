@@ -22,6 +22,7 @@ export const useOTPListQuery = (params?: any) => {
     select: (data) => {
       return data.data;
     },
+    refetchOnWindowFocus: false,
   });
 };
 
@@ -36,6 +37,7 @@ export const useOTPDetailQuery = (params?: any) => {
     select: (data) => {
       return data.data;
     },
+    refetchOnWindowFocus: false,
   });
 };
 

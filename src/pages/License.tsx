@@ -7,7 +7,7 @@ import { sha256 } from 'js-sha256';
 import LoadingComponent from '../components/common/LoadingComponent';
 import { SnackbarType } from '../components/common/UniSnackbar';
 import { snackbarState } from '../recoil/snackbar/atom';
-import { BASE_URL } from '../utils/commonUits';
+import { BASE_URL, copyToClipboard } from '../utils/commonUits';
 
 type fetchDataType = {
   isLoading: boolean;
@@ -54,21 +54,6 @@ const LicenseKey = () => {
     setEncryptText(sha256(shaCryptoText));
   };
 
-  const copyToClipboard = (event: any) => {
-    try {
-      const container = document.getElementById(event.target.id) as HTMLInputElement;
-      const range = document.createRange();
-      range.selectNode(container);
-      window.getSelection()?.removeAllRanges();
-      window.getSelection()?.addRange(range);
-      document.execCommand('copy');
-      window.getSelection()?.removeAllRanges();
-      setSnackbarOption({ ...snackbarOption, open: true, message: '클립보드 복사 완료되었습니다.' });
-    } catch (e: any) {
-      setSnackbarOption({ ...snackbarOption, open: true, isError: true, message: e.toString() });
-    }
-  };
-
   if (isLoading) return <LoadingComponent />;
 
   return (
@@ -106,7 +91,22 @@ const LicenseKey = () => {
           </>
         }
       />
-      <Typography id={'crypto-result'} level={'body-md'} sx={{ mt: '20px', mb: '100px' }} onClick={copyToClipboard}>
+      <Typography
+        id={'crypto-result'}
+        level={'body-md'}
+        sx={{ mt: '20px', mb: '100px' }}
+        onClick={() => {
+          copyToClipboard(
+            'crypto-result',
+            () => {
+              setSnackbarOption({ ...snackbarOption, open: true, message: '클립보드 복사 완료되었습니다.' });
+            },
+            (err: any) => {
+              setSnackbarOption({ ...snackbarOption, open: true, isError: true, message: err.toString() });
+            },
+          );
+        }}
+      >
         {data && data}
       </Typography>
       <Input
@@ -132,7 +132,22 @@ const LicenseKey = () => {
           </>
         }
       />
-      <Typography id={'crypto-result2'} level={'body-md'} sx={{ mt: '20px' }} onClick={copyToClipboard}>
+      <Typography
+        id={'crypto-result2'}
+        level={'body-md'}
+        sx={{ mt: '20px' }}
+        onClick={() => {
+          copyToClipboard(
+            'crypto-result2',
+            () => {
+              setSnackbarOption({ ...snackbarOption, open: true, message: '클립보드 복사 완료되었습니다.' });
+            },
+            (err: any) => {
+              setSnackbarOption({ ...snackbarOption, open: true, isError: true, message: err.toString() });
+            },
+          );
+        }}
+      >
         {encryptText && encryptText}
       </Typography>
     </>

@@ -21,6 +21,22 @@ export const emptyObject = (object: Record<string, any>) => {
   return Object.entries(object).length === 0;
 };
 
+export const copyToClipboard = (id: string, callBack: any, errorCallBack: any) => {
+  try {
+    const container = document.getElementById(id) as HTMLInputElement;
+    const range = document.createRange();
+    range.selectNodeContents(container);
+    const selection: any = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+    document.execCommand('copy');
+    selection.removeAllRanges();
+    callBack();
+  } catch (e: any) {
+    errorCallBack(e);
+  }
+};
+
 type removeArr = {
   [key: string]: string;
 };
