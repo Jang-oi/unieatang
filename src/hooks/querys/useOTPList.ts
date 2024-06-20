@@ -13,7 +13,7 @@ const COLLECTION_NAME = 'otpList';
 export const useOTPListQuery = (params?: any) => {
   const fetcher = async () => {
     // return await axios.post(`${BASE_URL}:3005/generate-otp`, params);
-    return await axios.post(`${BASE_URL}:3005/getOtpList`, params);
+    return await axios.post(`${BASE_URL}/getOtpList`, params);
   };
 
   return useQuery({
@@ -28,7 +28,7 @@ export const useOTPListQuery = (params?: any) => {
 
 export const useOTPDetailQuery = (params?: any) => {
   const fetcher = async () => {
-    return await axios.post(`${BASE_URL}:3005/getOtpList`, params);
+    return await axios.post(`${BASE_URL}/getOtpList`, params);
   };
 
   return useQuery({

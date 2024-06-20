@@ -18,6 +18,8 @@ import License from './pages/License';
 import OTPList from './pages/OTPList';
 import SubmitList from './components/interviewQuiz/SubmitList';
 import UniSnackbar from './components/common/UniSnackbar';
+import SignIn from './pages/SignIn';
+import PrivateRoute from './utils/PrivateRoute';
 
 export default function App() {
   return (
@@ -48,7 +50,16 @@ export default function App() {
               <Route path="/CustomerList" element={<CustomerList />} />
               <Route path="/License" element={<License />} />
               <Route path="/OTPList" element={<OTPList />} />
+              {/*              <Route
+                path="/OTPList"
+                element={
+                  <PrivateRoute allowedRoles={['admin']}>
+                    <OTPList />
+                  </PrivateRoute>
+                }
+              />*/}
               <Route path="/Settings" element={<Settings />} />
+              <Route path="/TEST" element={<SignIn />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Box>

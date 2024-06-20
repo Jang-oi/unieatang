@@ -220,6 +220,20 @@ export default function Sidebar() {
         }}
         onClick={() => closeSidebar()}
       />
+      <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+        <Box sx={{ minWidth: 0, flex: 1 }}>
+          <Typography level="title-md" sx={{ color: fontColor }}>
+            User.Name
+          </Typography>
+          <Typography level="body-md" sx={{ color: fontColor }}>
+            User.????
+          </Typography>
+        </Box>
+        <IconButton size="md">
+          <LogoutRoundedIcon sx={{ color: fontColor }} />
+        </IconButton>
+      </Box>
+      <Divider />
       <Box
         sx={{
           minHeight: 0,

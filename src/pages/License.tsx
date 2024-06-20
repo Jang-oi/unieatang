@@ -20,8 +20,6 @@ const LicenseKey = () => {
   const [fetchData, setFetchData] = useState<fetchDataType>({ isLoading: false, data: '' });
   const [snackbarOption, setSnackbarOption] = useRecoilState<SnackbarType>(snackbarState);
   const [cryptoText, setCryptoText] = useState<string>('');
-  const [shaCryptoText, shaSetCryptoText] = useState<string>('');
-  const [encryptText, setEncryptText] = useState<string>('');
   const { themeColor } = useRecoilValue(userSettingState);
   const { isLoading, data } = fetchData;
 
@@ -47,11 +45,6 @@ const LicenseKey = () => {
       .catch((err) => {
         setSnackbarOption({ ...snackbarOption, open: true, isError: true, message: err });
       });
-  };
-
-  const onShaCryptoButtonHandler = (event: any) => {
-    event.preventDefault();
-    setEncryptText(sha256(shaCryptoText));
   };
 
   if (isLoading) return <LoadingComponent />;
@@ -109,6 +102,23 @@ const LicenseKey = () => {
       >
         {data && data}
       </Typography>
+    </>
+  );
+};
+
+const LicenseTest = () => {
+  const { themeColor } = useRecoilValue(userSettingState);
+  const [snackbarOption, setSnackbarOption] = useRecoilState<SnackbarType>(snackbarState);
+  const [shaCryptoText, shaSetCryptoText] = useState<string>('');
+  const [encryptText, setEncryptText] = useState<string>('');
+
+  const onShaCryptoButtonHandler = (event: any) => {
+    event.preventDefault();
+    setEncryptText(sha256(shaCryptoText));
+  };
+
+  return (
+    <>
       <Input
         size="md"
         placeholder="SHA256 암호화 문자열을 입력해주세요."
@@ -160,6 +170,7 @@ const License = () => {
   return (
     <>
       <LicenseKey />
+      <LicenseTest />
     </>
   );
 };
