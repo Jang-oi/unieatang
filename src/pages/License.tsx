@@ -29,7 +29,7 @@ const LicenseKey = () => {
     setFetchData({ ...fetchData, isLoading: true });
 
     axios
-      .post(`${BASE_URL}:3001/license/${buttonId}/text`, { cryptoText })
+      .post(`${BASE_URL}/license/${buttonId}/text`, { cryptoText })
       .then((res) => {
         if (res.data.data.error) {
           setFetchData({ ...fetchData, isLoading: false });

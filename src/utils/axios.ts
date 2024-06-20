@@ -2,7 +2,7 @@ import axios from 'axios';
 import { RequestAxiosTypes } from '../types/axiosTypes';
 import { BASE_URL } from './commonUits';
 
-const BASE_URL_API = `${BASE_URL}:3001/api/v1/`;
+const BASE_URL_API = `${BASE_URL}/api/v1/`;
 
 /**
  * @param url
