@@ -10,7 +10,7 @@ import { hyperVSearchState } from '../recoil/hyperV/atom';
 import LoadingComponent from '../components/common/LoadingComponent';
 import { BASE_URL } from '../utils/commonUits';
 
-const socket = io(`${BASE_URL}`, { transports: ['websocket'], path: '/api/hyperV/socket.io' });
+const socket = io(`${BASE_URL}`, { transports: ['websocket'] });
 const HyperV = () => {
   const hyperVSearch = useRecoilValue<string>(hyperVSearchState);
 
