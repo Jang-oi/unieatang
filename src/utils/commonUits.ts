@@ -101,5 +101,5 @@ export const customerTypeOptionData: { _id: string; type: string; text: string }
   { _id: '4', type: '04', text: '4팀' },
 ];
 
-export const BASE_URL = 'http://192.168.12.199:3001';
-// export const BASE_URL = 'https://eatang.unipost.co.kr/api';
+// export const BASE_URL = 'http://192.168.12.199:3001';
+export const BASE_URL = 'https://eatang.unipost.co.kr/api';
